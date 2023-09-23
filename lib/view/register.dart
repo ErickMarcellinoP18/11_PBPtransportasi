@@ -65,6 +65,36 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
+  void _showAlertDialog2(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          backgroundColor: Colors.white,
+          contentPadding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => RegisterView())); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(
+              color: Color.fromARGB(255, 101, 92, 218),
+              width: 1.0,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -201,7 +231,10 @@ class _RegisterViewState extends State<RegisterView> {
 
                 ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
+                      if (_formKey.currentState!.validate() &&
+                          ketentuan &&
+                          !dateinput.text.isEmpty &&
+                          _gender != null) {
                         bool registrationSuccessful = true;
                         Map<String, dynamic> FormData = {};
                         FormData['username'] = usernameController.text;
@@ -219,6 +252,13 @@ class _RegisterViewState extends State<RegisterView> {
                         //               data: FormData,
                         //             )));
                       }
+                      // } else if (_gender == null) {
+                      //   _showAlertDialog2('Failed', 'Pilih Gender dulu!');
+                      // } else if (dateinput.text.isEmpty) {
+                      //   _showAlertDialog2('Failed', 'Isi tanggal dulu!');
+                      // } else if (!ketentuan) {
+                      //   _showAlertDialog2('Failed', 'Cek dulu bang!');
+                      // }
                     },
                     child: const Text('Register'))
               ],
