@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:transportasi_11/theme/theme_model.dart';
 import 'package:transportasi_11/theme/theme_prefrences.dart';
 import 'package:transportasi_11/view/view_list.dart';
+import 'package:transportasi_11/view/topbar2.dart';
 import 'package:transportasi_11/view/grid.dart';
 
 class HomeView extends StatefulWidget {
@@ -27,11 +28,7 @@ class _HomeViewState extends State<HomeView> {
       child: GridExpandable(),
     ),
     ListNamaView(),
-    Center(
-      child: Text(
-        'Index 3: Profile',
-      ),
-    )
+    topBar(),
   ];
 
   @override
@@ -39,9 +36,9 @@ class _HomeViewState extends State<HomeView> {
     return Consumer(
       builder: (context, ThemeModel themeNotifier, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text("KAI tapi boong"),
-          ),
+          // appBar: AppBar(
+          //   title: Text("KAI tapi boong"),
+          // ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               themeNotifier.isDark

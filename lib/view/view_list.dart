@@ -8,9 +8,6 @@ class ListNamaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Daftar Nama"),
-      ),
       body: LayoutBuilder(builder: (context, Constraints) {
         if (Constraints.maxWidth > 600) {
           return const WideLayout();
@@ -31,7 +28,9 @@ class NarrowLayout extends StatelessWidget {
       onPersonTap: (person) => Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              title: Text("KAI tapi boong"),
+            ),
             body: PersonDetail(person),
           ),
         ),

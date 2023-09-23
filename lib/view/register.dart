@@ -33,6 +33,38 @@ class _RegisterViewState extends State<RegisterView> {
   //radio
   listGender? _gender;
 
+  void _showAlertDialog(
+      String title, String message, Map<String, dynamic> FormData) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          backgroundColor: Colors.white,
+          contentPadding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) =>
+                        LoginView(data: FormData))); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(
+              color: Color.fromARGB(255, 101, 92, 218),
+              width: 1.0,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,15 +201,22 @@ class _RegisterViewState extends State<RegisterView> {
               ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      bool registrationSuccessful = true;
                       Map<String, dynamic> FormData = {};
                       FormData['username'] = usernameController.text;
                       FormData['password'] = passwordController.text;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => LoginView(
-                                    data: FormData,
-                                  )));
+                      if (registrationSuccessful) {
+                        // Show the success alert dialog
+                        _showAlertDialog(
+                            'Success', 'Registrasi berhasil!', FormData);
+                        // You can navigate to another screen (e.g., login) here if needed.
+                      }
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (_) => LoginView(
+                      //               data: FormData,
+                      //             )));
                     }
                   },
                   child: const Text('Register'))
