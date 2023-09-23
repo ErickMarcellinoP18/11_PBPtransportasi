@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:transportasi_11/component/passComp.dart';
 import 'package:transportasi_11/view/login.dart';
 import 'package:transportasi_11/component/form_component.dart';
@@ -10,6 +11,9 @@ class RegisterView extends StatefulWidget {
   @override
   State<RegisterView> createState() => _RegisterViewState();
 }
+
+//deklarasi list untuk gender
+enum listGender { laki_laki, perempuan }
 
 class _RegisterViewState extends State<RegisterView> {
   TextEditingController dateinput = TextEditingController();
@@ -24,6 +28,10 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController notelpController = TextEditingController();
+  //Checkbox
+  bool ketentuan = false;
+  //radio
+  listGender? _gender;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +75,37 @@ class _RegisterViewState extends State<RegisterView> {
                   hintTxt: "No Telp",
                   helperTxt: "0821123456789",
                   iconData: Icons.phone_android),
+              //radio button
+              Padding(
+                padding: const EdgeInsets.only(left: 60, top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Gender :'),
+                    RadioListTile(
+                      title: Text('laki laki'),
+                      value: listGender.laki_laki,
+                      groupValue: _gender,
+                      onChanged: (val) {
+                        setState(() {
+                          _gender = val;
+                        });
+                      },
+                    ),
+                    RadioListTile(
+                      title: Text('Perempuan'),
+                      value: listGender.perempuan,
+                      groupValue: _gender,
+                      onChanged: (val) {
+                        setState(() {
+                          _gender = val;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 20),
                 child: SizedBox(
@@ -108,6 +147,25 @@ class _RegisterViewState extends State<RegisterView> {
                   ),
                 ),
               ),
+              //Checkbox-----
+              Padding(
+                padding: const EdgeInsets.only(left: 40, top: 20),
+                child: Column(
+                  children: [
+                    CheckboxListTile(
+                      title: Text(
+                          'Saya menyetujui syarat dan ketentuan yang berlaku'),
+                      value: ketentuan,
+                      onChanged: (value) {
+                        setState(() {
+                          ketentuan = value!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+
               ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
