@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transportasi_11/theme/theme_model.dart';
 import 'package:transportasi_11/theme/theme_prefrences.dart';
+import 'package:transportasi_11/view/listhistoryOrder.dart';
 import 'package:transportasi_11/view/view_list.dart';
 import 'package:transportasi_11/view/topbar2.dart';
 import 'package:transportasi_11/view/grid.dart';
+import 'package:transportasi_11/view/view_list.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -27,7 +29,7 @@ class _HomeViewState extends State<HomeView> {
       padding: EdgeInsets.all(8.0),
       child: GridExpandable(),
     ),
-    ListNamaView(),
+    CardHistList(),
     topBar(),
   ];
 
