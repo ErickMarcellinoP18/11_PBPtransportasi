@@ -16,7 +16,7 @@ class SQLHelper {
         id INTEGER,
         tujuan TEXT,
         asal TEXT,
-        harga TEXT
+        harga INTEGER
         FOREIGN KEY (id) REFERENCES user(id)
       )
     """);
@@ -45,7 +45,7 @@ class SQLHelper {
   }
 
   static Future<int> addTicket(
-      int id, String asal, String tujuan, String, double harga) async {
+      int id, String asal, String tujuan, int harga) async {
     final db = await SQLHelper.db();
     final data = {'id': id, 'asal': asal, 'tujuan': tujuan, 'harga': harga};
     return await db.insert('ticket', data);
@@ -61,8 +61,8 @@ class SQLHelper {
     return db.query('ticket');
   }
 
-  static Future<int> editTicket(int idTicket, int id, String asal,
-      String tujuan, String, double harga) async {
+  static Future<int> editTicket(
+      int idTicket, int id, String asal, String tujuan, int harga) async {
     final db = await SQLHelper.db();
     final data = {'id': id, 'asal': asal, 'tujuan': tujuan, 'harga': harga};
     return await db.update('ticket', data, where: "idTicket = $idTicket");

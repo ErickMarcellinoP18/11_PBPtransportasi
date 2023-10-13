@@ -2,7 +2,7 @@ class ticket {
   final int? IdTicket, userId;
 
   String? tujuan, asal;
-  double? harga;
+  int? harga;
 
   ticket({this.userId, this.IdTicket, this.asal, this.tujuan, this.harga});
 }

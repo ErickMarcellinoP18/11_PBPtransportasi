@@ -17,7 +17,9 @@ class _TicketHomePageState extends State<TicketHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Hello," + widget.loggedIn.name!),
-        actions: [],
+        actions: [
+          //nanti tambah IconButton disini untuk edit Profile yaa
+        ],
       ),
     );
   }
