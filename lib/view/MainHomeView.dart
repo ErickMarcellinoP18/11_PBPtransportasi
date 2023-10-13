@@ -16,7 +16,8 @@ class _TicketHomePageState extends State<TicketHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: ,
+        title: Text("Hello," + widget.loggedIn.name!),
+        actions: [],
       ),
     );
   }
