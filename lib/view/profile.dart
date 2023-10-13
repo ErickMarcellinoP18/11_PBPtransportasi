@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transportasi_11/view/home.dart';
+import 'package:transportasi_11/view/login.dart';
+import 'package:transportasi_11/view/topbar2.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -39,9 +42,14 @@ class _ProfileViewState extends State<ProfileView> {
         title: Text('Profil Pengguna'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.arrow_forward),
+            icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const topBar(),
+                ),
+              );
             },
           ),
         ],
@@ -64,33 +72,49 @@ class _ProfileViewState extends State<ProfileView> {
             ProfileInfo(title: 'Nomor Telepon', info: '$noTelp'),
             ProfileInfo(title: 'Password', info: '$password'),
             SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        ElevatedButton(onPressed: (){
-                          Navigator.pushNamed(context, '/editprofile');
-                        }, child: Text('Cancel'), style: ElevatedButton.styleFrom(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const topBar(),
+                            ),
+                          );
+                        },
+                        child: Text('Cancel'),
+                        style: ElevatedButton.styleFrom(
                           primary: Colors.red,
-                        ),),
-                      ],
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        ElevatedButton(onPressed: (){
-                          Navigator.pushNamed(context, '/editprofile');
-                        }, child: Text('Save')),
-                      ],
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const topBar(),
+                              ),
+                            );
+                          },
+                          child: Text('Save')),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

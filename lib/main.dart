@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/login.dart';
 import 'package:transportasi_11/theme/theme_model.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,7 @@ class MainApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: themeNotifier.isDark ? ThemeData.dark() : ThemeData.light(),
-            home: ProfileView(),
+            home: HomeView(),
           );
         },
       ),
