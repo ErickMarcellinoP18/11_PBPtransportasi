@@ -3,9 +3,9 @@ import 'package:transportasi_11/database/sql_helper.dart';
 
 class ticketInputPage extends StatefulWidget {
   const ticketInputPage(
-      {super.key, this.asal, this.tujuan, this.harga, this.idTicket, this.id});
+      {super.key, this.idTicket, this.asal, this.tujuan, this.harga});
   final String? asal, tujuan;
-  final int? harga, idTicket, id;
+  final int? harga, idTicket;
   //int id, String asal, String tujuan, String, double harga
   @override
   State<ticketInputPage> createState() => _ticketInputPageState();
@@ -70,12 +70,13 @@ class _ticketInputPageState extends State<ticketInputPage> {
   }
 
   Future<void> addTicket() async {
-    await SQLHelper.addTicket(widget.id!, controllerAsal.text,
-        controllerTujuan.text, int.parse(controllerHarga.text));
+    int harga = int.parse(controllerHarga.text);
+    await SQLHelper.addTicket(
+        controllerAsal.text, controllerTujuan.text, harga);
   }
 
   Future<void> editTicket(int idTicket) async {
-    await SQLHelper.editTicket(idTicket, widget.id!, controllerAsal.text,
+    await SQLHelper.editTicket(widget.idTicket!, controllerAsal.text,
         controllerTujuan.text, int.parse(controllerHarga.text));
   }
 }

@@ -11,15 +11,16 @@ class SQLHelper {
         fullName TEXT,
         noTelp TEXT     )
 
-      CREATE TABLE ticket(
+      
+    """);
+    await database.execute("""
+    CREATE TABLE ticket(
         idTicket INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        id INTEGER,
         tujuan TEXT,
         asal TEXT,
         harga INTEGER
-        FOREIGN KEY (id) REFERENCES user(id)
       )
-    """);
+      """);
   }
 
   static Future<sql.Database> db() async {
@@ -44,10 +45,9 @@ class SQLHelper {
     return await db.insert('user', data);
   }
 
-  static Future<int> addTicket(
-      int id, String asal, String tujuan, int harga) async {
+  static Future<int> addTicket(String asal, String tujuan, int harga) async {
     final db = await SQLHelper.db();
-    final data = {'id': id, 'asal': asal, 'tujuan': tujuan, 'harga': harga};
+    final data = {'asal': asal, 'tujuan': tujuan, 'harga': harga};
     return await db.insert('ticket', data);
   }
 
@@ -62,9 +62,9 @@ class SQLHelper {
   }
 
   static Future<int> editTicket(
-      int idTicket, int id, String asal, String tujuan, int harga) async {
+      int idTicket, String asal, String tujuan, int harga) async {
     final db = await SQLHelper.db();
-    final data = {'id': id, 'asal': asal, 'tujuan': tujuan, 'harga': harga};
+    final data = {'asal': asal, 'tujuan': tujuan, 'harga': harga};
     return await db.update('ticket', data, where: "idTicket = $idTicket");
   }
 
