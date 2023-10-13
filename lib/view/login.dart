@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transportasi_11/component/passComp.dart';
+import 'package:transportasi_11/data/user.dart';
+import 'package:transportasi_11/view/MainHomeView.dart';
 import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/register.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
@@ -98,8 +100,17 @@ class _LoginViewState extends State<LoginView> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           if (findUser(controllerUsername.text,
-                                  controllerPassword.text) ==
-                              true) {
+                                  controllerPassword.text) !=
+                              -1) {
+                            int temp = findUser(controllerUsername.text,
+                                controllerPassword.text);
+                            User main = User(
+                                id: employee[temp]['id'],
+                                fullName: employee[temp]['name'],
+                                email: employee[temp]['email'],
+                                noTelp: employee[temp]['noTelp'],
+                                name: employee[temp]['name'],
+                                password: employee[temp]['password']);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Login Sukses'),
@@ -108,7 +119,8 @@ class _LoginViewState extends State<LoginView> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginView()));
+                                    builder: (context) =>
+                                        TicketHomePage(loggedIn: main)));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -162,13 +174,13 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  bool findUser(String nama, String password) {
+  int findUser(String nama, String password) {
     for (int i = 0; i < employee.length; i++) {
       if (employee[i]['name'] == nama && employee[i]['password'] == password) {
-        return true;
+        return i;
       }
     }
-    return false;
+    return -1;
   }
 }
 

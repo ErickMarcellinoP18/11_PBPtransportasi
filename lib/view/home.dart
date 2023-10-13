@@ -29,7 +29,6 @@ class _HomeViewState extends State<HomeView> {
       padding: EdgeInsets.all(8.0),
       child: GridExpandable(),
     ),
-    CardHistList(),
     topBar(),
   ];
 
