@@ -33,6 +33,20 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController controllerFullname = TextEditingController();
   bool isPasswordVisible = false;
 
+  List<Map<String, dynamic>> employee = [];
+  void refresh() async {
+    final data = await SQLHelper.getUser();
+    setState(() {
+      employee = data;
+    });
+  }
+
+  @override
+  void initState() {
+    refresh();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.id != null) {
@@ -83,6 +97,8 @@ class _RegisterViewState extends State<RegisterView> {
                         return 'Email Tidak Boleh Kosong';
                       } else if (!value.contains('@')) {
                         return 'Email Tidak Valid';
+                      } else if (emailUnique(value)) {
+                        return 'Email Sudah Terdaftar';
                       }
                       return null;
                     },
@@ -150,7 +166,7 @@ class _RegisterViewState extends State<RegisterView> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 48, width: 100),
                   SizedBox(
                     child: ElevatedButton(
                       onPressed: () async {
@@ -192,6 +208,15 @@ class _RegisterViewState extends State<RegisterView> {
         controllerPassword.text,
         controllerNotelp.text,
         controllerFullname.text);
+  }
+
+  bool emailUnique(String email) {
+    for (int i = 0; i < employee.length; i++) {
+      if (employee[i]['email'] == email) {
+        return true;
+      }
+    }
+    return false;
   }
 
   Future<void> editUser(int id) async {

@@ -55,4 +55,10 @@ class SQLHelper {
     final db = await SQLHelper.db();
     return await db.delete('user', where: "id = $id");
   }
+
+  static Future<bool> emailUnique(String email) async {
+    final db = await SQLHelper.db();
+    final result = await db.query('user', where: "email =" '$email');
+    return false;
+  }
 }

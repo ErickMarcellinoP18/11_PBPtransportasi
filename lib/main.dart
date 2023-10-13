@@ -33,20 +33,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Map<String, dynamic>> employee = [];
-  void refresh() async {
-    final data = await SQLHelper.getUser();
-    setState(() {
-      employee = data;
-    });
-  }
-
-  @override
-  void initState() {
-    refresh();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ThemeModel>(
