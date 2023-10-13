@@ -3,269 +3,197 @@ import 'package:flutter/rendering.dart';
 import 'package:transportasi_11/component/passComp.dart';
 import 'package:transportasi_11/view/login.dart';
 import 'package:transportasi_11/component/form_component.dart';
+import 'package:transportasi_11/database/sql_helper.dart';
+import 'package:transportasi_11/data/user.dart';
 import 'package:intl/intl.dart';
 
 class RegisterView extends StatefulWidget {
-  const RegisterView({super.key});
+  const RegisterView(
+      {super.key,
+      required this.id,
+      required this.name,
+      required this.email,
+      required this.fullName,
+      required this.noTelp,
+      required this.password});
+
+  final String? name, email, fullName, noTelp, password;
+  final int? id;
 
   @override
   State<RegisterView> createState() => _RegisterViewState();
 }
 
-//deklarasi list untuk gender
-enum listGender { laki_laki, perempuan }
-
 class _RegisterViewState extends State<RegisterView> {
-  TextEditingController dateinput = TextEditingController();
-  @override
-  void initState() {
-    dateinput.text = "";
-    super.initState();
-  }
-
   final _formKey = GlobalKey<FormState>();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController notelpController = TextEditingController();
-  //Checkbox
-  bool ketentuan = false;
-  //radio
-  listGender? _gender;
-
-  void _showAlertDialog(
-      String title, String message, Map<String, dynamic> FormData) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title),
-          content: Text(message),
-          backgroundColor: Colors.white,
-          contentPadding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) =>
-                        LoginView(data: FormData))); // Close the dialog
-              },
-              child: Text('OK'),
-            ),
-          ],
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            side: BorderSide(
-              color: Color.fromARGB(255, 101, 92, 218),
-              width: 1.0,
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _showAlertDialog2(String title, String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title),
-          content: Text(message),
-          backgroundColor: Colors.white,
-          contentPadding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => RegisterView())); // Close the dialog
-              },
-              child: Text('OK'),
-            ),
-          ],
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            side: BorderSide(
-              color: Color.fromARGB(255, 101, 92, 218),
-              width: 1.0,
-            ),
-          ),
-        );
-      },
-    );
-  }
+  TextEditingController controllerEmail = TextEditingController();
+  TextEditingController controllerUsername = TextEditingController();
+  TextEditingController controllerPassword = TextEditingController();
+  TextEditingController controllerNotelp = TextEditingController();
+  TextEditingController controllerFullname = TextEditingController();
+  bool isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
+    if (widget.id != null) {
+      controllerUsername.text = widget.name!;
+      controllerEmail.text = widget.email!;
+      controllerPassword.text = widget.password!;
+      controllerNotelp.text = widget.noTelp!;
+      controllerFullname.text = widget.fullName!;
+    }
+
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Silahkan Buat Akun"),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                inputForm((p0) {
-                  if (p0 == null || p0.isEmpty) {
-                    return 'Username Tidak Boleh Kosong';
-                  }
-                  if (p0.toLowerCase() == 'anjing') {
-                    return 'Tidak Boleh Menggunakan kata Kasar';
-                  }
-                  return null;
-                },
-                    controller: usernameController,
-                    hintTxt: "Username",
-                    helperTxt: "Ucup Surucup",
-                    iconData: Icons.person),
-                inputForm((p0) {
-                  if (p0 == null || p0.isEmpty) {
-                    return 'Email tidak boleh kosong';
-                  }
-                },
-                    controller: emailController,
-                    hintTxt: "Email",
-                    helperTxt: "ucup@gmail.com",
-                    iconData: Icons.email),
-                PassForm(passwordController: passwordController),
-                inputForm((p0) {
-                  if (p0 == null || p0.isEmpty) {
-                    return 'Nomor Telepon tidak boleh kosong';
-                  }
-                  return null;
-                },
-                    controller: notelpController,
-                    hintTxt: "No Telp",
-                    helperTxt: "0821123456789",
-                    iconData: Icons.phone_android),
-                //radio button
-                Padding(
-                  padding: const EdgeInsets.only(left: 60, top: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Gender :'),
-                      RadioListTile(
-                        title: Text('laki laki'),
-                        value: listGender.laki_laki,
-                        groupValue: _gender,
-                        onChanged: (val) {
-                          setState(() {
-                            _gender = val;
-                          });
-                        },
-                      ),
-                      RadioListTile(
-                        title: Text('Perempuan'),
-                        value: listGender.perempuan,
-                        groupValue: _gender,
-                        onChanged: (val) {
-                          setState(() {
-                            _gender = val;
-                          });
-                        },
-                      ),
-                    ],
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextFormField(
+                    controller: controllerUsername,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Username',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your name';
+                      } else if (value.contains(' ')) {
+                        return 'Username tidak boleh ada spasi';
+                      }
+                      return null;
+                    },
                   ),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 20),
-                  child: SizedBox(
-                    width: 350,
-                    child: TextField(
-                      controller: dateinput,
-                      decoration: InputDecoration(
-                        labelText: "Enter Date",
-                        contentPadding: EdgeInsets.all(10.0),
-                        filled: true,
-                        icon: Icon(Icons.calendar_today),
-                        enabledBorder: UnderlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black45),
+                  SizedBox(height: 24),
+                  TextFormField(
+                    controller: controllerEmail,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Email',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Email Tidak Boleh Kosong';
+                      } else if (!value.contains('@')) {
+                        return 'Email Tidak Valid';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 24),
+                  TextFormField(
+                    controller: controllerPassword,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Password',
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isPasswordVisible = !isPasswordVisible;
+                          });
+                        },
+                        icon: Icon(
+                          isPasswordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: isPasswordVisible ? Colors.grey : Colors.blue,
                         ),
                       ),
-                      readOnly: true,
-                      onTap: () async {
-                        var date = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(1990),
-                            lastDate: DateTime(2100));
-
-                        if (date != null) {
-                          print(date);
-                          String formatDate =
-                              DateFormat('dd/MM/yyyy').format(date);
-                          print(formatDate);
-                          setState(() {
-                            dateinput.text = formatDate;
-                          });
+                    ),
+                    obscureText: isPasswordVisible,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Password Tidak Boleh Kosong';
+                      } else if (value.length < 8) {
+                        return 'Password Minimal 8 karakter';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 24),
+                  TextFormField(
+                    controller: controllerFullname,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Full Name',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your name';
+                      } else if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
+                        return 'Nama Lengkap hanya mengandung huruf dan spasi';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 24),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    controller: controllerNotelp,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Nomor Telepon',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Nomor Telepon tidak boleh kosong';
+                      } else if (value.length < 10 || value.length > 13) {
+                        return 'Nomor Telepon Tidak Valid';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 48),
+                  SizedBox(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {}
+                        if (widget.id == null) {
+                          await addUser();
+                        } else {
+                          await editUser(widget.id!);
                         }
+                        Navigator.pop(context);
                       },
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 16.0, horizontal: 16.0),
+                        child: Text("Register"),
+                      ),
                     ),
                   ),
-                ),
-                //Checkbox-----
-                Padding(
-                  padding: const EdgeInsets.only(left: 40, top: 20),
-                  child: Column(
-                    children: [
-                      CheckboxListTile(
-                        title: Text(
-                            'Saya menyetujui syarat dan ketentuan yang berlaku'),
-                        value: ketentuan,
-                        onChanged: (value) {
-                          setState(() {
-                            ketentuan = value!;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-
-                ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate() &&
-                          ketentuan &&
-                          !dateinput.text.isEmpty &&
-                          _gender != null) {
-                        bool registrationSuccessful = true;
-                        Map<String, dynamic> FormData = {};
-                        FormData['username'] = usernameController.text;
-                        FormData['password'] = passwordController.text;
-                        if (registrationSuccessful) {
-                          // Show the success alert dialog
-                          _showAlertDialog(
-                              'Success', 'Registrasi berhasil!', FormData);
-                          // You can navigate to another screen (e.g., login) here if needed.
-                        }
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (_) => LoginView(
-                        //               data: FormData,
-                        //             )));
-                      }
-                      // } else if (_gender == null) {
-                      //   _showAlertDialog2('Failed', 'Pilih Gender dulu!');
-                      // } else if (dateinput.text.isEmpty) {
-                      //   _showAlertDialog2('Failed', 'Isi tanggal dulu!');
-                      // } else if (!ketentuan) {
-                      //   _showAlertDialog2('Failed', 'Cek dulu bang!');
-                      // }
-                    },
-                    child: const Text('Register'))
-              ],
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> addUser() async {
+    await SQLHelper.addUser(
+        controllerUsername.text,
+        controllerEmail.text,
+        controllerPassword.text,
+        controllerNotelp.text,
+        controllerFullname.text);
+  }
+
+  Future<void> editUser(int id) async {
+    await SQLHelper.editUser(
+        id,
+        controllerUsername.text,
+        controllerEmail.text,
+        controllerPassword.text,
+        controllerNotelp.text,
+        controllerFullname.text);
   }
 }
