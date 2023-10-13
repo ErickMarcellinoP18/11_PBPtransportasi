@@ -154,13 +154,20 @@ class _RegisterViewState extends State<RegisterView> {
                   SizedBox(
                     child: ElevatedButton(
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {}
-                        if (widget.id == null) {
-                          await addUser();
-                        } else {
-                          await editUser(widget.id!);
+                        if (_formKey.currentState!.validate()) {
+                          if (widget.id == null) {
+                            await addUser();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Register Sukses'),
+                              ),
+                            );
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginView()));
+                          }
                         }
-                        Navigator.pop(context);
                       },
                       child: const Padding(
                         padding: EdgeInsets.symmetric(

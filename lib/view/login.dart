@@ -98,7 +98,13 @@ void pushRegister(BuildContext context) {
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (_) => const RegisterView(),
+      builder: (_) => const RegisterView(
+          id: null,
+          name: null,
+          email: null,
+          fullName: null,
+          noTelp: null,
+          password: null),
     ),
   );
 }
