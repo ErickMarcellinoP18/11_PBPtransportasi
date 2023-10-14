@@ -1,4 +1,5 @@
 import 'package:sqflite/sqflite.dart' as sql;
+import 'package:transportasi_11/data/ticket.dart';
 
 class SQLHelper {
   static Future<void> createTables(sql.Database database) async {
@@ -18,7 +19,8 @@ class SQLHelper {
         idTicket INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         tujuan TEXT,
         asal TEXT,
-        harga INTEGER
+        harga INTEGER,
+        gambar TEXT
       )
       """);
   }
@@ -47,7 +49,12 @@ class SQLHelper {
 
   static Future<int> addTicket(String asal, String tujuan, int harga) async {
     final db = await SQLHelper.db();
-    final data = {'asal': asal, 'tujuan': tujuan, 'harga': harga};
+    final data = {
+      'asal': asal,
+      'tujuan': tujuan,
+      'harga': harga,
+      'gambar': setImage(harga)
+    };
     return await db.insert('ticket', data);
   }
 
@@ -64,7 +71,12 @@ class SQLHelper {
   static Future<int> editTicket(
       int idTicket, String asal, String tujuan, int harga) async {
     final db = await SQLHelper.db();
-    final data = {'asal': asal, 'tujuan': tujuan, 'harga': harga};
+    final data = {
+      'asal': asal,
+      'tujuan': tujuan,
+      'harga': harga,
+      'gambar': setImage(harga)
+    };
     return await db.update('ticket', data, where: "idTicket = $idTicket");
   }
 

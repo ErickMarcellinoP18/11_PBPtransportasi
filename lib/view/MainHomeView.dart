@@ -65,13 +65,12 @@ class _TicketHomePageState extends State<TicketHomePage> {
                 child: Row(
                   children: [
                     Container(
-                      width: 100,
-                      child: Center(
-                        child: Image(
-                            image:
-                                AssetImage(setImage(ticket[index]['harga']))),
-                      ),
-                    ),
+                        width: 100,
+                        child: Center(
+                          child: Image(
+                            image: AssetImage(ticket[index]['gambar']),
+                          ),
+                        )),
                     SizedBox(
                       width: 10,
                     ),
