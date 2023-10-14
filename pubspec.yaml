@@ -31,4 +31,9 @@ flutter:
 
   uses-material-design: true
 
+  assets:
+   - assets/images/download.jpeg
+   - assets/images/Laufey1.jpg
+   - assets/images/KABandara.png
+
 

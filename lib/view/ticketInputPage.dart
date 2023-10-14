@@ -47,6 +47,7 @@ class _ticketInputPageState extends State<ticketInputPage> {
         ),
         SizedBox(height: 24),
         TextField(
+          keyboardType: TextInputType.number,
           controller: controllerHarga,
           decoration: const InputDecoration(
             border: UnderlineInputBorder(),
