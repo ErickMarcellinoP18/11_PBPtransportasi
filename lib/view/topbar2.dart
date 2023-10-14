@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transportasi_11/view/profile.dart';
 
 class topBar extends StatefulWidget {
   const topBar({super.key});
@@ -32,6 +33,19 @@ class _topBarState extends State<topBar> {
       child: Scaffold(
         appBar: AppBar(
           bottom: upperTab,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.person_outlined),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const ProfileView(),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
         body: TabBarView(
           children: [
