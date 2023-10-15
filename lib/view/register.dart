@@ -6,6 +6,7 @@ import 'package:transportasi_11/component/form_component.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:intl/intl.dart';
+import 'package:transportasi_11/view/MainHomeView.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView(
@@ -59,7 +60,7 @@ class _RegisterViewState extends State<RegisterView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Silahkan Buat Akun"),
+        title: Text(judul(widget.id!)),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -97,7 +98,7 @@ class _RegisterViewState extends State<RegisterView> {
                         return 'Email Tidak Boleh Kosong';
                       } else if (!value.contains('@')) {
                         return 'Email Tidak Valid';
-                      } else if (emailUnique(value)) {
+                      } else if (emailUnique(value) && widget.id == null) {
                         return 'Email Sudah Terdaftar';
                       }
                       return null;
@@ -182,6 +183,21 @@ class _RegisterViewState extends State<RegisterView> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => LoginView()));
+                          } else {
+                            User main = User(
+                                id: widget.id,
+                                fullName: controllerFullname.text,
+                                email: controllerEmail.text,
+                                noTelp: controllerNotelp.text,
+                                name: controllerUsername.text,
+                                password: controllerPassword.text);
+
+                            await editUser(widget.id!);
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        TicketHomePage(loggedIn: main)));
                           }
                         }
                       },
@@ -227,5 +243,13 @@ class _RegisterViewState extends State<RegisterView> {
         controllerPassword.text,
         controllerNotelp.text,
         controllerFullname.text);
+  }
+
+  String judul(int id) {
+    if (id == null) {
+      return "Silahkan Buat Akun";
+    } else {
+      return "Silahkan Edit Akun";
+    }
   }
 }
