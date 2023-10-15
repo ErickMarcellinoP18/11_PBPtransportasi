@@ -66,6 +66,8 @@ class _TicketHomePageState extends State<TicketHomePage> {
                             asal: null,
                             tujuan: null,
                             harga: null,
+                            jenis: null,
+                            gambar: null,
                           )),
                 ).then((_) => refresh());
               }),
@@ -133,6 +135,8 @@ class _TicketHomePageState extends State<TicketHomePage> {
                                             harga: ticket[index]['harga'],
                                             idTicket: ticket[index]['idTicket'],
                                             tujuan: ticket[index]['tujuan'],
+                                            jenis: ticket[index]['jenis'],
+                                            gambar: ticket[index]['gambar'],
                                           ))).then((_) => refresh());
                             },
                             icon: Icon(Icons.edit)),
@@ -156,15 +160,5 @@ class _TicketHomePageState extends State<TicketHomePage> {
   Future<void> deleteTicket(int id) async {
     await SQLHelper.deleteTicket(id);
     refresh();
-  }
-
-  String setImage(int harga) {
-    if (harga < 1000) {
-      return 'assets/images/KABandara.png';
-    } else if (harga > 1000 && harga < 20000) {
-      return 'assets/images/download.jpeg';
-    } else {
-      return 'assets/images/Laufey1.jpg';
-    }
   }
 }

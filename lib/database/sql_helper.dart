@@ -20,6 +20,7 @@ class SQLHelper {
         tujuan TEXT,
         asal TEXT,
         harga INTEGER,
+        jenis TEXT,
         gambar TEXT
       )
       """);
@@ -47,13 +48,15 @@ class SQLHelper {
     return await db.insert('user', data);
   }
 
-  static Future<int> addTicket(String asal, String tujuan, int harga) async {
+  static Future<int> addTicket(String asal, String tujuan, int harga,
+      String jenis, String gambar) async {
     final db = await SQLHelper.db();
     final data = {
       'asal': asal,
       'tujuan': tujuan,
       'harga': harga,
-      'gambar': setImage(harga)
+      'jenis': jenis,
+      'gambar': gambar
     };
     return await db.insert('ticket', data);
   }
@@ -68,14 +71,15 @@ class SQLHelper {
     return db.query('ticket');
   }
 
-  static Future<int> editTicket(
-      int idTicket, String asal, String tujuan, int harga) async {
+  static Future<int> editTicket(int idTicket, String asal, String tujuan,
+      int harga, String jenis, String gambar) async {
     final db = await SQLHelper.db();
     final data = {
       'asal': asal,
       'tujuan': tujuan,
       'harga': harga,
-      'gambar': setImage(harga)
+      'jenis': jenis,
+      'gambar': gambar,
     };
     return await db.update('ticket', data, where: "idTicket = $idTicket");
   }
