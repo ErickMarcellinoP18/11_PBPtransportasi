@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:transportasi_11/component/passComp.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:transportasi_11/view/MainHomeView.dart';
@@ -55,7 +56,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
+                      return 'Please enter your username';
                     } else if (value.contains(' ')) {
                       return 'Username tidak boleh ada spasi';
                     }
@@ -106,7 +107,7 @@ class _LoginViewState extends State<LoginView> {
                                 controllerPassword.text);
                             User main = User(
                                 id: employee[temp]['id'],
-                                fullName: employee[temp]['name'],
+                                fullName: employee[temp]['fullName'],
                                 email: employee[temp]['email'],
                                 noTelp: employee[temp]['noTelp'],
                                 name: employee[temp]['name'],
@@ -127,10 +128,7 @@ class _LoginViewState extends State<LoginView> {
                                 content: Text('Login Gagal'),
                               ),
                             );
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginView()));
+                            refresh();
                             // showDialog(
                             //     context: context,
                             //     builder: (_) => AlertDialog(
@@ -179,6 +177,10 @@ class _LoginViewState extends State<LoginView> {
       if (employee[i]['name'] == nama && employee[i]['password'] == password) {
         return i;
       }
+      print(nama);
+      print(employee[i]['name'] + 'employee');
+      print(password);
+      print(employee[i]['password'] + 'employee');
     }
     return -1;
   }
