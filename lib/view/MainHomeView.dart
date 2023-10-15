@@ -4,6 +4,8 @@ import 'package:transportasi_11/data/user.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/view/ticketInputPage.dart';
+import 'package:transportasi_11/view/register.dart';
+import 'package:transportasi_11/view/profile.dart';
 
 class TicketHomePage extends StatefulWidget {
   final User loggedIn;
@@ -34,7 +36,25 @@ class _TicketHomePageState extends State<TicketHomePage> {
       appBar: AppBar(
         title: Text("Hello,${widget.loggedIn.name!}"),
         actions: [
-          //nanti tambah IconButton disini untuk edit Profile yaa
+          IconButton(
+            icon: Icon(Icons.person_outlined),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  // builder: (_) => const ProfileView(),
+                  builder: (_) => ProfileView(
+                    id: widget.loggedIn.id!,
+                    name: widget.loggedIn.name!,
+                    email: widget.loggedIn.email!,
+                    fullName: widget.loggedIn.fullName!,
+                    noTelp: widget.loggedIn.noTelp!,
+                    password: widget.loggedIn.password!,
+                  ),
+                ),
+              ).then((_) => refresh());
+            },
+          ),
           IconButton(
               icon: Icon(Icons.add),
               onPressed: () async {

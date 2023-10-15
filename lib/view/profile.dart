@@ -8,8 +8,8 @@ import 'package:transportasi_11/data/user.dart';
 import 'package:intl/intl.dart';
 import 'package:transportasi_11/view/MainHomeView.dart';
 
-class RegisterView extends StatefulWidget {
-  const RegisterView(
+class ProfileView extends StatefulWidget {
+  const ProfileView(
       {super.key,
       required this.id,
       required this.name,
@@ -22,10 +22,10 @@ class RegisterView extends StatefulWidget {
   final int? id;
 
   @override
-  State<RegisterView> createState() => _RegisterViewState();
+  State<ProfileView> createState() => _ProfileViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
+class _ProfileViewState extends State<ProfileView> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController controllerEmail = TextEditingController();
   TextEditingController controllerUsername = TextEditingController();
@@ -57,10 +57,9 @@ class _RegisterViewState extends State<RegisterView> {
       controllerNotelp.text = widget.noTelp!;
       controllerFullname.text = widget.fullName!;
     }
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("Silahkan Buat Akun"),
+        title: Text("Silahkan Edit Akun"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -71,6 +70,12 @@ class _RegisterViewState extends State<RegisterView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Center(
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundImage: AssetImage('assets/avatar.png'),
+                    ),
+                  ),
                   TextFormField(
                     controller: controllerUsername,
                     decoration: const InputDecoration(
@@ -98,7 +103,7 @@ class _RegisterViewState extends State<RegisterView> {
                         return 'Email Tidak Boleh Kosong';
                       } else if (!value.contains('@')) {
                         return 'Email Tidak Valid';
-                      } else if (emailUnique(value)) {
+                      } else if (emailUnique(value) && widget.id == null) {
                         return 'Email Sudah Terdaftar';
                       }
                       return null;
@@ -168,54 +173,62 @@ class _RegisterViewState extends State<RegisterView> {
                     },
                   ),
                   const SizedBox(height: 48, width: 100),
-                  SizedBox(
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          if (widget.id == null) {
-                            await addUser();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Register Sukses'),
-                              ),
-                            );
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginView()));
-                          } else {
-                            User main = User(
-                                id: widget.id,
-                                fullName: controllerFullname.text,
-                                email: controllerEmail.text,
-                                noTelp: controllerNotelp.text,
-                                name: controllerUsername.text,
-                                password: controllerPassword.text);
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              if (widget.id == null) {
+                                await addUser();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Register Sukses'),
+                                  ),
+                                );
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginView()));
+                              } else {
+                                User main = User(
+                                    id: widget.id,
+                                    fullName: controllerFullname.text,
+                                    email: controllerEmail.text,
+                                    noTelp: controllerNotelp.text,
+                                    name: controllerUsername.text,
+                                    password: controllerPassword.text);
 
-                            await editUser(widget.id!);
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        TicketHomePage(loggedIn: main)));
-                          }
-                        }
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 16.0),
-                        child: Text("Register"),
+                                await editUser(widget.id!);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            TicketHomePage(loggedIn: main)));
+                              }
+                            }
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("Register"),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginView()));
-                      },
-                      child: const Text('Sudah punya akun ?')),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('Cancel'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -253,11 +266,39 @@ class _RegisterViewState extends State<RegisterView> {
         controllerFullname.text);
   }
 
-  String judul(int id) {
-    if (id == null) {
-      return "Silahkan Buat Akun";
-    } else {
-      return "Silahkan Edit Akun";
-    }
-  }
+  // String judul(int id) {
+  //   if (id == null) {
+  //     return "Silahkan Buat Akun";
+  //   } else {
+  //     return "Silahkan Edit Akun";
+  //   }
+  // }
 }
+
+// class ProfileInfo extends StatelessWidget {
+//   final String title;
+//   final String? info;
+
+//   ProfileInfo({required this.title, this.info});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Text(
+//           title,
+//           style: TextStyle(
+//             fontWeight: FontWeight.bold,
+//             fontSize: 16,
+//           ),
+//         ),
+//         ListTile(
+//           title: Text(info ?? 'Belum Diisi'),
+//           leading: Icon(Icons.person),
+//         ),
+//         Divider(),
+//       ],
+//     );
+//   }
+// }
