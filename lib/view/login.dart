@@ -17,6 +17,10 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController controllerUsername = TextEditingController();
+  TextEditingController controllerPassword = TextEditingController();
+  bool isPasswordVisible = true;
+
   List<Map<String, dynamic>> employee = [];
   void refresh() async {
     final data = await SQLHelper.getUser();
@@ -33,10 +37,6 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controllerUsername = TextEditingController();
-    TextEditingController controllerPassword = TextEditingController();
-    bool isPasswordVisible = false;
-
     Map? dataForm = widget.data;
     return Scaffold(
       body: SafeArea(
