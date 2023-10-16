@@ -16,3 +16,5 @@ Membuat Check box, Radio button, dan date picker pada registrasi <br />
 Membuat tampilan top navbar untuk profil masing-masing anggota kelompok (bonus) <br />
 Memahami dan membuat alert untuk registrasi <br />
 
+## UGD DATA <br />
+Membuat login, register dan basis data pada aplikasi ini. Membantu pembuatan CRUD dalam tampilan serta seleksi gambar (Joshua) <br />
