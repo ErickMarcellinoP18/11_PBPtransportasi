@@ -19,4 +19,4 @@ Memahami dan membuat alert untuk registrasi <br />
 ## UGD DATA <br />
 Membuat login, register dan basis data pada aplikasi ini. Membantu pembuatan CRUD dalam tampilan serta seleksi gambar (Joshua) <br />
 Membuat tabel tambahan serta command sql tambahan pada basis data untuk CRUD, membuat tampilan card dan edit serta delete untuk data tambahan (Samuel) <br />
-Membuat fungsionalitas edit profile (tio) <br />
+Membuat fungsionalitas edit profile (tio, Erick, Agatha) <br />
