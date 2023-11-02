@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:transportasi_11/component/passComp.dart';
 import 'package:transportasi_11/data/user.dart';
-import 'package:transportasi_11/view/MainHomeView.dart';
+import 'package:transportasi_11/view/TicketPage.dart';
 import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/register.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
@@ -121,7 +121,7 @@ class _LoginViewState extends State<LoginView> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        TicketHomePage(loggedIn: main)));
+                                        HomeView(loggedIn: main)));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

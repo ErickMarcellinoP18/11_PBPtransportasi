@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transportasi_11/theme/theme_model.dart';
 import 'package:transportasi_11/theme/theme_prefrences.dart';
-import 'package:transportasi_11/view/listhistoryOrder.dart';
+import 'package:transportasi_11/view/TicketPage.dart';
 import 'package:transportasi_11/view/view_list.dart';
 import 'package:transportasi_11/view/topbar2.dart';
 import 'package:transportasi_11/view/grid.dart';
 import 'package:transportasi_11/view/view_list.dart';
+import 'package:transportasi_11/data/user.dart';
+import 'package:transportasi_11/view/profile.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  final User loggedIn;
+  const HomeView({super.key, required this.loggedIn});
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -24,13 +27,28 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 
-  static const List<Widget> _widgetOption = <Widget>[
-    Padding(
-      padding: EdgeInsets.all(8.0),
-      child: GridExpandable(),
-    ),
-    topBar(),
-  ];
+  List<Widget> _widgetOption = [];
+
+  @override
+  void initState() {
+    _widgetOption = <Widget>[
+      Padding(
+        padding: EdgeInsets.all(8.0),
+        child: GridExpandable(),
+      ),
+      TicketHomePage(loggedIn: widget.loggedIn),
+      topBar(),
+      ProfileView(
+        id: widget.loggedIn.id!,
+        name: widget.loggedIn.name!,
+        email: widget.loggedIn.email!,
+        fullName: widget.loggedIn.fullName!,
+        noTelp: widget.loggedIn.noTelp!,
+        password: widget.loggedIn.password!,
+      ),
+    ];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +73,16 @@ class _HomeViewState extends State<HomeView> {
                   icon: Icon(
                     Icons.home,
                   ),
-                  label: 'Home'),
+                  label: 'Beranda'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.directions_subway), label: "Kereta"),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.list,
                   ),
-                  label: 'List'),
+                  label: 'Ticket Saya'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.airplane_ticket), label: "Promo"),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.person,
