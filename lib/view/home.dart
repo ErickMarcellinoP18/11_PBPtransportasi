@@ -50,6 +50,7 @@ class _HomeViewState extends State<HomeView> {
         fullName: widget.loggedIn.fullName!,
         noTelp: widget.loggedIn.noTelp!,
         password: widget.loggedIn.password!,
+        Profpicture: widget.loggedIn.profilePicture!,
       ),
     ];
     super.initState();

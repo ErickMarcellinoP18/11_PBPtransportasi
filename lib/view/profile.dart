@@ -1,6 +1,11 @@
+import 'dart:typed_data';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:transportasi_11/component/passComp.dart';
+import 'package:transportasi_11/main.dart';
+import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/login.dart';
 import 'package:transportasi_11/component/form_component.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
@@ -16,10 +21,12 @@ class ProfileView extends StatefulWidget {
       required this.email,
       required this.fullName,
       required this.noTelp,
-      required this.password});
+      required this.password,
+      required this.Profpicture});
 
   final String? name, email, fullName, noTelp, password;
   final int? id;
+  final Uint8List Profpicture;
 
   @override
   State<ProfileView> createState() => _ProfileViewState();
@@ -70,10 +77,20 @@ class _ProfileViewState extends State<ProfileView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // Text(widget.Profpicture.toString()),
                   Center(
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundImage: AssetImage('assets/avatar.png'),
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundImage: MemoryImage(widget.Profpicture),
+                        ),
+                        Positioned(
+                            bottom: -10,
+                            right: -15,
+                            child: IconButton(
+                                onPressed: null, icon: Icon(Icons.camera_alt)))
+                      ],
                     ),
                   ),
                   TextFormField(
@@ -198,14 +215,15 @@ class _ProfileViewState extends State<ProfileView> {
                                     email: controllerEmail.text,
                                     noTelp: controllerNotelp.text,
                                     name: controllerUsername.text,
-                                    password: controllerPassword.text);
+                                    password: controllerPassword.text,
+                                    profilePicture: widget.Profpicture);
 
                                 await editUser(widget.id!);
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            TicketHomePage(loggedIn: main)));
+                                            HomeView(loggedIn: main)));
                               }
                             }
                           },

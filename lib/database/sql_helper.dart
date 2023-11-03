@@ -1,3 +1,7 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:transportasi_11/data/ticket.dart';
 
@@ -10,7 +14,9 @@ class SQLHelper {
         email TEXT,
         password TEXT,
         fullName TEXT,
-        noTelp TEXT     )
+        noTelp TEXT,
+        profilePicture BLOB
+           )
 
       
     """);
@@ -38,12 +44,15 @@ class SQLHelper {
   static Future<int> addUser(String name, String email, String password,
       String noTelp, String fullName) async {
     final db = await SQLHelper.db();
+    final ByteData data1 = await rootBundle.load('assets/images/bisnis.jpg');
+    final Uint8List imageBytes = data1.buffer.asUint8List();
     final data = {
       'name': name,
       'email': email,
       'password': password,
       'noTelp': noTelp,
-      'fullName': fullName
+      'fullName': fullName,
+      'profilePicture': imageBytes
     };
     return await db.insert('user', data);
   }
@@ -94,6 +103,12 @@ class SQLHelper {
       'noTelp': noTelp,
       'fullName': fullName
     };
+    return await db.update('user', data, where: "id = $id");
+  }
+
+  static Future<int> editProfilePic(Uint8List imageInBytes, int id) async {
+    final db = await SQLHelper.db();
+    final data = {'profilePic': imageInBytes};
     return await db.update('user', data, where: "id = $id");
   }
 

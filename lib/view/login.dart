@@ -111,7 +111,9 @@ class _LoginViewState extends State<LoginView> {
                                 email: employee[temp]['email'],
                                 noTelp: employee[temp]['noTelp'],
                                 name: employee[temp]['name'],
-                                password: employee[temp]['password']);
+                                password: employee[temp]['password'],
+                                profilePicture: employee[temp]
+                                    ['profilePicture']);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Login Sukses'),
