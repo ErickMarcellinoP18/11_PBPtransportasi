@@ -33,28 +33,14 @@ class _TicketHomePageState extends State<TicketHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 206, 205, 205),
       appBar: AppBar(
-        title: Text("Hello,${widget.loggedIn.name!}"),
+        backgroundColor: Color.fromARGB(255, 34, 102, 141),
+        title: Text(
+          "History",
+          style: TextStyle(color: Color.fromARGB(255, 255, 250, 221)),
+        ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.person_outlined),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  // builder: (_) => const ProfileView(),
-                  builder: (_) => ProfileView(
-                    id: widget.loggedIn.id!,
-                    name: widget.loggedIn.name!,
-                    email: widget.loggedIn.email!,
-                    fullName: widget.loggedIn.fullName!,
-                    noTelp: widget.loggedIn.noTelp!,
-                    password: widget.loggedIn.password!,
-                  ),
-                ),
-              ).then((_) => refresh());
-            },
-          ),
           IconButton(
               icon: Icon(Icons.add),
               onPressed: () async {
@@ -71,7 +57,6 @@ class _TicketHomePageState extends State<TicketHomePage> {
                           )),
                 ).then((_) => refresh());
               }),
-          IconButton(icon: Icon(Icons.clear), onPressed: () async {})
         ],
       ),
       body: ListView.builder(

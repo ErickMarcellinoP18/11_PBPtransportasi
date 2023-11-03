@@ -19,8 +19,10 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'SQFLITE',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primarySwatch: Colors.blue,
+          textTheme: TextTheme(
+            headline1: TextStyle(color: Color.fromARGB(0, 255, 250, 221)),
+          )),
       home: const HomePage(),
     );
   }

@@ -36,6 +36,11 @@ class _HomeViewState extends State<HomeView> {
         padding: EdgeInsets.all(8.0),
         child: GridExpandable(),
       ),
+      Padding(
+          padding: EdgeInsets.all(10),
+          child: SizedBox(
+            child: Text("Belum ada Kereta"),
+          )),
       TicketHomePage(loggedIn: widget.loggedIn),
       topBar(),
       ProfileView(
@@ -68,24 +73,38 @@ class _HomeViewState extends State<HomeView> {
                 Icon(themeNotifier.isDark ? Icons.dark_mode : Icons.light_mode),
           ),
           bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            unselectedLabelStyle: TextStyle(color: Colors.black, fontSize: 10),
+            backgroundColor: Color.fromARGB(255, 206, 205, 205),
             items: const [
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.home,
+                    color: Color.fromARGB(255, 34, 102, 141),
                   ),
                   label: 'Beranda'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.directions_subway), label: "Kereta"),
+                  icon: Icon(
+                    Icons.directions_subway,
+                    color: Color.fromARGB(255, 34, 102, 141),
+                  ),
+                  label: "Kereta"),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.list,
+                    color: Color.fromARGB(255, 34, 102, 141),
                   ),
                   label: 'Ticket Saya'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.airplane_ticket), label: "Promo"),
+                  icon: Icon(
+                    Icons.airplane_ticket,
+                    color: Color.fromARGB(255, 34, 102, 141),
+                  ),
+                  label: "Promo"),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.person,
+                    color: Color.fromARGB(255, 34, 102, 141),
                   ),
                   label: 'Profile'),
             ],
