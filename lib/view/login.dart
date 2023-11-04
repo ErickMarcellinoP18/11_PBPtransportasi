@@ -126,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
                                     builder: (context) =>
                                         HomeView(loggedIn: main)));
                           } else if (controllerUsername.text == 'Petugas' &&
-                              controllerPassword == 'petugas') {
+                              controllerPassword == 'petugasPBP') {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Login Petugas'),
