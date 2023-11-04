@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:transportasi_11/component/passComp.dart';
 import 'package:transportasi_11/data/user.dart';
+import 'package:transportasi_11/main.dart';
 import 'package:transportasi_11/view/TicketPage.dart';
 import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/register.dart';
@@ -124,6 +125,17 @@ class _LoginViewState extends State<LoginView> {
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         HomeView(loggedIn: main)));
+                          } else if (controllerUsername.text == 'Petugas' &&
+                              controllerPassword == 'petugas') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Login Petugas'),
+                              ),
+                            );
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

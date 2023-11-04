@@ -6,6 +6,7 @@ import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/view/ticketInputPage.dart';
 import 'package:transportasi_11/view/register.dart';
 import 'package:transportasi_11/view/profile.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class TicketHomePage extends StatefulWidget {
   final User loggedIn;
@@ -75,8 +76,13 @@ class _TicketHomePageState extends State<TicketHomePage> {
                     Container(
                         width: 100,
                         child: Center(
-                          child: Image(
-                            image: AssetImage(ticket[index]['gambar']),
+                          child: QrImageView(
+                            data: 'pbptransport' +
+                                ticket[index]['idTicket'].toString(),
+                            version: 6,
+                            // padding: const EdgeInsets.all(50),
+                            // child: Image(
+                            //   image: AssetImage(ticket[index]['gambar']),
                           ),
                         )),
                     SizedBox(
