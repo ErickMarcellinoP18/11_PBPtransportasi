@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transportasi_11/constant/app_constant.dart';
+import 'package:transportasi_11/qr_scan/scan_qr_page.dart';
 
 class HomePagePetugas extends StatelessWidget {
   const HomePagePetugas({super.key});
@@ -18,9 +19,14 @@ class HomePagePetugas extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             ElevatedButton(
-                onPressed: () =>
-                    navigateTo(context, RouteConstant.routeToQrScanPage),
-                child: const Text(ButtonTextConstant.qrScanning)),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const BarcodeScannerPageView()));
+              },
+              child: const Text(ButtonTextConstant.qrScanning),
+            ),
           ],
         ),
       ),

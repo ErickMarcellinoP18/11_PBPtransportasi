@@ -112,7 +112,7 @@ class _LoginViewState extends State<LoginView> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomePagePetugas(),
+                                builder: (context) => const HomePagePetugas(),
                               ),
                             );
                           } else if (findUser(controllerUsername.text,

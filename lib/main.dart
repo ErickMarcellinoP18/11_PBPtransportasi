@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:transportasi_11/constant/app_constant.dart';
+import 'package:transportasi_11/qr_scan/scan_qr_page.dart';
+import 'package:transportasi_11/view/homePetugas.dart';
 import 'package:transportasi_11/view/login.dart';
 import 'package:transportasi_11/view/register.dart';
 import 'package:transportasi_11/theme/theme_model.dart';
@@ -6,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/data/user.dart';
+import 'package:transportasi_11/view/reviewPage.dart';
 
 void main() {
   runApp(const MainApp());

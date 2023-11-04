@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:transportasi_11/constant/app_constant.dart';
 import 'package:transportasi_11/qr_scan/scanner_error_widget.dart';
+// ignore: depend_on_referenced_packages
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class BarcodeScannerPageView extends StatefulWidget {
