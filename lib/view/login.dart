@@ -5,6 +5,7 @@ import 'package:transportasi_11/data/user.dart';
 import 'package:transportasi_11/main.dart';
 import 'package:transportasi_11/view/TicketPage.dart';
 import 'package:transportasi_11/view/home.dart';
+import 'package:transportasi_11/view/homePetugas.dart';
 import 'package:transportasi_11/view/register.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/component/form_component.dart';
@@ -101,7 +102,20 @@ class _LoginViewState extends State<LoginView> {
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          if (findUser(controllerUsername.text,
+                          if (controllerUsername.text == 'Petugas' &&
+                              controllerPassword.text == 'petugasPBP') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Login Petugas'),
+                              ),
+                            );
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomePagePetugas(),
+                              ),
+                            );
+                          } else if (findUser(controllerUsername.text,
                                   controllerPassword.text) !=
                               -1) {
                             int temp = findUser(controllerUsername.text,
@@ -125,17 +139,6 @@ class _LoginViewState extends State<LoginView> {
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         HomeView(loggedIn: main)));
-                          } else if (controllerUsername.text == 'Petugas' &&
-                              controllerPassword.text == 'petugasPBP') {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Login Petugas'),
-                              ),
-                            );
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomePage()));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -143,26 +146,6 @@ class _LoginViewState extends State<LoginView> {
                               ),
                             );
                             refresh();
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (_) => AlertDialog(
-                            //           title: const Text('Password Salah'),
-                            //           content: TextButton(
-                            //               onPressed: () => pushRegister(context),
-                            //               child: const Text('Daftar Disini')),
-                            //           actions: <Widget>[
-                            //             TextButton(
-                            //               onPressed: () =>
-                            //                   Navigator.pop(context, 'Cancel'),
-                            //               child: const Text('Cancel'),
-                            //             ),
-                            //             TextButton(
-                            //               onPressed: () =>
-                            //                   Navigator.pop(context, 'OK'),
-                            //               child: const Text('OK'),
-                            //             ),
-                            //           ],
-                            //         ));
                           }
                         }
                       },

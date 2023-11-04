@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:transportasi_11/constant/app_constant.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePagePetugas extends StatelessWidget {
+  const HomePagePetugas({super.key});
 
   navigateTo(BuildContext context, String routeName) =>
       Navigator.pushNamed(context, routeName);
