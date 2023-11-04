@@ -10,7 +10,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 class TicketHomePage extends StatefulWidget {
   final User loggedIn;
-  const TicketHomePage({super.key, required this.loggedIn});
+  const TicketHomePage({Key? key, required this.loggedIn}) : super(key: key);
 
   @override
   State<TicketHomePage> createState() => _TicketHomePageState();
@@ -18,17 +18,18 @@ class TicketHomePage extends StatefulWidget {
 
 class _TicketHomePageState extends State<TicketHomePage> {
   List<Map<String, dynamic>> ticket = [];
-  void refresh() async {
-    final data = await SQLHelper.getTicket();
-    setState(() {
-      ticket = data;
-    });
-  }
 
   @override
   void initState() {
     refresh();
     super.initState();
+  }
+
+  void refresh() async {
+    final data = await SQLHelper.getTicket();
+    setState(() {
+      ticket = data;
+    });
   }
 
   @override
@@ -44,21 +45,23 @@ class _TicketHomePageState extends State<TicketHomePage> {
         ),
         actions: [
           IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ticketInputPage(
-                            idTicket: null,
-                            asal: null,
-                            tujuan: null,
-                            harga: null,
-                            jenis: null,
-                            gambar: null,
-                          )),
-                ).then((_) => refresh());
-              }),
+            icon: Icon(Icons.add),
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TicketInputPage(
+                    idTicket: null,
+                    asal: null,
+                    tujuan: null,
+                    harga: null,
+                    jenis: null,
+                    gambar: null,
+                  ),
+                ),
+              ).then((_) => refresh());
+            },
+          ),
         ],
       ),
       body: ListView.builder(
@@ -69,47 +72,40 @@ class _TicketHomePageState extends State<TicketHomePage> {
             child: Container(
               height: 150,
               child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 child: Row(
                   children: [
                     Container(
-                        width: 100,
-                        child: Center(
-                          child: QrImageView(
-                            data: 'pbptransport' +
-                                ticket[index]['idTicket'].toString(),
-                            version: 6,
-                            // padding: const EdgeInsets.all(50),
-                            // child: Image(
-                            //   image: AssetImage(ticket[index]['gambar']),
-                          ),
-                        )),
-                    SizedBox(
-                      width: 10,
+                      width: 100,
+                      child: Center(
+                        child: QrImageView(
+                          data: 'pbptransport' + ticket[index]['idTicket'].toString(),
+                          version: 6,
+                        ),
+                      ),
                     ),
+                    SizedBox(width: 10),
                     Column(
                       children: [
                         Container(
-                            margin: EdgeInsets.only(top: 20),
-                            height: 50,
-                            child: Text(
-                              "Dari Kota : " + ticket[index]['asal'],
-                              textAlign: TextAlign.justify,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            )),
+                          margin: EdgeInsets.only(top: 20),
+                          height: 50,
+                          child: Text(
+                            "Dari Kota : " + ticket[index]['asal'],
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         Divider(
                           thickness: 50,
                           color: Theme.of(context).colorScheme.primary,
                           indent: BorderSide.strokeAlignCenter,
                         ),
                         Container(
-                          // ignore: prefer_interpolation_to_compose_strings
                           child: Text("Ke Kota : " + ticket[index]['tujuan']),
                         ),
                         Container(
-                          child: Text(
-                              "Harga : " + ticket[index]['harga'].toString()),
+                          child: Text("Harga : " + ticket[index]['harga'].toString()),
                         ),
                       ],
                     ),
@@ -118,27 +114,31 @@ class _TicketHomePageState extends State<TicketHomePage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         IconButton(
-                            onPressed: () async {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ticketInputPage(
-                                            asal: ticket[index]['asal'],
-                                            harga: ticket[index]['harga'],
-                                            idTicket: ticket[index]['idTicket'],
-                                            tujuan: ticket[index]['tujuan'],
-                                            jenis: ticket[index]['jenis'],
-                                            gambar: ticket[index]['gambar'],
-                                          ))).then((_) => refresh());
-                            },
-                            icon: Icon(Icons.edit)),
+                          onPressed: () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TicketInputPage(
+                                  asal: ticket[index]['asal'],
+                                  harga: ticket[index]['harga'],
+                                  idTicket: ticket[index]['idTicket'],
+                                  tujuan: ticket[index]['tujuan'],
+                                  jenis: ticket[index]['jenis'],
+                                  gambar: ticket[index]['gambar'],
+                                ),
+                              ),
+                            ).then((_) => refresh());
+                          },
+                          icon: Icon(Icons.edit),
+                        ),
                         IconButton(
-                            onPressed: () async {
-                              await deleteTicket(ticket[index]['idTicket']);
-                            },
-                            icon: Icon(Icons.delete)),
+                          onPressed: () async {
+                            await deleteTicket(ticket[index]['idTicket']);
+                          },
+                          icon: Icon(Icons.delete),
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
