@@ -108,7 +108,7 @@ class SQLHelper {
 
   static Future<int> editProfilePic(Uint8List imageInBytes, int id) async {
     final db = await SQLHelper.db();
-    final data = {'profilePic': imageInBytes};
+    final data = {'profilePicture': imageInBytes};
     return await db.update('user', data, where: "id = $id");
   }
 

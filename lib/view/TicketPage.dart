@@ -35,6 +35,7 @@ class _TicketHomePageState extends State<TicketHomePage> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 206, 205, 205),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(255, 34, 102, 141),
         title: Text(
           "History",

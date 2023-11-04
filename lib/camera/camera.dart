@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:transportasi_11/data/user.dart';
+import 'changeProfilePic.dart';
 
 class CameraView extends StatefulWidget {
-  const CameraView({super.key});
+  final User loggedIn;
+  const CameraView({super.key, required this.loggedIn});
 
   @override
   State<CameraView> createState() => _CameraViewState();
@@ -45,7 +48,7 @@ class _CameraViewState extends State<CameraView> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile Picture using Camera'),
+        title: const Text('Take a Picture'),
       ),
       body: FutureBuilder<void>(
         future: _initializeCameraFuture,
@@ -60,31 +63,28 @@ class _CameraViewState extends State<CameraView> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: null,
+        onPressed: () async => await previewImageResult(),
         child: const Icon(Icons.camera),
       ),
     );
   }
 
-  // Future<DisplayPictureScreen?> previewImageResult() async {
-  //   String activity = "Preview IMAGE RESULT";
-  //   LoggingUtils.logStartFunction(activity);
-  //   try {
-  //     await _initializeCameraFuture;
-  //     final image = await _cameraController.takePicture();
-  //     if (!mounted) return null;
-  //     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-  //       _cameraController.pausePreview();
-  //       LoggingUtils.logDebugValue(
-  //           "get image on previewImageResult".toUpperCase(),
-  //           "image.path : ${image.path}");
-  //       return DisplayPictureScreen(
-  //           imagePath: image.path, cameraController: _cameraController);
-  //     }));
-  //   } catch (e) {
-  //     LoggingUtils.logError(activity, e.toString());
-  //     return null;
-  //   }
-  //   return null;
-  // }
+  Future<DisplayPictureScreen?> previewImageResult() async {
+    try {
+      await _initializeCameraFuture;
+      final image = await _cameraController.takePicture();
+      if (!mounted) return null;
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        _cameraController.pausePreview();
+        return DisplayPictureScreen(
+          imagePath: image.path,
+          cameraController: _cameraController,
+          loggedIn: widget.loggedIn,
+        );
+      }));
+    } catch (e) {
+      return null;
+    }
+    return null;
+  }
 }

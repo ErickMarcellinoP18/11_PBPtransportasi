@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:transportasi_11/camera/camera.dart';
 import 'package:transportasi_11/component/passComp.dart';
 import 'package:transportasi_11/main.dart';
 import 'package:transportasi_11/view/home.dart';
@@ -66,6 +67,7 @@ class _ProfileViewState extends State<ProfileView> {
     }
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Silahkan Edit Akun"),
       ),
       body: SafeArea(
@@ -89,7 +91,22 @@ class _ProfileViewState extends State<ProfileView> {
                             bottom: -10,
                             right: -15,
                             child: IconButton(
-                                onPressed: null, icon: Icon(Icons.camera_alt)))
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return CameraView(
+                                        loggedIn: User(
+                                            id: widget.id,
+                                            email: widget.email,
+                                            fullName: widget.fullName,
+                                            name: widget.name,
+                                            noTelp: widget.noTelp,
+                                            password: widget.password,
+                                            profilePicture:
+                                                widget.Profpicture));
+                                  }));
+                                },
+                                icon: Icon(Icons.camera_alt)))
                       ],
                     ),
                   ),
