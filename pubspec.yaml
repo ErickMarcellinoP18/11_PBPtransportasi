@@ -20,6 +20,13 @@ dependencies:
   flutter_slidable: ^0.6.0
  
 
+dependencies:
+  flutter:
+    sdk: flutter
+  sensors: ^0.7.0
+  screen_brightness: ^0.2.4
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
