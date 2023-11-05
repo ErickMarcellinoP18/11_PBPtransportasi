@@ -1,24 +1,23 @@
 name: transportasi_11
 description: A new Flutter project.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.0 <4.0.0'
-
+  sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   intl: ^0.17.0
-  provider: 
+  provider:
   shared_preferences:
   cupertino_icons: ^1.0.2
   sqflite: ^2.2.6
   flutter_slidable: ^0.6.0
- 
+  screen_brightness: ^0.2.2+1
 
 dev_dependencies:
   flutter_test:
@@ -31,16 +30,11 @@ dev_dependencies:
   qr_flutter: ^4.1.0
 
 flutter:
-
-
   uses-material-design: true
 
   assets:
-   - assets/images/download.jpeg
-   - assets/images/ekonomi.jpg
-   - assets/images/bisnis.jpg
-   - assets/images/eks.jpg
-   - assets/images/priv.jpg
-
-
-
+    - assets/images/download.jpeg
+    - assets/images/ekonomi.jpg
+    - assets/images/bisnis.jpg
+    - assets/images/eks.jpg
+    - assets/images/priv.jpg

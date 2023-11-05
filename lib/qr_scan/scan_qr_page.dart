@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:transportasi_11/constant/app_constant.dart';
 import 'package:transportasi_11/qr_scan/scanner_error_widget.dart';
-// ignore: depend_on_referenced_packages
+import 'package:screen_brightness/screen_brightness.dart';
+
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 class BarcodeScannerPageView extends StatefulWidget {
@@ -15,6 +16,10 @@ class BarcodeScannerPageView extends StatefulWidget {
 class _BarcodeScannerPageViewState extends State<BarcodeScannerPageView>
     with SingleTickerProviderStateMixin {
   BarcodeCapture? barcodeCapture;
+
+  double _brightnessValue = 0.1; // Kecerahan awal (0-1)
+  double _initialBrightness = 0.5; // Kecerahan awal yang disimpan
+  ScreenBrightness screenBrightness = ScreenBrightness();
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +103,8 @@ class _BarcodeScannerPageViewState extends State<BarcodeScannerPageView>
 
     if (qrCode != null) {
       copyToClipboard(qrCode);
+      setMaxBrightness();
+      resetBrightnessAfterDelay(Duration(seconds: 5));
     }
   }
 
@@ -112,6 +119,18 @@ class _BarcodeScannerPageViewState extends State<BarcodeScannerPageView>
   }
 
   void copyToClipboard(String text) {
+    // if (text.contains('pbptransport')) {
+    //   Clipboard.setData(ClipboardData(text: text));
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text('Valid Legit', style: TextStyle(color: Colors.white)),
+    //       backgroundColor: Colors.green,
+    //     ),
+    //   );
+    // } else {
+    //   showSnackbarError();
+    // }
+
     if (text.contains('pbptransport')) {
       Clipboard.setData(ClipboardData(text: text));
       ScaffoldMessenger.of(context).showSnackBar(
@@ -123,5 +142,28 @@ class _BarcodeScannerPageViewState extends State<BarcodeScannerPageView>
     } else {
       showSnackbarError();
     }
+  }
+
+////////Brightness
+  Future<void> setMaxBrightness() async {
+    await screenBrightness.setScreenBrightness(1.0);
+
+    setState(() {
+      _brightnessValue = 1.0;
+    });
+  }
+
+  Future<void> resetBrightness() async {
+    await screenBrightness.setScreenBrightness(_initialBrightness);
+
+    setState(() {
+      _brightnessValue = _initialBrightness;
+    });
+  }
+
+  Future<void> resetBrightnessAfterDelay(Duration delay) async {
+    await Future.delayed(delay);
+    resetBrightness();
+    setState(() {});
   }
 }
