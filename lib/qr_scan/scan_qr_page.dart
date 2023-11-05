@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:transportasi_11/constant/app_constant.dart';
 import 'package:transportasi_11/qr_scan/scanner_error_widget.dart';
 import 'package:screen_brightness/screen_brightness.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 import 'package:mobile_scanner/mobile_scanner.dart';
 
@@ -20,6 +21,21 @@ class _BarcodeScannerPageViewState extends State<BarcodeScannerPageView>
   double _brightnessValue = 0.1; // Kecerahan awal (0-1)
   double _initialBrightness = 0.5; // Kecerahan awal yang disimpan
   ScreenBrightness screenBrightness = ScreenBrightness();
+
+  @override
+  void initState() {
+    super.initState();
+    accelerometerEvents.listen((AccelerometerEvent event) {
+      if (event.z < 0) {
+        // orientation = "atas";
+        setMaxBrightness();
+      } else {
+        // orientation = "bawah";
+        setMinBrightness();
+      }
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,8 +119,8 @@ class _BarcodeScannerPageViewState extends State<BarcodeScannerPageView>
 
     if (qrCode != null) {
       copyToClipboard(qrCode);
-      setMaxBrightness();
-      resetBrightnessAfterDelay(Duration(seconds: 5));
+      // setMaxBrightness();
+      // resetBrightnessAfterDelay(Duration(seconds: 5));
     }
   }
 
@@ -153,17 +169,11 @@ class _BarcodeScannerPageViewState extends State<BarcodeScannerPageView>
     });
   }
 
-  Future<void> resetBrightness() async {
-    await screenBrightness.setScreenBrightness(_initialBrightness);
+  Future<void> setMinBrightness() async {
+    await screenBrightness.setScreenBrightness(0.1);
 
     setState(() {
-      _brightnessValue = _initialBrightness;
+      _brightnessValue = 0.1;
     });
-  }
-
-  Future<void> resetBrightnessAfterDelay(Duration delay) async {
-    await Future.delayed(delay);
-    resetBrightness();
-    setState(() {});
   }
 }
