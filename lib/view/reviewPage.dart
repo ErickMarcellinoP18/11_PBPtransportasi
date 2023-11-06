@@ -86,7 +86,7 @@ class _ReviewPageState extends State<ReviewPage> {
                           currentlyPlayingText = text;
                         }
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.speaker_notes_outlined,
                         size: 24,
                       ),
