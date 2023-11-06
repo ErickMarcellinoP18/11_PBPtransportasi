@@ -24,4 +24,4 @@ Membuat fungsionalitas edit profile (tio, Erick, Agatha) <br />
 # UGD HARDWARE <br />
 Inisialisasi & edit foto pada profil (Samuel) <br />
 Sensors Gyro untuk kecerahan (Tio, Agatha, Erick) <br />
-Membuat Text to speech dan Scan qr beserta validasi sisanya
+Membuat Text to speech dan Scan qr beserta validasi sisanya (Joshua)
