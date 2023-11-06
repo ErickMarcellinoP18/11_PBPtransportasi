@@ -7,6 +7,8 @@ import 'package:transportasi_11/view/ticketInputPage.dart';
 import 'package:transportasi_11/view/register.dart';
 import 'package:transportasi_11/view/profile.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:sensors_plus/sensors_plus.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 
 class TicketHomePage extends StatefulWidget {
   final User loggedIn;
@@ -17,18 +19,31 @@ class TicketHomePage extends StatefulWidget {
 }
 
 class _TicketHomePageState extends State<TicketHomePage> {
+  double _brightnessValue = 0.1; // Kecerahan awal (0-1)
+  double _initialBrightness = 0.5; // Kecerahan awal yang disimpan
+  ScreenBrightness screenBrightness = ScreenBrightness();
+
+  @override
+  void initState() {
+    super.initState();
+    accelerometerEvents.listen((AccelerometerEvent event) {
+      if (event.z < 0) {
+        // orientation = "atas";
+        setMaxBrightness();
+      } else {
+        // orientation = "bawah";
+        setMinBrightness();
+      }
+      setState(() {});
+    });
+  }
+
   List<Map<String, dynamic>> ticket = [];
   void refresh() async {
     final data = await SQLHelper.getTicket();
     setState(() {
       ticket = data;
     });
-  }
-
-  @override
-  void initState() {
-    refresh();
-    super.initState();
   }
 
   @override
@@ -152,5 +167,21 @@ class _TicketHomePageState extends State<TicketHomePage> {
   Future<void> deleteTicket(int id) async {
     await SQLHelper.deleteTicket(id);
     refresh();
+  }
+
+  Future<void> setMaxBrightness() async {
+    await screenBrightness.setScreenBrightness(1.0);
+
+    setState(() {
+      _brightnessValue = 1.0;
+    });
+  }
+
+  Future<void> setMinBrightness() async {
+    await screenBrightness.setScreenBrightness(0.1);
+
+    setState(() {
+      _brightnessValue = 0.1;
+    });
   }
 }
