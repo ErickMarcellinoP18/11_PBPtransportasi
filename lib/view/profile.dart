@@ -95,7 +95,7 @@ class _ProfileViewState extends State<ProfileView> {
                             right: -15,
                             child: IconButton(
                                 onPressed: () {
-                                  _pickImage().then((_) => refresh());
+                                  OptionPopUp().then((_) => refresh());
                                   // Navigator.push(context,
                                   //     MaterialPageRoute(builder: (context) {
                                   //   return CameraView(
@@ -310,10 +310,35 @@ class _ProfileViewState extends State<ProfileView> {
     await SQLHelper.editProfilePic(imageBytes, id);
   }
 
-  Future _pickImage() async {
+  Future OptionPopUp() async {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt_rounded),
+                title: Text("Take Photo From Camera"),
+                onTap: () {
+                  _pickImage(ImageSource.camera);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.browse_gallery),
+                title: Text("Open Photo From Gallery"),
+                onTap: () {
+                  _pickImage(ImageSource.gallery);
+                },
+              )
+            ],
+          );
+        });
+  }
+
+  Future _pickImage(ImageSource sources) async {
     try {
-      final pickedImage =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
+      final pickedImage = await ImagePicker().pickImage(source: sources);
       setState(() {
         if (pickedImage != null) {
           Navigator.pushReplacement(
