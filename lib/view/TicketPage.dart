@@ -9,6 +9,7 @@ import 'package:transportasi_11/view/profile.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:screen_brightness/screen_brightness.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 
 class TicketHomePage extends StatefulWidget {
   final User loggedIn;
@@ -91,13 +92,14 @@ class _TicketHomePageState extends State<TicketHomePage> {
                     Container(
                         width: 100,
                         child: Center(
-                          child: QrImageView(
-                            data: 'pbptransport' +
-                                ticket[index]['idTicket'].toString(),
-                            version: 6,
-                            // padding: const EdgeInsets.all(50),
-                            // child: Image(
-                            //   image: AssetImage(ticket[index]['gambar']),
+                          child: Padding(
+                            padding: EdgeInsets.all(5),
+                            child: BarcodeWidget(
+                                data: 'pbptransport' +
+                                    ticket[index]['idTicket'].toString(),
+                                barcode: Barcode.qrCode(
+                                    errorCorrectLevel:
+                                        BarcodeQRCorrectionLevel.high)),
                           ),
                         )),
                     SizedBox(
