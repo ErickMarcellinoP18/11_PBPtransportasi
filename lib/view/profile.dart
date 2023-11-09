@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:transportasi_11/camera/camera.dart';
+import 'package:transportasi_11/camera/imagepicker.dart';
 import 'package:transportasi_11/component/passComp.dart';
 import 'package:transportasi_11/main.dart';
 import 'package:transportasi_11/view/home.dart';
@@ -92,19 +95,20 @@ class _ProfileViewState extends State<ProfileView> {
                             right: -15,
                             child: IconButton(
                                 onPressed: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return CameraView(
-                                        loggedIn: User(
-                                            id: widget.id,
-                                            email: widget.email,
-                                            fullName: widget.fullName,
-                                            name: widget.name,
-                                            noTelp: widget.noTelp,
-                                            password: widget.password,
-                                            profilePicture:
-                                                widget.Profpicture));
-                                  }));
+                                  _pickImage().then((_) => refresh());
+                                  // Navigator.push(context,
+                                  //     MaterialPageRoute(builder: (context) {
+                                  //   return CameraView(
+                                  //       loggedIn: User(
+                                  //           id: widget.id,
+                                  //           email: widget.email,
+                                  //           fullName: widget.fullName,
+                                  //           name: widget.name,
+                                  //           noTelp: widget.noTelp,
+                                  //           password: widget.password,
+                                  //           profilePicture:
+                                  //               widget.Profpicture));
+                                  // }));
                                 },
                                 icon: Icon(Icons.camera_alt)))
                       ],
@@ -301,6 +305,37 @@ class _ProfileViewState extends State<ProfileView> {
         controllerFullname.text);
   }
 
+  Future<void> editProfilePicture(int id, File image) async {
+    final Uint8List imageBytes = await image.readAsBytes();
+    await SQLHelper.editProfilePic(imageBytes, id);
+  }
+
+  Future _pickImage() async {
+    try {
+      final pickedImage =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      setState(() {
+        if (pickedImage != null) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ImagePickerButton(
+                        loggedin: User(
+                            id: widget.id,
+                            email: widget.email,
+                            fullName: widget.fullName,
+                            name: widget.name,
+                            noTelp: widget.noTelp,
+                            password: widget.password,
+                            profilePicture: widget.Profpicture),
+                        imageUpdate: pickedImage,
+                      )));
+        }
+      });
+    } catch (e) {
+      print("Error when picking image");
+    }
+  }
   // String judul(int id) {
   //   if (id == null) {
   //     return "Silahkan Buat Akun";
@@ -309,31 +344,3 @@ class _ProfileViewState extends State<ProfileView> {
   //   }
   // }
 }
-
-// class ProfileInfo extends StatelessWidget {
-//   final String title;
-//   final String? info;
-
-//   ProfileInfo({required this.title, this.info});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Text(
-//           title,
-//           style: TextStyle(
-//             fontWeight: FontWeight.bold,
-//             fontSize: 16,
-//           ),
-//         ),
-//         ListTile(
-//           title: Text(info ?? 'Belum Diisi'),
-//           leading: Icon(Icons.person),
-//         ),
-//         Divider(),
-//       ],
-//     );
-//   }
-// }
