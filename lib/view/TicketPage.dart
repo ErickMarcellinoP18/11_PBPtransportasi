@@ -9,10 +9,15 @@ import 'package:transportasi_11/view/profile.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:screen_brightness/screen_brightness.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:uuid/uuid.dart';
+import 'package:transportasi_11/view/pdf_view.dart';
 
 class TicketHomePage extends StatefulWidget {
   final User loggedIn;
-  const TicketHomePage({super.key, required this.loggedIn});
+  const TicketHomePage({Key? key, required this.loggedIn}) : super(key: key);
 
   @override
   State<TicketHomePage> createState() => _TicketHomePageState();
@@ -152,6 +157,14 @@ class _TicketHomePageState extends State<TicketHomePage> {
                               await deleteTicket(ticket[index]['idTicket']);
                             },
                             icon: Icon(Icons.delete)),
+                        buttonCreatePDF(
+                          context,
+                          ticket[index]['asal'],
+                          ticket[index]['harga'],
+                          ticket[index]['idTicket'],
+                          ticket[index]['tujuan'],
+                          ticket[index]['jenis'],
+                        ),
                       ],
                     )
                   ],
@@ -184,4 +197,18 @@ class _TicketHomePageState extends State<TicketHomePage> {
       _brightnessValue = 0.1;
     });
   }
+}
+
+Container buttonCreatePDF(BuildContext context, String asal, int harga,
+    int idTicket, String tujuan, String jenis) {
+  return Container(
+    margin: const EdgeInsets.symmetric(vertical: 2),
+    child: ElevatedButton(
+      onPressed: () {
+        createPdf(asal, harga, idTicket, tujuan, jenis, context);
+      },
+      style: ElevatedButton.styleFrom(backgroundColor: null),
+      child: const Icon(Icons.print),
+    ),
+  );
 }
