@@ -48,11 +48,13 @@ Future<void> createPdf(String asal, int harga, int idTicket, String tujuan,
                     margin: const pw.EdgeInsets.symmetric(
                         horizontal: 2, vertical: 2)),
                 personalDataFromInput(asal, harga, idTicket, tujuan, jenis),
-                // pw.SizedBox(height: 10),
+                pw.SizedBox(height: 10),
                 // topOfInvoice(imageInvoice),
                 // barcodeGaris(idTicket.toString()),
                 // pw.SizedBox(height: 5),
-                // barcodeKotak(idTicket.toString()),
+                pw.Text('QR CODE TIKET ANDA'),
+                pw.SizedBox(height: 5),
+                barcodeKotak(idTicket.toString()),
                 pw.SizedBox(height: 1),
               ])),
         ];
@@ -287,9 +289,9 @@ pw.Padding barcodeKotak(String id) {
         barcode: pw.Barcode.qrCode(
           errorCorrectLevel: BarcodeQRCorrectionLevel.high,
         ),
-        data: id,
-        width: 15,
-        height: 15,
+        data: 'https://pbptransportasi/' + id,
+        width: 60,
+        height: 60,
       ),
     ),
   );
