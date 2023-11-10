@@ -7,8 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:transportasi_11/view/preview_screen.dart';
 
-Future<void> createPdf(String asal, int harga, int idTicket, String tujuan,
-    String jenis, BuildContext context) async {
+Future<void> createPdf(Uint8List image, String asal, int harga, String idTicket,
+    String tujuan, String jenis, BuildContext context) async {
   final doc = pw.Document();
   final now = DateTime.now();
   final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
@@ -16,6 +16,10 @@ Future<void> createPdf(String asal, int harga, int idTicket, String tujuan,
   final imageLogo =
       (await rootBundle.load("assets/images/logo.png")).buffer.asUint8List();
   final imageInvoice = pw.MemoryImage(imageLogo);
+
+  pw.ImageProvider pdfImageProvider(Uint8List image) {
+    return pw.MemoryImage(image);
+  }
 
   final pdfTheme = pw.PageTheme(
     pageFormat: PdfPageFormat.a4,
@@ -47,6 +51,9 @@ Future<void> createPdf(String asal, int harga, int idTicket, String tujuan,
                 pw.Container(
                     margin: const pw.EdgeInsets.symmetric(
                         horizontal: 2, vertical: 2)),
+                pw.SizedBox(height: 10),
+                imageFromInput(pdfImageProvider, image),
+                pw.SizedBox(height: 10),
                 personalDataFromInput(asal, harga, idTicket, tujuan, jenis),
                 pw.SizedBox(height: 10),
                 // topOfInvoice(imageInvoice),
@@ -54,7 +61,7 @@ Future<void> createPdf(String asal, int harga, int idTicket, String tujuan,
                 // pw.SizedBox(height: 5),
                 pw.Text('QR CODE TIKET ANDA'),
                 pw.SizedBox(height: 5),
-                barcodeKotak(idTicket.toString()),
+                barcodeKotak(idTicket),
                 pw.SizedBox(height: 1),
               ])),
         ];
@@ -91,10 +98,10 @@ pw.Header headerPDF() {
       ),
       child: pw.Center(
         child: pw.Text(
-          '-Modul 8 Library-',
+          '-TRANSKRIP TIKET KERETA-',
           style: pw.TextStyle(
             fontWeight: pw.FontWeight.bold,
-            fontSize: 12,
+            fontSize: 15,
           ),
         ),
       ));
@@ -106,7 +113,7 @@ pw.Padding imageFromInput(
   return pw.Padding(
     padding: const pw.EdgeInsets.symmetric(horizontal: 2, vertical: 1),
     child: pw.FittedBox(
-      child: pw.Image(pdfImageProvider(imageBytes), width: 33),
+      child: pw.Image(pdfImageProvider(imageBytes), width: 100),
       fit: pw.BoxFit.fitHeight,
       alignment: pw.Alignment.center,
     ),
@@ -116,7 +123,7 @@ pw.Padding imageFromInput(
 pw.Padding personalDataFromInput(
   String asal,
   int harga,
-  int idTicket,
+  String idTicket,
   String tujuan,
   String jenis,
 ) {
@@ -290,8 +297,8 @@ pw.Padding barcodeKotak(String id) {
           errorCorrectLevel: BarcodeQRCorrectionLevel.high,
         ),
         data: 'https://pbptransportasi/' + id,
-        width: 60,
-        height: 60,
+        width: 100,
+        height: 100,
       ),
     ),
   );

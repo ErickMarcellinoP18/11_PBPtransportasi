@@ -159,9 +159,10 @@ class _TicketHomePageState extends State<TicketHomePage> {
                             icon: Icon(Icons.delete)),
                         buttonCreatePDF(
                           context,
+                          widget.loggedIn.profilePicture!,
                           ticket[index]['asal'],
                           ticket[index]['harga'],
-                          ticket[index]['idTicket'],
+                          ticket[index]['idTicket'].toString(),
                           ticket[index]['tujuan'],
                           ticket[index]['jenis'],
                         ),
@@ -198,9 +199,8 @@ class _TicketHomePageState extends State<TicketHomePage> {
     });
   }
 
-  Container buttonCreatePDF(BuildContext context, String asal, int harga,
-      int idTicket, String tujuan, String jenis) {
-    String id;
+  Container buttonCreatePDF(BuildContext context, Uint8List image, String asal,
+      int harga, String idTicket, String tujuan, String jenis) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 2),
       child: ElevatedButton(
@@ -221,10 +221,10 @@ class _TicketHomePageState extends State<TicketHomePage> {
             );
             return;
           } else {
-            createPdf(asal, harga, idTicket, tujuan, jenis, context);
+            createPdf(image, asal, harga, idTicket, tujuan, jenis, context);
             setState(() {
               const uuid = Uuid();
-              id = uuid.v1();
+              idTicket = uuid.v1();
             });
           }
         },
