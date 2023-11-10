@@ -27,6 +27,7 @@ class _TicketHomePageState extends State<TicketHomePage> {
   @override
   void initState() {
     super.initState();
+    refresh();
     accelerometerEvents.listen((AccelerometerEvent event) {
       if (event.z < 0) {
         // orientation = "atas";
@@ -180,10 +181,10 @@ class _TicketHomePageState extends State<TicketHomePage> {
   }
 
   Future<void> setMinBrightness() async {
-    await screenBrightness.setScreenBrightness(0.1);
+    await screenBrightness.setScreenBrightness(0.5);
 
     setState(() {
-      _brightnessValue = 0.1;
+      _brightnessValue = 0.5;
     });
   }
 }
