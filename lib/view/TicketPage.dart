@@ -9,11 +9,16 @@ import 'package:transportasi_11/view/profile.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:screen_brightness/screen_brightness.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:uuid/uuid.dart';
+import 'package:transportasi_11/view/pdf_view.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 
 class TicketHomePage extends StatefulWidget {
   final User loggedIn;
-  const TicketHomePage({super.key, required this.loggedIn});
+  const TicketHomePage({Key? key, required this.loggedIn}) : super(key: key);
 
   @override
   State<TicketHomePage> createState() => _TicketHomePageState();
@@ -155,6 +160,15 @@ class _TicketHomePageState extends State<TicketHomePage> {
                               await deleteTicket(ticket[index]['idTicket']);
                             },
                             icon: Icon(Icons.delete)),
+                        buttonCreatePDF(
+                          context,
+                          widget.loggedIn.profilePicture!,
+                          ticket[index]['asal'],
+                          ticket[index]['harga'],
+                          ticket[index]['idTicket'].toString(),
+                          ticket[index]['tujuan'],
+                          ticket[index]['jenis'],
+                        ),
                       ],
                     )
                   ],
@@ -186,5 +200,40 @@ class _TicketHomePageState extends State<TicketHomePage> {
     setState(() {
       _brightnessValue = 0.5;
     });
+  }
+
+  Container buttonCreatePDF(BuildContext context, Uint8List image, String asal,
+      int harga, String idTicket, String tujuan, String jenis) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 2),
+      child: ElevatedButton(
+        onPressed: () {
+          if (asal.isEmpty) {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Warning'),
+                content: const Text('Please fill in all the fields.'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            );
+            return;
+          } else {
+            createPdf(image, asal, harga, idTicket, tujuan, jenis, context);
+            setState(() {
+              const uuid = Uuid();
+              idTicket = uuid.v1();
+            });
+          }
+        },
+        style: ElevatedButton.styleFrom(backgroundColor: null),
+        child: const Icon(Icons.print),
+      ),
+    );
   }
 }

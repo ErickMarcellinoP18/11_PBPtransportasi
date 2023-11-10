@@ -19,6 +19,9 @@ dependencies:
   flutter_slidable: ^0.6.0
   screen_brightness: ^0.2.2+1
   sensors_plus: ^3.1.0
+  pdf: ^3.6.4
+  printing: ^5.9.0
+  uuid: ^3.0.6
   image_picker: ^0.8.7
   barcode_widget: ^2.0.4
 
@@ -34,10 +37,24 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
+  
   assets:
+
     - assets/images/download.jpeg
     - assets/images/ekonomi.jpg
     - assets/images/bisnis.jpg
     - assets/images/eks.jpg
     - assets/images/priv.jpg
+    - assets/images/logo.png
+
+  fonts:
+  - family: Raleway
+    fonts:
+    - asset: assets/fonts/Raleway-Regular.ttf
+    - asset: assets/fonts/Raleway-Italic.ttf
+      style: italic
+  - family: Poppins
+    fonts:
+    - asset: assets/fonts/Poppins-Regular.ttf
+    - asset: assets/fonts/Poppins-Bold.ttf
+      weight: 700
