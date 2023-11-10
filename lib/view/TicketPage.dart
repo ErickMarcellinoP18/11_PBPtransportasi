@@ -197,18 +197,40 @@ class _TicketHomePageState extends State<TicketHomePage> {
       _brightnessValue = 0.1;
     });
   }
-}
 
-Container buttonCreatePDF(BuildContext context, String asal, int harga,
-    int idTicket, String tujuan, String jenis) {
-  return Container(
-    margin: const EdgeInsets.symmetric(vertical: 2),
-    child: ElevatedButton(
-      onPressed: () {
-        createPdf(asal, harga, idTicket, tujuan, jenis, context);
-      },
-      style: ElevatedButton.styleFrom(backgroundColor: null),
-      child: const Icon(Icons.print),
-    ),
-  );
+  Container buttonCreatePDF(BuildContext context, String asal, int harga,
+      int idTicket, String tujuan, String jenis) {
+    String id;
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 2),
+      child: ElevatedButton(
+        onPressed: () {
+          if (asal.isEmpty) {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Warning'),
+                content: const Text('Please fill in all the fields.'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            );
+            return;
+          } else {
+            createPdf(asal, harga, idTicket, tujuan, jenis, context);
+            setState(() {
+              const uuid = Uuid();
+              id = uuid.v1();
+            });
+          }
+        },
+        style: ElevatedButton.styleFrom(backgroundColor: null),
+        child: const Icon(Icons.print),
+      ),
+    );
+  }
 }

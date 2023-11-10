@@ -14,7 +14,7 @@ Future<void> createPdf(String asal, int harga, int idTicket, String tujuan,
   final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
 
   final imageLogo =
-      (await rootBundle.load("assets/logo.png")).buffer.asUint8List();
+      (await rootBundle.load("assets/images/logo.png")).buffer.asUint8List();
   final imageInvoice = pw.MemoryImage(imageLogo);
 
   final pdfTheme = pw.PageTheme(
