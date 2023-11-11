@@ -24,4 +24,9 @@ Membuat fungsionalitas edit profile (tio, Erick, Agatha) <br />
 # UGD HARDWARE <br />
 Inisialisasi & edit foto pada profil (Samuel) <br />
 Sensors Gyro untuk kecerahan (Tio, Agatha, Erick) <br />
-Membuat Text to speech dan Scan qr beserta validasi sisanya (Joshua)
+Membuat Text to speech dan Scan qr beserta validasi sisanya (Joshua) <br />
+
+# UGD Library <br />
+Membuat imagePicker dan QR Code menggunakan barcode widget (Samuel) <br />
+Membuat PDF Viewer (Joshua) <br />
+Memikirkan ide untuk UGD, membantu dalam merapikan code, serta melanjutkan penyicilan UI untuk Tugas Besar (Tio, Agatha, Erick) <br />
