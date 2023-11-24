@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:transportasi_11/component/passComp.dart';
+import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:transportasi_11/main.dart';
 import 'package:transportasi_11/view/TicketPage.dart';
@@ -40,6 +41,18 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    Future<User?> login() async {
+      try {
+        User loggedIn = await userClient.Login(
+            controllerUsername.text, controllerPassword.text);
+        showSnackbar(context, "Berhasil Login", Colors.green);
+        return loggedIn;
+      } catch (e) {
+        showSnackbar(context, "Gagal Login", Colors.red);
+        return null;
+      }
+    }
+
     Map? dataForm = widget.data;
     return Scaffold(
       body: SafeArea(
@@ -100,7 +113,7 @@ class _LoginViewState extends State<LoginView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           if (controllerUsername.text == 'Petugas' &&
                               controllerPassword.text == 'petugasPBP') {
@@ -115,37 +128,15 @@ class _LoginViewState extends State<LoginView> {
                                 builder: (context) => const HomePagePetugas(),
                               ),
                             );
-                          } else if (findUser(controllerUsername.text,
-                                  controllerPassword.text) !=
-                              -1) {
-                            int temp = findUser(controllerUsername.text,
-                                controllerPassword.text);
-                            User main = User(
-                                id: employee[temp]['id'],
-                                fullName: employee[temp]['fullName'],
-                                email: employee[temp]['email'],
-                                noTelp: employee[temp]['noTelp'],
-                                name: employee[temp]['name'],
-                                password: employee[temp]['password'],
-                                profilePicture: employee[temp]
-                                    ['profilePicture']);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Login Sukses'),
-                              ),
-                            );
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        HomeView(loggedIn: main)));
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Login Gagal'),
-                              ),
-                            );
-                            refresh();
+                            User? loggedIn = await login();
+                            if (loggedIn != null) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          HomeView(loggedIn: loggedIn)));
+                            }
                           }
                         }
                       },
@@ -167,6 +158,18 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
+  }
+
+  void showSnackbar(BuildContext context, String msg, Color bg) {
+    final Scaffold = ScaffoldMessenger.of(context);
+    Scaffold.showSnackBar(SnackBar(
+      content: Text(msg),
+      backgroundColor: bg,
+      action: SnackBarAction(
+        label: 'hide',
+        onPressed: Scaffold.hideCurrentSnackBar,
+      ),
+    ));
   }
 
   int findUser(String nama, String password) {

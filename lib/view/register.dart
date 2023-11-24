@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:transportasi_11/component/passComp.dart';
+import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/view/login.dart';
 import 'package:transportasi_11/component/form_component.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
@@ -50,6 +52,28 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
+    void submission() async {
+      final ByteData data1 = await rootBundle.load('assets/images/ekonomi.jpg');
+      final Uint8List imageBytes = data1.buffer.asUint8List();
+      User input = User(
+        id: 0,
+        name: controllerUsername.text,
+        email: controllerEmail.text,
+        fullName: controllerFullname.text,
+        noTelp: controllerNotelp.text,
+        profilePicture: imageBytes,
+        password: controllerPassword.text,
+      );
+      try {
+        await userClient.create(input);
+        showSnackbar(context, "Berhasil Register", Colors.green);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginView()));
+      } catch (err) {
+        showSnackbar(context, err.toString(), Colors.red);
+      }
+    }
+
     if (widget.id != null) {
       controllerUsername.text = widget.name!;
       controllerEmail.text = widget.email!;
@@ -98,10 +122,11 @@ class _RegisterViewState extends State<RegisterView> {
                         return 'Email Tidak Boleh Kosong';
                       } else if (!value.contains('@')) {
                         return 'Email Tidak Valid';
-                      } else if (emailUnique(value)) {
-                        return 'Email Sudah Terdaftar';
-                      }
-                      return null;
+                      } else
+                        // if (emailUnique(value)) {
+                        //   return 'Email Sudah Terdaftar';
+                        // }
+                        return null;
                     },
                   ),
                   SizedBox(height: 24),
@@ -173,16 +198,12 @@ class _RegisterViewState extends State<RegisterView> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           if (widget.id == null) {
-                            await addUser();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Register Sukses'),
-                              ),
-                            );
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginView()));
+                            submission();
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //   const SnackBar(
+                            //     content: Text('Register Sukses'),
+                            //   ),
+                            // );
                           } else {
                             User main = User(
                                 id: widget.id,
@@ -223,6 +244,18 @@ class _RegisterViewState extends State<RegisterView> {
         ),
       ),
     );
+  }
+
+  void showSnackbar(BuildContext context, String msg, Color bg) {
+    final Scaffold = ScaffoldMessenger.of(context);
+    Scaffold.showSnackBar(SnackBar(
+      content: Text(msg),
+      backgroundColor: bg,
+      action: SnackBarAction(
+        label: 'hide',
+        onPressed: Scaffold.hideCurrentSnackBar,
+      ),
+    ));
   }
 
   Future<void> addUser() async {
