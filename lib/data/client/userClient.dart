@@ -69,4 +69,16 @@ class userClient {
       return Future.error(e.toString());
     }
   }
+
+  static Future<Response> ResetPass(String username, String newPass) async {
+    try {
+      var response = await post(Uri.http(url, "/api/resetPassword"),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({"username": username, "password": newPass}));
+      if (response.statusCode != 200) throw Exception(response.reasonPhrase);
+      return response;
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
 }
