@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:transportasi_11/constant/app_constant.dart';
 import 'package:transportasi_11/qr_scan/scan_qr_page.dart';
 import 'package:transportasi_11/view/homePetugas.dart';
@@ -12,7 +13,7 @@ import 'package:transportasi_11/data/user.dart';
 import 'package:transportasi_11/view/reviewPage.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(ProviderScope(child: const MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -30,31 +31,19 @@ class MainApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key});
 
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ThemeModel>(
-      create: (_) => ThemeModel(),
-      child: Consumer<ThemeModel>(
-        builder: (context, themeNotifier, child) {
-          return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme:
-                  themeNotifier.isDark ? ThemeData.dark() : ThemeData.light(),
-              home: const RegisterView(
-                  id: null,
-                  name: null,
-                  email: null,
-                  fullName: null,
-                  noTelp: null,
-                  password: null));
-        },
+    return const MaterialApp(
+      home: RegisterView(
+        id: null,
+        name: null,
+        email: null,
+        fullName: null,
+        noTelp: null,
+        password: null,
       ),
     );
   }
@@ -77,6 +66,5 @@ MaterialColor createMaterialColor(Color color) {
       1,
     );
   }
-  ;
   return MaterialColor(color.value, swatch);
 }

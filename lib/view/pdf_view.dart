@@ -7,8 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:transportasi_11/view/preview_screen.dart';
 
-Future<void> createPdf(Uint8List image, String asal, int harga, String idTicket,
-    String tujuan, String jenis, BuildContext context) async {
+Future<void> createPdf(String asal, int harga, String idTicket, String tujuan,
+    String jenis, BuildContext context) async {
   final doc = pw.Document();
   final now = DateTime.now();
   final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
@@ -52,7 +52,6 @@ Future<void> createPdf(Uint8List image, String asal, int harga, String idTicket,
                     margin: const pw.EdgeInsets.symmetric(
                         horizontal: 2, vertical: 2)),
                 pw.SizedBox(height: 10),
-                imageFromInput(pdfImageProvider, image),
                 pw.SizedBox(height: 10),
                 personalDataFromInput(asal, harga, idTicket, tujuan, jenis),
                 pw.SizedBox(height: 10),

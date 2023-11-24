@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:transportasi_11/data/ticket.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -15,46 +16,40 @@ import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
 import 'package:transportasi_11/view/pdf_view.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:transportasi_11/client/TicketClient.dart';
 
-class TicketHomePage extends StatefulWidget {
+class TicketHomePage extends ConsumerWidget {
   final User loggedIn;
-  const TicketHomePage({Key? key, required this.loggedIn}) : super(key: key);
+  TicketHomePage({Key? key, required this.loggedIn}) : super(key: key);
 
-  @override
-  State<TicketHomePage> createState() => _TicketHomePageState();
-}
-
-class _TicketHomePageState extends State<TicketHomePage> {
   double _brightnessValue = 0.1; // Kecerahan awal (0-1)
   double _initialBrightness = 0.5; // Kecerahan awal yang disimpan
   ScreenBrightness screenBrightness = ScreenBrightness();
 
-  @override
-  void initState() {
-    super.initState();
-    refresh();
-    accelerometerEvents.listen((AccelerometerEvent event) {
-      if (event.z < 0) {
-        // orientation = "atas";
-        setMaxBrightness();
-      } else {
-        // orientation = "bawah";
-        setMinBrightness();
-      }
-      setState(() {});
-    });
+  final listTicketProvider = FutureProvider<List<ticket>>((ref) async {
+    return await ticketClient.fetchAll();
+  });
+
+  void onAdd(context, ref) {
+    Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ticketInputPage()))
+        .then((value) => ref.refresh(listTicketProvider));
   }
 
-  List<Map<String, dynamic>> ticket = [];
-  void refresh() async {
-    final data = await SQLHelper.getTicket();
-    setState(() {
-      ticket = data;
-    });
+  void onDelete(id, context, ref) async {
+    try {
+      await ticketClient.destroy(id);
+      ref.refresh(listTicketProvider);
+      showSnackBar(context, "Delete Success", Colors.green);
+    } catch (e) {
+      showSnackBar(context, e.toString(), Colors.red);
+    }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var listener = ref.watch(listTicketProvider);
+
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 206, 205, 205),
       appBar: AppBar(
@@ -66,114 +61,111 @@ class _TicketHomePageState extends State<TicketHomePage> {
         ),
         actions: [
           IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ticketInputPage(
-                            idTicket: null,
-                            asal: null,
-                            tujuan: null,
-                            harga: null,
-                            jenis: null,
-                            gambar: null,
-                          )),
-                ).then((_) => refresh());
-              }),
+            icon: Icon(Icons.add),
+            onPressed: () => onAdd(context, ref),
+          ),
         ],
       ),
       body: ListView.builder(
-        itemCount: ticket.length,
+        itemCount: listener.when(
+          data: (tickets) => tickets.length,
+          loading: () => 0,
+          error: (_, __) => 0,
+        ),
         itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.all(10),
-            child: Container(
-              height: 150,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                child: Row(
-                  children: [
-                    Container(
-                        width: 100,
-                        child: Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(5),
-                            child: BarcodeWidget(
-                                data: 'pbptransport' +
-                                    ticket[index]['idTicket'].toString(),
+          return listener.when(
+            data: (tickets) {
+              final ticket = tickets[index];
+              return Padding(
+                padding: EdgeInsets.all(10),
+                child: Container(
+                  height: 150,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 100,
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(5),
+                              child: BarcodeWidget(
+                                data:
+                                    'pbptransport + ${ticket.IdTicket}', // Use ticket ID here
                                 barcode: Barcode.qrCode(
-                                    errorCorrectLevel:
-                                        BarcodeQRCorrectionLevel.high)),
+                                  errorCorrectLevel:
+                                      BarcodeQRCorrectionLevel.high,
+                                ),
+                              ),
+                            ),
                           ),
-                        )),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(top: 20),
-                            height: 50,
-                            child: Text(
-                              "Dari Kota : " + ticket[index]['asal'],
-                              textAlign: TextAlign.justify,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            )),
-                        Divider(
-                          thickness: 50,
-                          color: Theme.of(context).colorScheme.primary,
-                          indent: BorderSide.strokeAlignCenter,
                         ),
-                        Container(
-                          // ignore: prefer_interpolation_to_compose_strings
-                          child: Text("Ke Kota : " + ticket[index]['tujuan']),
+                        SizedBox(
+                          width: 10,
                         ),
-                        Container(
-                          child: Text(
-                              "Harga : " + ticket[index]['harga'].toString()),
+                        Column(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.only(top: 20),
+                                height: 50,
+                                child: Text(
+                                  "Dari Kota : " + ticket.asal.toString(),
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                )),
+                            Divider(
+                              thickness: 50,
+                              color: Theme.of(context).colorScheme.primary,
+                              indent: BorderSide.strokeAlignCenter,
+                            ),
+                            Container(
+                              // ignore: prefer_interpolation_to_compose_strings
+                              child:
+                                  Text("Ke Kota : " + ticket.tujuan.toString()),
+                            ),
+                            Container(
+                              child: Text("Harga : " + ticket.harga.toString()),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    Spacer(),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        IconButton(
-                            onPressed: () async {
-                              Navigator.push(
+                        Spacer(),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            IconButton(
+                              onPressed: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => ticketInputPage(
-                                            asal: ticket[index]['asal'],
-                                            harga: ticket[index]['harga'],
-                                            idTicket: ticket[index]['idTicket'],
-                                            tujuan: ticket[index]['tujuan'],
-                                            jenis: ticket[index]['jenis'],
-                                            gambar: ticket[index]['gambar'],
-                                          ))).then((_) => refresh());
-                            },
-                            icon: Icon(Icons.edit)),
-                        IconButton(
-                            onPressed: () async {
-                              await deleteTicket(ticket[index]['idTicket']);
-                            },
-                            icon: Icon(Icons.delete)),
-                        buttonCreatePDF(
-                          context,
-                          widget.loggedIn.profilePicture!,
-                          ticket[index]['asal'],
-                          ticket[index]['harga'],
-                          ticket[index]['idTicket'].toString(),
-                          ticket[index]['tujuan'],
-                          ticket[index]['jenis'],
+                                          idTicket: ticket.IdTicket))).then(
+                                  (value) => ref.refresh(listTicketProvider)),
+                              icon: Icon(Icons.edit),
+                            ),
+                            IconButton(
+                              onPressed: () =>
+                                  onDelete(ticket.IdTicket, context, ref),
+                              icon: Icon(Icons.delete),
+                            ),
+                            buttonCreatePDF(
+                              context,
+                              ticket.asal.toString(),
+                              ticket.harga!.toInt(),
+                              ticket.IdTicket.toString(),
+                              ticket.tujuan.toString(),
+                              ticket.jenis.toString(),
+                            ),
+                          ],
                         ),
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
-              ),
+              );
+            },
+            error: (err, s) => Center(child: Text(err.toString())),
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
             ),
           );
         },
@@ -183,27 +175,18 @@ class _TicketHomePageState extends State<TicketHomePage> {
 
   Future<void> deleteTicket(int id) async {
     await SQLHelper.deleteTicket(id);
-    refresh();
   }
 
   Future<void> setMaxBrightness() async {
     await screenBrightness.setScreenBrightness(1.0);
-
-    setState(() {
-      _brightnessValue = 1.0;
-    });
   }
 
   Future<void> setMinBrightness() async {
     await screenBrightness.setScreenBrightness(0.5);
-
-    setState(() {
-      _brightnessValue = 0.5;
-    });
   }
 
-  Container buttonCreatePDF(BuildContext context, Uint8List image, String asal,
-      int harga, String idTicket, String tujuan, String jenis) {
+  Container buttonCreatePDF(BuildContext context, String asal, int harga,
+      String idTicket, String tujuan, String jenis) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 2),
       child: ElevatedButton(
@@ -224,11 +207,7 @@ class _TicketHomePageState extends State<TicketHomePage> {
             );
             return;
           } else {
-            createPdf(image, asal, harga, idTicket, tujuan, jenis, context);
-            setState(() {
-              const uuid = Uuid();
-              idTicket = uuid.v1();
-            });
+            createPdf(asal, harga, idTicket, tujuan, jenis, context);
           }
         },
         style: ElevatedButton.styleFrom(backgroundColor: null),

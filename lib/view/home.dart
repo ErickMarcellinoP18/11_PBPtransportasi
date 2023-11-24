@@ -59,63 +59,59 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, ThemeModel themeNotifier, child) {
-        return Scaffold(
-          // appBar: AppBar(
-          //   title: Text("KAI tapi boong"),
-          // ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              themeNotifier.isDark
-                  ? themeNotifier.isDark = false
-                  : themeNotifier.isDark = true;
-            },
-            child:
-                Icon(themeNotifier.isDark ? Icons.dark_mode : Icons.light_mode),
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            unselectedLabelStyle: TextStyle(color: Colors.black, fontSize: 10),
-            backgroundColor: Color.fromARGB(255, 206, 205, 205),
-            items: const [
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.home,
-                    color: Color.fromARGB(255, 34, 102, 141),
-                  ),
-                  label: 'Beranda'),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.directions_subway,
-                    color: Color.fromARGB(255, 34, 102, 141),
-                  ),
-                  label: "Kereta"),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.list,
-                    color: Color.fromARGB(255, 34, 102, 141),
-                  ),
-                  label: 'Ticket Saya'),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.airplane_ticket,
-                    color: Color.fromARGB(255, 34, 102, 141),
-                  ),
-                  label: "Promo"),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.person,
-                    color: Color.fromARGB(255, 34, 102, 141),
-                  ),
-                  label: 'Profile'),
-            ],
-            currentIndex: _selectedIndex,
-            onTap: _onItemTapped,
-          ),
-          body: _widgetOption.elementAt(_selectedIndex),
-        );
-      },
+    return Scaffold(
+      // appBar: AppBar(
+      //   title: Text("KAI tapi boong"),
+      // ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     themeNotifier.isDark
+      //         ? themeNotifier.isDark = false
+      //         : themeNotifier.isDark = true;
+      //   },
+      //   child:
+      //       Icon(themeNotifier.isDark ? Icons.dark_mode : Icons.light_mode),
+      // ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        unselectedLabelStyle: TextStyle(color: Colors.black, fontSize: 10),
+        backgroundColor: Color.fromARGB(255, 206, 205, 205),
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+                color: Color.fromARGB(255, 34, 102, 141),
+              ),
+              label: 'Beranda'),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.directions_subway,
+                color: Color.fromARGB(255, 34, 102, 141),
+              ),
+              label: "Kereta"),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.list,
+                color: Color.fromARGB(255, 34, 102, 141),
+              ),
+              label: 'Ticket Saya'),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.airplane_ticket,
+                color: Color.fromARGB(255, 34, 102, 141),
+              ),
+              label: "Promo"),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person,
+                color: Color.fromARGB(255, 34, 102, 141),
+              ),
+              label: 'Profile'),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ),
+      body: _widgetOption.elementAt(_selectedIndex),
     );
   }
 }
