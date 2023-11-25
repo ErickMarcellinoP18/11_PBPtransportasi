@@ -10,6 +10,7 @@ import 'package:transportasi_11/view/homePetugas.dart';
 import 'package:transportasi_11/view/register.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/component/form_component.dart';
+import 'package:transportasi_11/view/resetPass.dart';
 
 class LoginView extends StatefulWidget {
   final Map? data;
@@ -149,7 +150,16 @@ class _LoginViewState extends State<LoginView> {
                           formData['password'] = controllerPassword.text;
                           pushRegister(context);
                         },
-                        child: const Text('Belum punya akun ?')),
+                        child: const Text('Belum Punya Akun?')),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ForgetPasswordPage(),
+                              ));
+                        },
+                        child: const Text('Lupa Password?'))
                   ],
                 )
               ],

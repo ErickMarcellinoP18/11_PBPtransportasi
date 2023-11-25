@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -8,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:transportasi_11/camera/camera.dart';
 import 'package:transportasi_11/camera/imagepicker.dart';
 import 'package:transportasi_11/component/passComp.dart';
+import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/main.dart';
 import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/login.dart';
@@ -43,6 +45,7 @@ class _ProfileViewState extends State<ProfileView> {
   TextEditingController controllerPassword = TextEditingController();
   TextEditingController controllerNotelp = TextEditingController();
   TextEditingController controllerFullname = TextEditingController();
+  Uint8List tempProfPict = Uint8List(0);
   bool isPasswordVisible = false;
 
   List<Map<String, dynamic>> employee = [];
@@ -53,21 +56,40 @@ class _ProfileViewState extends State<ProfileView> {
     });
   }
 
+  void LoggedIn() async {
+    try {
+      User loggedIn = await userClient.find(widget.id);
+      controllerEmail.value = TextEditingValue(text: loggedIn.email.toString());
+      controllerFullname.value =
+          TextEditingValue(text: loggedIn.fullName.toString());
+      controllerNotelp.value =
+          TextEditingValue(text: loggedIn.noTelp.toString());
+      controllerPassword.value =
+          TextEditingValue(text: loggedIn.password.toString());
+      controllerUsername.value =
+          TextEditingValue(text: loggedIn.name.toString());
+      tempProfPict = loggedIn.profilePicture!;
+    } catch (e) {
+      return null;
+    }
+  }
+
   @override
   void initState() {
     refresh();
     super.initState();
+    LoggedIn();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.id != null) {
-      controllerUsername.text = widget.name!;
-      controllerEmail.text = widget.email!;
-      controllerPassword.text = widget.password!;
-      controllerNotelp.text = widget.noTelp!;
-      controllerFullname.text = widget.fullName!;
-    }
+    // if (widget.id != null) {
+    //   controllerUsername.text = widget.name!;
+    //   controllerEmail.text = widget.email!;
+    //   controllerPassword.text = widget.password!;
+    //   controllerNotelp.text = widget.noTelp!;
+    //   controllerFullname.text = widget.fullName!;
+    // }
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
