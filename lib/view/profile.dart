@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -9,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:transportasi_11/camera/camera.dart';
 import 'package:transportasi_11/camera/imagepicker.dart';
 import 'package:transportasi_11/component/passComp.dart';
-import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/main.dart';
 import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/login.dart';
@@ -18,6 +16,9 @@ import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:intl/intl.dart';
 import 'package:transportasi_11/view/TicketPage.dart';
+
+// ugd aapi
+import 'package:transportasi_11/data/client/userClient.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView(
@@ -45,7 +46,6 @@ class _ProfileViewState extends State<ProfileView> {
   TextEditingController controllerPassword = TextEditingController();
   TextEditingController controllerNotelp = TextEditingController();
   TextEditingController controllerFullname = TextEditingController();
-  Uint8List tempProfPict = Uint8List(0);
   bool isPasswordVisible = false;
 
   List<Map<String, dynamic>> employee = [];
@@ -68,7 +68,7 @@ class _ProfileViewState extends State<ProfileView> {
           TextEditingValue(text: loggedIn.password.toString());
       controllerUsername.value =
           TextEditingValue(text: loggedIn.name.toString());
-      tempProfPict = loggedIn.profilePicture!;
+      // tempProfPict = loggedIn.profilePicture!;
     } catch (e) {
       return null;
     }
@@ -118,19 +118,6 @@ class _ProfileViewState extends State<ProfileView> {
                             child: IconButton(
                                 onPressed: () {
                                   OptionPopUp().then((_) => refresh());
-                                  // Navigator.push(context,
-                                  //     MaterialPageRoute(builder: (context) {
-                                  //   return CameraView(
-                                  //       loggedIn: User(
-                                  //           id: widget.id,
-                                  //           email: widget.email,
-                                  //           fullName: widget.fullName,
-                                  //           name: widget.name,
-                                  //           noTelp: widget.noTelp,
-                                  //           password: widget.password,
-                                  //           profilePicture:
-                                  //               widget.Profpicture));
-                                  // }));
                                 },
                                 icon: Icon(Icons.camera_alt)))
                       ],
@@ -261,7 +248,7 @@ class _ProfileViewState extends State<ProfileView> {
                                     password: controllerPassword.text,
                                     profilePicture: widget.Profpicture);
 
-                                await editUser(widget.id!);
+                                await editUser(widget.id!, main);
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
@@ -317,14 +304,13 @@ class _ProfileViewState extends State<ProfileView> {
     return false;
   }
 
-  Future<void> editUser(int id) async {
-    await SQLHelper.editUser(
-        id,
-        controllerUsername.text,
-        controllerEmail.text,
-        controllerPassword.text,
-        controllerNotelp.text,
-        controllerFullname.text);
+  Future<void> editUser(int id, User user) async {
+    try {
+      // Panggil fungsi update dari userClient
+      await userClient.update(user);
+    } catch (e) {
+      print("Error during user update: $e");
+    }
   }
 
   Future<void> editProfilePicture(int id, File image) async {
