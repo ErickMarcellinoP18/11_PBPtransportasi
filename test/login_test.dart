@@ -30,7 +30,6 @@ void main() {
       await tester.tap(find.byKey(const Key('LoginBtn')));
       await tester.pumpAndSettle(Duration(seconds: 2));
 
-      print(find.byType(TextFormField).at(1));
       expect(find.byType(HomeView), isNull);
     });
 
@@ -53,10 +52,10 @@ void main() {
     testWidgets('cek berhasil login', (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(home: LoginView()));
 
-      await tester.enterText(find.byType(TextFormField).first, '123');
+      await tester.enterText(find.byType(TextFormField).first, '321');
       await tester.pumpAndSettle(Duration(seconds: 2));
 
-      await tester.enterText(find.byType(TextFormField).at(1), '12345678');
+      await tester.enterText(find.byType(TextFormField).at(1), '87654321');
       await tester.pumpAndSettle(Duration(seconds: 2));
 
       await tester.tap(find.byKey(const Key('password')));
