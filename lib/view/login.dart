@@ -26,26 +26,25 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController controllerPassword = TextEditingController();
   bool isPasswordVisible = true;
 
-  List<Map<String, dynamic>> employee = [];
-  void refresh() async {
-    final data = await SQLHelper.getUser();
-    setState(() {
-      employee = data;
-    });
-  }
+  // List<Map<String, dynamic>> employee = [];
+  // void refresh() async {
+  //   final data = await SQLHelper.getUser();
+  //   setState(() {
+  //     employee = data;
+  //   });
+  // }
 
-  @override
-  void initState() {
-    refresh();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   refresh();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    Future<User?> login() async {
+    Future<User?> login(String username, String password) async {
       try {
-        User loggedIn = await userClient.Login(
-            controllerUsername.text, controllerPassword.text);
+        User loggedIn = await userClient.Login(username, password);
         showSnackbar(context, "Berhasil Login", Colors.green);
         return loggedIn;
       } catch (e) {
@@ -65,6 +64,7 @@ class _LoginViewState extends State<LoginView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  key: const Key('username'),
                   controller: controllerUsername,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
@@ -79,13 +79,14 @@ class _LoginViewState extends State<LoginView> {
                     return null;
                   },
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 TextFormField(
                   controller: controllerPassword,
                   decoration: InputDecoration(
-                    border: UnderlineInputBorder(),
+                    border: const UnderlineInputBorder(),
                     labelText: 'Password',
                     suffixIcon: IconButton(
+                      key: const Key('password'),
                       onPressed: () {
                         setState(() {
                           isPasswordVisible = !isPasswordVisible;
@@ -114,6 +115,7 @@ class _LoginViewState extends State<LoginView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
+                      key: const Key('LoginBtn'),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           if (controllerUsername.text == 'Petugas' &&
@@ -130,8 +132,11 @@ class _LoginViewState extends State<LoginView> {
                               ),
                             );
                           } else {
-                            User? loggedIn = await login();
+                            User? loggedIn = await login(
+                                controllerUsername.text,
+                                controllerPassword.text);
                             if (loggedIn != null) {
+                              // ignore: use_build_context_synchronously
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -182,18 +187,18 @@ class _LoginViewState extends State<LoginView> {
     ));
   }
 
-  int findUser(String nama, String password) {
-    for (int i = 0; i < employee.length; i++) {
-      if (employee[i]['name'] == nama && employee[i]['password'] == password) {
-        return i;
-      }
-      print(nama);
-      print(employee[i]['name'] + 'employee');
-      print(password);
-      print(employee[i]['password'] + 'employee');
-    }
-    return -1;
-  }
+  // int findUser(String nama, String password) {
+  //   for (int i = 0; i < employee.length; i++) {
+  //     if (employee[i]['name'] == nama && employee[i]['password'] == password) {
+  //       return i;
+  //     }
+  //     print(nama);
+  //     print(employee[i]['name'] + 'employee');
+  //     print(password);
+  //     print(employee[i]['password'] + 'employee');
+  //   }
+  //   return -1;
+  // }
 }
 
 void pushRegister(BuildContext context) {

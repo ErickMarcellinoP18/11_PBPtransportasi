@@ -81,4 +81,24 @@ class userClient {
       return Future.error(e.toString());
     }
   }
+
+  static Future<LoginModel?> logintesting({
+    required String username,
+    required String password,
+  }) async {
+    String uri = '127.0.0.1:8000';
+
+    try {
+      var apiResult = await post(Uri.http(uri, "/api/login"),
+          body: jsonEncode({"username": username, "password": password}));
+      if (apiResult.statusCode == 200) {
+        final result = LoginModel.fromRawJson(apiResult.body);
+        return result;
+      } else {
+        throw Exception('Failed to login');
+      }
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
 }

@@ -36,19 +36,19 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController controllerFullname = TextEditingController();
   bool isPasswordVisible = false;
 
-  List<Map<String, dynamic>> employee = [];
-  void refresh() async {
-    final data = await SQLHelper.getUser();
-    setState(() {
-      employee = data;
-    });
-  }
+  // List<Map<String, dynamic>> employee = [];
+  // void refresh() async {
+  //   final data = await SQLHelper.getUser();
+  //   setState(() {
+  //     employee = data;
+  //   });
+  // }
 
-  @override
-  void initState() {
-    refresh();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   refresh();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +213,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 name: controllerUsername.text,
                                 password: controllerPassword.text);
 
-                            await editUser(widget.id!);
+                            // await editUser(widget.id!);
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -230,6 +230,7 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                   ),
                   TextButton(
+                      key: const Key('login'),
                       onPressed: () {
                         Navigator.push(
                             context,
@@ -258,33 +259,33 @@ class _RegisterViewState extends State<RegisterView> {
     ));
   }
 
-  Future<void> addUser() async {
-    await SQLHelper.addUser(
-        controllerUsername.text,
-        controllerEmail.text,
-        controllerPassword.text,
-        controllerNotelp.text,
-        controllerFullname.text);
-  }
+  // Future<void> addUser() async {
+  //   await SQLHelper.addUser(
+  //       controllerUsername.text,
+  //       controllerEmail.text,
+  //       controllerPassword.text,
+  //       controllerNotelp.text,
+  //       controllerFullname.text);
+  // }
 
-  bool emailUnique(String email) {
-    for (int i = 0; i < employee.length; i++) {
-      if (employee[i]['email'] == email) {
-        return true;
-      }
-    }
-    return false;
-  }
+  // bool emailUnique(String email) {
+  //   for (int i = 0; i < employee.length; i++) {
+  //     if (employee[i]['email'] == email) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 
-  Future<void> editUser(int id) async {
-    await SQLHelper.editUser(
-        id,
-        controllerUsername.text,
-        controllerEmail.text,
-        controllerPassword.text,
-        controllerNotelp.text,
-        controllerFullname.text);
-  }
+  // Future<void> editUser(int id) async {
+  //   await SQLHelper.editUser(
+  //       id,
+  //       controllerUsername.text,
+  //       controllerEmail.text,
+  //       controllerPassword.text,
+  //       controllerNotelp.text,
+  //       controllerFullname.text);
+  // }
 
   String judul(int id) {
     if (id == null) {

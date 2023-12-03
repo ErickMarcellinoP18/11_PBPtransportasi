@@ -24,8 +24,8 @@ dependencies:
   uuid: ^3.0.6
   image_picker: ^0.8.7
   barcode_widget: ^2.0.4
-  http: ^1.1.0
   flutter_riverpod: ^2.4.8
+  mockito: ^5.4.3
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +36,9 @@ dev_dependencies:
   mobile_scanner: ^3.2.0
   path_provider: ^2.0.15
   qr_flutter: ^4.1.0
+  http: ^1.1.0
+  http_mock_adapter: ^0.4.0
+
 
 flutter:
   uses-material-design: true

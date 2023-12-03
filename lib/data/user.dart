@@ -1,6 +1,35 @@
 import 'dart:typed_data';
 import 'dart:convert';
 
+class LoginModel {
+  final int status;
+  final String message;
+  final User data;
+
+  const LoginModel({
+    required this.status,
+    required this.message,
+    required this.data,
+  });
+
+  factory LoginModel.fromRawJson(String str) =>
+      LoginModel.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
+        status: json["status"],
+        message: json["message"],
+        data: User.fromJson(json["data"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "message": message,
+        "data": data.toJson(),
+      };
+}
+
 class User {
   final int? id;
 
