@@ -51,6 +51,7 @@ flutter:
     - assets/images/eks.jpg
     - assets/images/priv.jpg
     - assets/images/logo.png
+    - assets/images/GambarKeretaApi.jpg
 
   fonts:
   - family: Raleway
