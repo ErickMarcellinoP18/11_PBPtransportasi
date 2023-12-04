@@ -195,6 +195,7 @@ class _RegisterViewState extends State<RegisterView> {
                   const SizedBox(height: 48, width: 100),
                   SizedBox(
                     child: ElevatedButton(
+                      key: const Key('RegisterBtn'),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           if (widget.id == null) {
