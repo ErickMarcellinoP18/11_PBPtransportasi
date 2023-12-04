@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:transportasi_11/view/register.dart';
+import 'package:integration_test/integration_test.dart';
 import 'package:transportasi_11/view/login.dart';
 import 'package:transportasi_11/view/home.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Import Riverpod
 
 void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   group('Register Testing', () {
     testWidgets('cek berhasil gagal', (WidgetTester tester) async {
       await tester.pumpWidget(
@@ -50,12 +52,12 @@ void main() {
         const ProviderScope(
           child: MaterialApp(
             home: RegisterView(
-              id: 1,
-              name: ' ',
-              email: ' ',
-              fullName: ' ',
-              noTelp: ' ',
-              password: ' ',
+              id: null,
+              name: null,
+              email: null,
+              fullName: null,
+              noTelp: null,
+              password: null,
             ),
           ),
         ),

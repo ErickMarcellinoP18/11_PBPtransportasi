@@ -26,6 +26,8 @@ dependencies:
   barcode_widget: ^2.0.4
   flutter_riverpod: ^2.4.8
   mockito: ^5.4.3
+  integration_test:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

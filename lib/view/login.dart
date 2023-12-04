@@ -48,6 +48,7 @@ class _LoginViewState extends State<LoginView> {
         showSnackbar(context, "Berhasil Login", Colors.green);
         return loggedIn;
       } catch (e) {
+        print(e);
         showSnackbar(context, "Gagal Login", Colors.red);
         return null;
       }

@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:transportasi_11/data/client/userClient.dart';
+import 'package:integration_test/integration_test.dart';
 import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/homePetugas.dart';
 import 'package:transportasi_11/view/login.dart';
@@ -13,6 +14,7 @@ import 'package:transportasi_11/data/user.dart';
 import 'package:http/http.dart';
 
 void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() {
     HttpOverrides.global = null;
   });
@@ -30,7 +32,7 @@ void main() {
       await tester.tap(find.byKey(const Key('LoginBtn')));
       await tester.pumpAndSettle(Duration(seconds: 2));
 
-      expect(find.byType(HomeView), isNull);
+      expect(find.text('Gagal Login'), findsOneWidget);
     });
 
     testWidgets('cek berhasil login Petugas', (WidgetTester tester) async {
@@ -52,10 +54,10 @@ void main() {
     testWidgets('cek berhasil login', (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(home: LoginView()));
 
-      await tester.enterText(find.byType(TextFormField).first, '321');
+      await tester.enterText(find.byType(TextFormField).first, '123');
       await tester.pumpAndSettle(Duration(seconds: 2));
 
-      await tester.enterText(find.byType(TextFormField).at(1), '87654321');
+      await tester.enterText(find.byType(TextFormField).at(1), '12345678');
       await tester.pumpAndSettle(Duration(seconds: 2));
 
       await tester.tap(find.byKey(const Key('password')));
