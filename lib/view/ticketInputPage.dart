@@ -93,6 +93,7 @@ class _ticketInputPageState extends State<ticketInputPage> {
                   key: _formKey,
                   child: Column(children: [
                     TextField(
+                      key: const Key('asal'),
                       controller: controllerAsal,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(),
@@ -101,6 +102,7 @@ class _ticketInputPageState extends State<ticketInputPage> {
                     ),
                     SizedBox(height: 24),
                     TextField(
+                      key: const Key('tujuan'),
                       controller: controllerTujuan,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(),
@@ -111,6 +113,7 @@ class _ticketInputPageState extends State<ticketInputPage> {
                       padding: const EdgeInsets.only(
                           top: 20.0, right: 15.0, left: 15.0),
                       child: DropdownButtonFormField<String>(
+                        key: const Key('jenis'),
                         value: selectedJenis,
                         decoration: const InputDecoration(
                           border: UnderlineInputBorder(),
@@ -145,6 +148,7 @@ class _ticketInputPageState extends State<ticketInputPage> {
                     ),
                     SizedBox(height: 24),
                     TextField(
+                      key: const Key('harga'),
                       keyboardType: TextInputType.number,
                       controller: controllerHarga,
                       decoration: const InputDecoration(
@@ -154,6 +158,7 @@ class _ticketInputPageState extends State<ticketInputPage> {
                     ),
                     SizedBox(height: 48),
                     ElevatedButton(
+                      key: const Key('SaveBtn'),
                       child: Text('Save'),
                       onPressed: onSubmit,
                     )
