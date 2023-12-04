@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:transportasi_11/data/client/userClient.dart';
+import 'package:transportasi_11/data/user.dart';
 import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/ticketInputPage.dart';
 import 'package:transportasi_11/view/TicketPage.dart';
@@ -26,8 +27,9 @@ void main() {
       await tester.pumpAndSettle(Duration(seconds: 2));
 
       await tester.tap(find.byKey(Key('jenis')));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Eksekutif'));
-      await tester.pumpAndSettle(Duration(seconds: 2));
+      await tester.pumpAndSettle(Duration(seconds: 5));
 
       await tester.tap(find.byKey(const Key('SaveBtn')));
       await tester.pumpAndSettle(Duration(seconds: 2));
@@ -49,14 +51,25 @@ void main() {
       await tester.enterText(find.byKey(Key('harga')), '12');
       await tester.pumpAndSettle(Duration(seconds: 2));
 
-      await tester.tap(find.byKey(Key('jenis')));
-      await tester.tap(find.text('Eksekutif'));
-      await tester.pumpAndSettle(Duration(seconds: 2));
-
       await tester.tap(find.byKey(const Key('SaveBtn')));
       await tester.pumpAndSettle(Duration(seconds: 2));
 
       expect(find.byType(TicketHomePage), isNotNull);
+    });
+
+    testWidgets('cek hapus berhasil', (WidgetTester tester) async {
+      User loggedIn = await userClient.Login('123', '12345678');
+      for (var i = 0; i < 10; i++) {
+        User loggedIn = await userClient.Login('123', '12345678');
+      }
+      await tester
+          .pumpWidget(MaterialApp(home: TicketHomePage(loggedIn: loggedIn)));
+      await tester.pumpAndSettle(Duration(seconds: 2));
+
+      await tester.tap(find.byKey(const Key('delete')));
+      await tester.pumpAndSettle(Duration(seconds: 5));
+
+      expect(find.text('Delete Success'), findsOneWidget);
     });
   });
 }

@@ -60,8 +60,10 @@ void main() {
 
       await tester.tap(find.byKey(const Key('password')));
 
-      await tester.tap(find.byKey(const Key('LoginBtn')));
-      await tester.pumpAndSettle(Duration(seconds: 2));
+      for (var i = 0; i < 10; i++) {
+        await tester.tap(find.byKey(const Key('LoginBtn')));
+        await tester.pumpAndSettle(Duration(seconds: 2));
+      }
 
       expect(find.byType(HomeView), isNotNull);
       await tester.pumpAndSettle(Duration(seconds: 2));

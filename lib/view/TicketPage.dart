@@ -90,14 +90,14 @@ class TicketHomePage extends ConsumerWidget {
                           child: Center(
                             child: Padding(
                               padding: EdgeInsets.all(5),
-                              child: BarcodeWidget(
-                                data:
-                                    'pbptransport + ${ticket.IdTicket}', // Use ticket ID here
-                                barcode: Barcode.qrCode(
-                                  errorCorrectLevel:
-                                      BarcodeQRCorrectionLevel.high,
-                                ),
-                              ),
+                              // child: BarcodeWidget(
+                              //   data:
+                              //       'pbptransport + ${ticket.IdTicket}', // Use ticket ID here
+                              //   barcode: Barcode.qrCode(
+                              //     errorCorrectLevel:
+                              //         BarcodeQRCorrectionLevel.high,
+                              //   ),
+                              // ),
                             ),
                           ),
                         ),
@@ -143,6 +143,7 @@ class TicketHomePage extends ConsumerWidget {
                               icon: Icon(Icons.edit),
                             ),
                             IconButton(
+                              key: const Key('delete'),
                               onPressed: () =>
                                   onDelete(ticket.IdTicket, context, ref),
                               icon: Icon(Icons.delete),
