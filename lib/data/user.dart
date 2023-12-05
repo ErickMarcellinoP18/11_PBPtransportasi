@@ -63,6 +63,11 @@ class User {
         "fullName": fullName,
         "noTelp": noTelp,
         "password": password,
-        "profilePicture": base64Encode(profilePicture ?? Uint8List(0)),
+        "profilePicture":
+            base64EncodeWithPadding(profilePicture ?? Uint8List(0)),
       };
+
+  String base64EncodeWithPadding(Uint8List bytes) {
+    return base64.encode(bytes).replaceAll('/', '_').replaceAll('+', '-');
+  }
 }

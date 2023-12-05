@@ -5,7 +5,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:intl/intl.dart';
 import 'package:barcode_widget/barcode_widget.dart';
-import 'package:transportasi_11/view/preview_screen.dart';
+import 'package:transportasi_11/view/pdf/preview_screen.dart';
 
 Future<void> createPdf(String asal, int harga, String idTicket, String tujuan,
     String jenis, BuildContext context) async {

@@ -5,8 +5,8 @@ import 'package:integration_test/integration_test.dart';
 import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:transportasi_11/view/home.dart';
-import 'package:transportasi_11/view/ticketInputPage.dart';
-import 'package:transportasi_11/view/TicketPage.dart';
+import 'package:transportasi_11/view/Ticket/ticketInputPage.dart';
+import 'package:transportasi_11/view/Ticket/TicketPage.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

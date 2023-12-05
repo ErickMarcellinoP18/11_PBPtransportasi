@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transportasi_11/data/client/userClient.dart';
-import 'package:transportasi_11/view/login.dart';
+import 'package:transportasi_11/view/loginRegistResetPass/login.dart';
 
 class ForgetPasswordPage extends StatefulWidget {
   @override

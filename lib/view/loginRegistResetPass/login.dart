@@ -4,13 +4,13 @@ import 'package:transportasi_11/component/passComp.dart';
 import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:transportasi_11/main.dart';
-import 'package:transportasi_11/view/TicketPage.dart';
+import 'package:transportasi_11/view/Ticket/TicketPage.dart';
 import 'package:transportasi_11/view/home.dart';
-import 'package:transportasi_11/view/homePetugas.dart';
-import 'package:transportasi_11/view/register.dart';
+import 'package:transportasi_11/view/PetugasView/homePetugas.dart';
+import 'package:transportasi_11/view/loginRegistResetPass/register.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/component/form_component.dart';
-import 'package:transportasi_11/view/resetPass.dart';
+import 'package:transportasi_11/view/loginRegistResetPass/resetPass.dart';
 
 class LoginView extends StatefulWidget {
   final Map? data;

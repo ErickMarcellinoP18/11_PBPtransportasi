@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/theme/theme_model.dart';
-import 'package:transportasi_11/view/TicketPage.dart';
-import 'package:transportasi_11/view/reviewPage.dart';
+import 'package:transportasi_11/view/Ticket/TicketPage.dart';
+import 'package:transportasi_11/view/Reviews/reviewPage.dart';
 import 'package:transportasi_11/view/view_list.dart';
 import 'package:transportasi_11/view/topbar2.dart';
 import 'package:transportasi_11/view/grid.dart';
 import 'package:transportasi_11/view/view_list.dart';
 import 'package:transportasi_11/data/user.dart';
-import 'package:transportasi_11/view/profile.dart';
+import 'package:transportasi_11/view/profile/profile.dart';
 
 class HomeView extends StatefulWidget {
   final User loggedIn;

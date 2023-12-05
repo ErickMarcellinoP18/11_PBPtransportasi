@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:transportasi_11/view/register.dart';
+import 'package:transportasi_11/view/loginRegistResetPass/register.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:transportasi_11/view/login.dart';
+import 'package:transportasi_11/view/loginRegistResetPass/login.dart';
 import 'package:transportasi_11/view/home.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Import Riverpod
 

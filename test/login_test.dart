@@ -7,9 +7,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:transportasi_11/view/home.dart';
-import 'package:transportasi_11/view/homePetugas.dart';
-import 'package:transportasi_11/view/login.dart';
-import 'package:transportasi_11/view/register.dart';
+import 'package:transportasi_11/view/PetugasView/homePetugas.dart';
+import 'package:transportasi_11/view/loginRegistResetPass/login.dart';
+import 'package:transportasi_11/view/loginRegistResetPass/register.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:http/http.dart';
 
