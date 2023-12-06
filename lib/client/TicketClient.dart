@@ -35,7 +35,7 @@ class ticketClient {
 
   static Future<List<ticket>> findByUser(idUser) async {
     try {
-      var response = await get(Uri.http(url, '$endpoint/$idUser'));
+      var response = await get(Uri.http(url, '/api/tiketShow/$idUser'));
 
       if (response.statusCode != 200) throw Exception(response.reasonPhrase);
 

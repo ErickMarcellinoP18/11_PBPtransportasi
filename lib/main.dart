@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:transportasi_11/client/TicketClient.dart';
@@ -6,6 +8,7 @@ import 'package:transportasi_11/data/ticket.dart';
 import 'package:transportasi_11/qr_scan/scan_qr_page.dart';
 import 'package:transportasi_11/view/PetugasView/homePetugas.dart';
 import 'package:transportasi_11/view/Ticket/TicketCard.dart';
+import 'package:transportasi_11/view/Ticket/TicketPage.dart';
 import 'package:transportasi_11/view/loginRegistResetPass/login.dart';
 import 'package:transportasi_11/view/loginRegistResetPass/register.dart';
 import 'package:transportasi_11/theme/theme_model.dart';
@@ -48,26 +51,15 @@ class HomePage extends StatelessWidget {
         //   noTelp: null,
         //   password: null,
         // ),
-        home: Scaffold(
-      appBar: AppBar(
-        title: Text("testing nya sam sori"),
-      ),
-      body: FutureBuilder<ticket>(
-        future: ticketClient.find(1),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error in first snapshot: ${snapshot.error}');
-          } else if (!snapshot.hasData || snapshot.data == null) {
-            return Text('Ticket not found');
-          } else {
-            ticket oneTicket = snapshot.data!;
-            return TicketCard(oneTicket: oneTicket);
-          }
-        },
-      ),
-    ));
+        home: TicketHomePage(
+            loggedIn: User(
+                id: 1,
+                email: "",
+                fullName: "",
+                name: "",
+                noTelp: "",
+                password: "",
+                profilePicture: Uint8List(0))));
   }
 }
 

@@ -21,15 +21,28 @@ import 'package:transportasi_11/client/TicketClient.dart';
 
 class TicketHomePage extends ConsumerWidget {
   final User loggedIn;
-  TicketHomePage({Key? key, required this.loggedIn}) : super(key: key);
+  late final FutureProvider<List<ticket>> listTicketProvider;
+  TicketHomePage({Key? key, required this.loggedIn}) : super(key: key) {
+    listTicketProvider = FutureProvider<List<ticket>>((ref) async {
+      try {
+        final loggedInId = loggedIn.id;
+        print('Fetching data for user ID: $loggedInId');
+        // return await ticketClient.fetchAll();
+        return await ticketClient.findByUser(loggedInId);
+      } catch (e) {
+        print('Error fetching data: $e');
+        throw e; // Rethrow the error to see it in the console
+      }
+    });
+  }
 
   double _brightnessValue = 0.1; // Kecerahan awal (0-1)
   double _initialBrightness = 0.5; // Kecerahan awal yang disimpan
   ScreenBrightness screenBrightness = ScreenBrightness();
 
-  final listTicketProvider = FutureProvider<List<ticket>>((ref) async {
-    return await ticketClient.fetchAll();
-  });
+  // final listTicketProvider = FutureProvider<List<ticket>>((ref) async {
+  //   return await ticketClient.findByUser(loggedIn.id);
+  // });
 
   // void onAdd(context, ref) {
   //   Navigator.push(context,
