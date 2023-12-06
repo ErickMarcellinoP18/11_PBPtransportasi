@@ -87,6 +87,7 @@ class TicketHomePage extends ConsumerWidget {
                 child: Container(
                     child: TicketCard(
                   oneTicket: ticket,
+                  onDelete: () => onDelete(ticket.IdTicket, context, ref),
                 )),
               );
             },

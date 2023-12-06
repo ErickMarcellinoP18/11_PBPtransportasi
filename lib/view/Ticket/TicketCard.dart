@@ -1,3 +1,4 @@
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:transportasi_11/client/JadwalClient.dart';
 import 'package:transportasi_11/client/KeretaClient.dart';
@@ -7,10 +8,13 @@ import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/data/ticket.dart';
 import 'package:intl/intl.dart';
 import 'package:transportasi_11/data/user.dart';
+import 'package:transportasi_11/view/pdf/pdf_view.dart';
 
 class TicketCard extends StatefulWidget {
-  const TicketCard({super.key, required this.oneTicket});
+  const TicketCard(
+      {super.key, required this.oneTicket, required this.onDelete});
   final ticket oneTicket;
+  final VoidCallback onDelete;
 
   @override
   State<TicketCard> createState() => _TicketCardState();
@@ -153,11 +157,81 @@ class _TicketCardState extends State<TicketCard> {
                               ? Colors.blue
                               : Colors.amber),
                     ),
+                    Divider(
+                      height: 20, // Adjust the height of the Divider
+                      color: Colors.grey,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: BarcodeWidget(
+                              data: widget.oneTicket.status.toString() ==
+                                      "Sudah Dibayar"
+                                  ? 'pbptransport' +
+                                      widget.oneTicket.IdTicket.toString()
+                                  : 'belum bayar hehe',
+                              barcode: Barcode.qrCode(
+                                  errorCorrectLevel:
+                                      BarcodeQRCorrectionLevel.high)),
+                        ),
+                        if (widget.oneTicket.status.toString() ==
+                            "Sudah Dibayar")
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              children: [
+                                buttonCreatePDF(
+                                    context,
+                                    widget.oneTicket.asal.toString(),
+                                    widget.oneTicket.IdTicket!,
+                                    widget.oneTicket.status.toString(),
+                                    widget.oneTicket.tujuan.toString(),
+                                    widget.oneTicket.asal.toString()),
+                                IconButton(
+                                    onPressed: widget.onDelete,
+                                    icon: Icon(Icons.delete))
+                              ],
+                            ),
+                          )
+                      ],
+                    )
                   ],
                 ),
               ),
             );
           }
         });
+  }
+
+  Container buttonCreatePDF(BuildContext context, String asal, int harga,
+      String idTicket, String tujuan, String jenis) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 2),
+      child: ElevatedButton(
+        onPressed: () {
+          if (asal.isEmpty) {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Warning'),
+                content: const Text('Please fill in all the fields.'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            );
+            return;
+          } else {
+            createPdf(asal, harga, idTicket, tujuan, jenis, context);
+          }
+        },
+        style: ElevatedButton.styleFrom(backgroundColor: null),
+        child: const Icon(Icons.print),
+      ),
+    );
   }
 }

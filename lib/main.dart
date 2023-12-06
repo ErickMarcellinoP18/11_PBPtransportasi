@@ -43,23 +43,24 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        // home: RegisterView(
-        //   id: null,
-        //   name: null,
-        //   email: null,
-        //   fullName: null,
-        //   noTelp: null,
-        //   password: null,
-        // ),
-        home: TicketHomePage(
-            loggedIn: User(
-                id: 1,
-                email: "",
-                fullName: "",
-                name: "",
-                noTelp: "",
-                password: "",
-                profilePicture: Uint8List(0))));
+      home: RegisterView(
+        id: null,
+        name: null,
+        email: null,
+        fullName: null,
+        noTelp: null,
+        password: null,
+      ),
+    );
+    // home: TicketHomePage(
+    //     loggedIn: User(
+    //         id: 1,
+    //         email: "",
+    //         fullName: "",
+    //         name: "",
+    //         noTelp: "",
+    //         password: "",
+    //         profilePicture: Uint8List(0))));
   }
 }
 
