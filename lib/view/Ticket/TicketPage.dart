@@ -24,15 +24,8 @@ class TicketHomePage extends ConsumerWidget {
   late final FutureProvider<List<ticket>> listTicketProvider;
   TicketHomePage({Key? key, required this.loggedIn}) : super(key: key) {
     listTicketProvider = FutureProvider<List<ticket>>((ref) async {
-      try {
-        final loggedInId = loggedIn.id;
-        print('Fetching data for user ID: $loggedInId');
-        // return await ticketClient.fetchAll();
-        return await ticketClient.findByUser(loggedInId);
-      } catch (e) {
-        print('Error fetching data: $e');
-        throw e; // Rethrow the error to see it in the console
-      }
+      final loggedInId = loggedIn.id;
+      return await ticketClient.findByUser(loggedInId);
     });
   }
 

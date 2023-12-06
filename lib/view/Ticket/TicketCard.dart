@@ -29,9 +29,10 @@ class _TicketCardState extends State<TicketCard> {
 
   Future<Jadwal?> findJadwal(ticket thisone) async {
     try {
-      Jadwal onTicket = await JadwalClient.findById(thisone.id_jadwal!);
-      return onTicket;
+      Jadwal onTicket2 = await JadwalClient.findById(thisone.id_jadwal!);
+      return onTicket2;
     } catch (e) {
+      print(e);
       return null;
     }
   }
@@ -55,7 +56,14 @@ class _TicketCardState extends State<TicketCard> {
           } else {
             Kereta? kereta = snapshot.data![0] as Kereta?;
             Jadwal? jadwal = snapshot.data![1] as Jadwal?;
-            return Card();
+            return Card(
+              child: Row(
+                children: [
+                  Text(jadwal!.tanggal.toString()),
+                  // Text(kereta!.rating.toString()),
+                ],
+              ),
+            );
           }
         });
   }

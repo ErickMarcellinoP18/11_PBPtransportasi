@@ -55,6 +55,7 @@ flutter:
     - assets/images/priv.jpg
     - assets/images/logo.png
     - assets/images/GambarKeretaApi.jpg
+    - assets/images/ticketTemplateAtas.png
 
   fonts:
   - family: Raleway
