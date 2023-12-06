@@ -10,7 +10,7 @@ class TulisReview extends StatefulWidget {
 }
 
 class _TulisReviewState extends State<TulisReview> {
-  int _currentValue = 3;
+  int _currentValue = 50;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

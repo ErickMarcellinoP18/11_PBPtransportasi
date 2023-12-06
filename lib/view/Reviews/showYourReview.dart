@@ -74,9 +74,6 @@ class _MyReviewState extends State<MyReview> {
                           ),
                         ],
                       ),
-
-                      // The child of the Slidable is what the user sees when the
-                      // component is not dragged.
                       child: Padding(
                         padding: const EdgeInsets.all(15),
                         child: Column(
