@@ -30,7 +30,7 @@ class ticket {
       tujuan: json["ke"],
       jumlah: json["jumlah"],
       jenis: json["kelas"],
-      tanggal_pergi: json["tanggal_pergi"]);
+      tanggal_pergi: DateTime.parse(json["tanggal_pergi"]));
 
   String toRawJson() => json.encode(toJson());
 

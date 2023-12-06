@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/theme/theme_model.dart';
-import 'package:transportasi_11/view/Ticket/TicketPage.dart';
+// import 'package:transportasi_11/view/Ticket/TicketPage.dart';
 import 'package:transportasi_11/view/Reviews/reviewPage.dart';
 import 'package:transportasi_11/view/view_list.dart';
 import 'package:transportasi_11/view/topbar2.dart';
@@ -42,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
           child: SizedBox(
             child: Text("Belum ada Kereta"),
           )),
-      TicketHomePage(loggedIn: widget.loggedIn),
+      // TicketHomePage(loggedIn: widget.loggedIn),
       ReviewPage(),
       ProfileView(
         id: widget.loggedIn.id!,

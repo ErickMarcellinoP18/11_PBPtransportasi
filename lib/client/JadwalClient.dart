@@ -20,4 +20,16 @@ class JadwalClient {
       return Future.error(e.toString());
     }
   }
+
+  static Future<Jadwal> findById(int id) async {
+    try {
+      var response = await get(Uri.http(url, '$endpoint/$id'));
+
+      if (response.statusCode != 200) throw Exception(response.reasonPhrase);
+
+      return Jadwal.fromJson(json.decode(response.body)['data']);
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
 }

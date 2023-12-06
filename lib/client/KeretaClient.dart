@@ -3,7 +3,7 @@ import 'package:transportasi_11/data/Kereta.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
 
-class ticketClient {
+class KeretaClient {
   static final String url = '10.0.2.2:8000';
   static final String endpoint = '/api/kereta';
 

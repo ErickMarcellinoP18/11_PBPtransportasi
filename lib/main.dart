@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:transportasi_11/client/TicketClient.dart';
 import 'package:transportasi_11/constant/app_constant.dart';
 import 'package:transportasi_11/data/ticket.dart';
 import 'package:transportasi_11/qr_scan/scan_qr_page.dart';
@@ -38,17 +39,35 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      // home: RegisterView(
-      //   id: null,
-      //   name: null,
-      //   email: null,
-      //   fullName: null,
-      //   noTelp: null,
-      //   password: null,
-      // ),
-      home: Scaffold(),
-    );
+    return MaterialApp(
+        // home: RegisterView(
+        //   id: null,
+        //   name: null,
+        //   email: null,
+        //   fullName: null,
+        //   noTelp: null,
+        //   password: null,
+        // ),
+        home: Scaffold(
+      appBar: AppBar(
+        title: Text("testing nya sam sori"),
+      ),
+      body: FutureBuilder<ticket>(
+        future: ticketClient.find(1),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error in first snapshot: ${snapshot.error}');
+          } else if (!snapshot.hasData || snapshot.data == null) {
+            return Text('Ticket not found');
+          } else {
+            ticket oneTicket = snapshot.data!;
+            return TicketCard(oneTicket: oneTicket);
+          }
+        },
+      ),
+    ));
   }
 }
 

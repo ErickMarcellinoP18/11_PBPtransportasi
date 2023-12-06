@@ -8,7 +8,6 @@ import 'package:transportasi_11/component/form_component.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:intl/intl.dart';
-import 'package:transportasi_11/view/Ticket/TicketPage.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView(
@@ -205,21 +204,6 @@ class _RegisterViewState extends State<RegisterView> {
                             //     content: Text('Register Sukses'),
                             //   ),
                             // );
-                          } else {
-                            User main = User(
-                                id: widget.id,
-                                fullName: controllerFullname.text,
-                                email: controllerEmail.text,
-                                noTelp: controllerNotelp.text,
-                                name: controllerUsername.text,
-                                password: controllerPassword.text);
-
-                            // await editUser(widget.id!);
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        TicketHomePage(loggedIn: main)));
                           }
                         }
                       },

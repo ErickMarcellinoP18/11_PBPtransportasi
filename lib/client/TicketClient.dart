@@ -33,6 +33,20 @@ class ticketClient {
     }
   }
 
+  static Future<List<ticket>> findByUser(idUser) async {
+    try {
+      var response = await get(Uri.http(url, '$endpoint/$idUser'));
+
+      if (response.statusCode != 200) throw Exception(response.reasonPhrase);
+
+      Iterable list = json.decode(response.body)['data'];
+
+      return list.map((e) => ticket.fromJson(e)).toList();
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
   static Future<Response> create(ticket ticket) async {
     try {
       var response = await post(Uri.http(url, endpoint),

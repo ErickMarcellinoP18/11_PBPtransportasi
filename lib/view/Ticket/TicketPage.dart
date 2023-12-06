@@ -4,7 +4,8 @@ import 'package:transportasi_11/data/ticket.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
-import 'package:transportasi_11/view/Ticket/ticketInputPage.dart';
+import 'package:transportasi_11/view/Ticket/TicketCard.dart';
+// import 'package:transportasi_11/view/Ticket/ticketInputPage.dart';
 import 'package:transportasi_11/view/loginRegistResetPass/register.dart';
 import 'package:transportasi_11/view/profile/profile.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -30,19 +31,19 @@ class TicketHomePage extends ConsumerWidget {
     return await ticketClient.fetchAll();
   });
 
-  void onAdd(context, ref) {
-    Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ticketInputPage()))
-        .then((value) => ref.refresh(listTicketProvider));
-  }
+  // void onAdd(context, ref) {
+  //   Navigator.push(context,
+  //           MaterialPageRoute(builder: (context) => const ticketInputPage()))
+  //       .then((value) => ref.refresh(listTicketProvider));
+  // }
 
   void onDelete(id, context, ref) async {
     try {
       await ticketClient.destroy(id);
       ref.refresh(listTicketProvider);
-      showSnackBar(context, "Delete Success", Colors.green);
+      // showSnackBar(context, "Delete Success", Colors.green);
     } catch (e) {
-      showSnackBar(context, e.toString(), Colors.red);
+      // showSnackBar(context, e.toString(), Colors.red);
     }
   }
 
@@ -62,7 +63,7 @@ class TicketHomePage extends ConsumerWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () => onAdd(context, ref),
+            onPressed: () {},
           ),
         ],
       ),
@@ -79,89 +80,10 @@ class TicketHomePage extends ConsumerWidget {
               return Padding(
                 padding: EdgeInsets.all(10),
                 child: Container(
-                  height: 150,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 100,
-                          child: Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(5),
-                              // child: BarcodeWidget(
-                              //   data:
-                              //       'pbptransport + ${ticket.IdTicket}', // Use ticket ID here
-                              //   barcode: Barcode.qrCode(
-                              //     errorCorrectLevel:
-                              //         BarcodeQRCorrectionLevel.high,
-                              //   ),
-                              // ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          children: [
-                            Container(
-                                margin: EdgeInsets.only(top: 20),
-                                height: 50,
-                                child: Text(
-                                  "Dari Kota : " + ticket.asal.toString(),
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )),
-                            Divider(
-                              thickness: 50,
-                              color: Theme.of(context).colorScheme.primary,
-                              indent: BorderSide.strokeAlignCenter,
-                            ),
-                            Container(
-                              // ignore: prefer_interpolation_to_compose_strings
-                              child:
-                                  Text("Ke Kota : " + ticket.tujuan.toString()),
-                            ),
-                            Container(
-                              child: Text("Harga : " + ticket.harga.toString()),
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            IconButton(
-                              onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ticketInputPage(
-                                          idTicket: ticket.IdTicket))).then(
-                                  (value) => ref.refresh(listTicketProvider)),
-                              icon: Icon(Icons.edit),
-                            ),
-                            IconButton(
-                              key: const Key('delete'),
-                              onPressed: () =>
-                                  onDelete(ticket.IdTicket, context, ref),
-                              icon: Icon(Icons.delete),
-                            ),
-                            buttonCreatePDF(
-                              context,
-                              ticket.asal.toString(),
-                              ticket.harga!.toInt(),
-                              ticket.IdTicket.toString(),
-                              ticket.tujuan.toString(),
-                              ticket.jenis.toString(),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                    height: 150,
+                    child: TicketCard(
+                      oneTicket: ticket,
+                    )),
               );
             },
             error: (err, s) => Center(child: Text(err.toString())),
