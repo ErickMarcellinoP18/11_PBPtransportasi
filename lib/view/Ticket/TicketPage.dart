@@ -60,18 +60,17 @@ class TicketHomePage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 206, 205, 205),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        leading: IconButton(
+            color: const Color.fromARGB(255, 255, 250, 221),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back)),
         backgroundColor: Color.fromARGB(255, 34, 102, 141),
         title: Text(
           "History",
           style: TextStyle(color: Color.fromARGB(255, 255, 250, 221)),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: ListView.builder(
         itemCount: listener.when(
@@ -86,10 +85,9 @@ class TicketHomePage extends ConsumerWidget {
               return Padding(
                 padding: EdgeInsets.all(10),
                 child: Container(
-                    height: 150,
                     child: TicketCard(
-                      oneTicket: ticket,
-                    )),
+                  oneTicket: ticket,
+                )),
               );
             },
             error: (err, s) => Center(child: Text(err.toString())),

@@ -4,7 +4,7 @@ class ticket {
   final int? IdTicket;
   int? id_user, id_jadwal;
   String? id_kereta;
-  String? tujuan, asal, jenis;
+  String? tujuan, asal, status;
   int? jumlah;
   DateTime? tanggal_pergi;
 
@@ -16,7 +16,7 @@ class ticket {
     required this.asal,
     required this.tujuan,
     required this.jumlah,
-    required this.jenis,
+    required this.status,
     required this.tanggal_pergi,
   });
 
@@ -29,7 +29,7 @@ class ticket {
       asal: json["dari"],
       tujuan: json["ke"],
       jumlah: json["jumlah"],
-      jenis: json["kelas"],
+      status: json["status"],
       tanggal_pergi: DateTime.parse(json["tanggal_pergi"]));
 
   String toRawJson() => json.encode(toJson());
@@ -39,6 +39,6 @@ class ticket {
         "dari": asal,
         "ke": tujuan,
         "jumlah": jumlah,
-        "kelas": jenis,
+        "status": status,
       };
 }
