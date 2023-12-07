@@ -4,6 +4,7 @@ import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/theme/theme_model.dart';
 import 'package:transportasi_11/view/Ticket/TicketPage.dart';
 import 'package:transportasi_11/view/Reviews/reviewPage.dart';
+import 'package:transportasi_11/view/Ticket/inputHomePage.dart';
 import 'package:transportasi_11/view/view_list.dart';
 import 'package:transportasi_11/view/topbar2.dart';
 import 'package:transportasi_11/view/grid.dart';
@@ -37,11 +38,7 @@ class _HomeViewState extends State<HomeView> {
         padding: EdgeInsets.all(8.0),
         child: GridExpandable(),
       ),
-      Padding(
-          padding: EdgeInsets.all(10),
-          child: SizedBox(
-            child: Text("Belum ada Kereta"),
-          )),
+      InputHome(loggedIn: widget.loggedIn),
       TicketHomePage(loggedIn: widget.loggedIn),
       ReviewPage(),
       ProfileView(

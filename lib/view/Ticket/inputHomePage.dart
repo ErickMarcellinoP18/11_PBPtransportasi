@@ -1,4 +1,6 @@
+import 'package:flutter/rendering.dart';
 import 'package:transportasi_11/data/stasiun.dart';
+import 'package:transportasi_11/data/user.dart';
 import 'package:transportasi_11/view/Ticket/tampilKereta.dart';
 import 'package:transportasi_11/client/StasiunClient.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +10,11 @@ import 'package:transportasi_11/client/TicketClient.dart';
 import 'package:transportasi_11/data/ticket.dart';
 
 class InputHome extends StatefulWidget {
+  final User loggedIn;
+
   const InputHome({
     this.idTicket,
+    required this.loggedIn,
     Key? key,
   }) : super(key: key);
   final String? idTicket;
@@ -244,7 +249,9 @@ class _InputHomeState extends State<InputHome> {
                                                 selectedKe: selectedKe,
                                                 penumpang: int.parse(
                                                     controllerPenumpang.text),
-                                                idUser: 1, //nanti ini ubah lagi
+                                                idUser: 1,
+                                                loggedIn: widget
+                                                    .loggedIn, //nanti ini ubah lagi
                                               ), // Pastikan variabel selectedDate sudah dideklarasikan di tempat yang sesuai
                                             ),
                                           );

@@ -2,12 +2,17 @@ import 'package:transportasi_11/client/JadwalClient.dart';
 import 'package:transportasi_11/client/TicketClient.dart';
 import 'package:transportasi_11/data/jadwal.dart';
 import 'package:transportasi_11/data/ticket.dart';
+import 'package:transportasi_11/data/user.dart';
+import 'package:transportasi_11/main.dart';
+import 'package:transportasi_11/view/Reviews/reviewPage.dart';
 import 'package:transportasi_11/view/Ticket/inputHomePage.dart';
+import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/invoicePage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ListViewKereta extends StatefulWidget {
+  final User loggedIn;
   final String selectedDate;
   final String selectedDari;
   final String selectedKe;
@@ -22,6 +27,7 @@ class ListViewKereta extends StatefulWidget {
     required this.penumpang,
     this.idTicket,
     required this.idUser,
+    required this.loggedIn,
     Key? key,
   }) : super(key: key);
 
@@ -208,7 +214,7 @@ class _ListViewKeretaState extends State<ListViewKereta>
                 color: Color.fromRGBO(217, 217, 217, 1),
                 child: Padding(
                   padding: EdgeInsets.all(
-                      17.0), // Ubah nilai padding sesuai kebutuhan
+                      10.0), // Ubah nilai padding sesuai kebutuhan
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -220,7 +226,7 @@ class _ListViewKeretaState extends State<ListViewKereta>
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      PembayaranPage()), // Ganti InvoicePage dengan halaman yang sesuai
+                                      ReviewPage()), // Ganti InvoicePage dengan halaman yang sesuai
                             );
                           },
                           child: Text(
@@ -349,10 +355,15 @@ class _ListViewKeretaState extends State<ListViewKereta>
             ),
             TextButton(
               onPressed: () {
-                ;
                 // Panggil fungsi onSubmit jika user mengonfirmasi
                 onSubmit(idJadwal, idKereta, tanggal);
-                Navigator.of(context).pop(); // Tutup dialog
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomeView(
+                          loggedIn: widget
+                              .loggedIn)), // Ganti InvoicePage dengan halaman yang sesuai
+                ); // Tutup dialog
               },
               child: Text('Ya'),
             ),

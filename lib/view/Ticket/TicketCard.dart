@@ -8,6 +8,8 @@ import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/data/ticket.dart';
 import 'package:intl/intl.dart';
 import 'package:transportasi_11/data/user.dart';
+import 'package:transportasi_11/view/Ticket/tampilKereta.dart';
+import 'package:transportasi_11/view/invoicePage.dart';
 import 'package:transportasi_11/view/pdf/pdf_view.dart';
 
 class TicketCard extends StatefulWidget {
@@ -188,6 +190,53 @@ class _TicketCardState extends State<TicketCard> {
                                     widget.oneTicket.status.toString(),
                                     widget.oneTicket.tujuan.toString(),
                                     widget.oneTicket.asal.toString()),
+                                IconButton(
+                                    onPressed: widget.onDelete,
+                                    icon: Icon(Icons.delete))
+                              ],
+                            ),
+                          )
+                        else if (widget.oneTicket.status.toString() ==
+                            "Belum Dibayar")
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ListViewKereta(
+                                            selectedDate:
+                                                widget.oneTicket.tanggal_pergi,
+                                            selectedDari: widget.oneTicket.asal
+                                                .toString(),
+                                            selectedKe: widget.oneTicket.tujuan
+                                                .toString(),
+                                            penumpang: widget.oneTicket
+                                                .jumlah, // ini jumlah penumpang entah kenapa jadi merah sam
+                                            idUser: widget.oneTicket
+                                                .id_user, // ini juga harusnya int
+                                            idTicket: widget.oneTicket.IdTicket,
+                                            loggedIn: widget
+                                                .loggedIn // ini aku butuh sam buat lempar datanya
+                                            , //nanti ini ubah lagi
+                                          ), // Pastikan variabel selectedDate sudah dideklarasikan di tempat yang sesuai
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(Icons.edit)),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                PembayaranPage())), // nanti ini kukelarin dulu di source ku
+                                      );
+                                    },
+                                    child: Text("PAY")),
                                 IconButton(
                                     onPressed: widget.onDelete,
                                     icon: Icon(Icons.delete))
