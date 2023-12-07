@@ -18,6 +18,16 @@ class ReviewClient {
     }
   }
 
+  static Future<Review> fetchByKeretaUser(kode, id) async {
+    try {
+      var response = await get(Uri.http(url, "/reviewUser/{$kode}/{$id}"));
+      if (response.statusCode != 200) throw Exception(response.reasonPhrase);
+      return Review.fromJson(json.decode(response.body)['data']);
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
   static Future<Review> find(id) async {
     try {
       var response = await get(Uri.http(url, '$endpoint/$id'));
@@ -40,12 +50,24 @@ class ReviewClient {
     }
   }
 
-  Future<Response> update(Review review) async {
+  static Future<Response> update(Review review) async {
     try {
       var response = await put(Uri.http(url, '$endpoint/${review.id}'),
           headers: {"Content-Type": "application/json"},
           body: review.toRawJson());
       if (response.statusCode != 200) throw Exception(response.reasonPhrase);
+      return response;
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
+  static Future<Response> destroy(id) async {
+    try {
+      var response = await delete(Uri.http(url, '$endpoint/$id'));
+
+      if (response.statusCode != 200) throw Exception(response.reasonPhrase);
+
       return response;
     } catch (e) {
       return Future.error(e.toString());

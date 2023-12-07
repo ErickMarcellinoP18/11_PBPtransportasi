@@ -1,19 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:transportasi_11/client/KeretaClient.dart';
+import 'package:transportasi_11/client/ReviewClient.dart';
+import 'package:transportasi_11/data/kereta.dart';
+import 'package:transportasi_11/data/review.dart';
+import 'package:transportasi_11/data/user.dart';
+import 'package:transportasi_11/view/Reviews/TulisReview.dart';
 
 class MyReview extends StatefulWidget {
-  const MyReview({super.key, required this.idKereta, required this.idUser});
-  final idKereta, idUser;
+  const MyReview({super.key, required this.kereta, required this.user});
+  final Kereta kereta;
+  final User user;
 
   @override
   State<MyReview> createState() => _MyReviewState();
 }
 
 class _MyReviewState extends State<MyReview> {
+  Review? kaloada;
   TextStyle textKeren = const TextStyle(
       color: Color.fromARGB(255, 34, 102, 141),
       fontWeight: FontWeight.bold,
       fontSize: 20);
+  @override
+  void initState() {
+    super.initState();
+    initReview();
+  }
+
+  Future<Review?> initReview() async {
+    Review? current =
+        await ambilDataReview(widget.kereta.kode!, widget.user.id!);
+    setState(() {
+      kaloada = current;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +59,7 @@ class _MyReviewState extends State<MyReview> {
             Padding(
               padding: EdgeInsets.only(left: 15),
               child: Text(
-                "For: ${ambilDataKereta(widget.idKereta)}",
+                "For: ${widget.kereta.nama}",
                 style: const TextStyle(
                     fontSize: 15,
                     color: Color.fromARGB(255, 34, 102, 141),
@@ -47,16 +69,16 @@ class _MyReviewState extends State<MyReview> {
             const SizedBox(
               height: 20,
             ),
-            ambilDataReview(widget.idUser) != null
+            kaloada != null
                 ? Card(
                     child: Slidable(
                       key: const ValueKey(0),
-                      endActionPane: const ActionPane(
+                      endActionPane: ActionPane(
                         motion: ScrollMotion(),
                         children: [
                           SlidableAction(
                             flex: 1,
-                            onPressed: null,
+                            onPressed: _navigateToMyReview,
                             backgroundColor: Color.fromARGB(255, 34, 102, 141),
                             foregroundColor: Colors.white,
                             icon: Icons.archive,
@@ -80,14 +102,14 @@ class _MyReviewState extends State<MyReview> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  ambilDataPengguna(1),
+                                  widget.user.fullName.toString(),
                                   style: textKeren,
                                 ),
                                 const SizedBox(
                                   width: 100,
                                 ),
                                 Text(
-                                  "70%",
+                                  kaloada!.rekomendasi.toString(),
                                   style: textKeren,
                                 ),
                               ],
@@ -96,7 +118,7 @@ class _MyReviewState extends State<MyReview> {
                               height: 20,
                             ),
                             Text(
-                              ambilDataReview(1)!,
+                              kaloada!.content.toString()!,
                               style: const TextStyle(
                                   color: Color.fromARGB(255, 34, 102, 141),
                                   fontWeight: FontWeight.bold,
@@ -127,13 +149,44 @@ class _MyReviewState extends State<MyReview> {
     );
   }
 
-  String ambilDataKereta(id) {
-    return "Kereta SAF JAYA";
+  void _navigateToMyReview(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TulisReview(
+          kereta: widget.kereta,
+          user: widget.user,
+          idReview: kaloada!.id,
+        ),
+      ),
+    );
   }
 
-  String ambilDataPengguna(id) {
-    return "You";
+  void DeleteReview(BuildContext context) async {
+    try {
+      await ReviewClient.destroy(kaloada!.id);
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyReview(
+            kereta: widget.kereta,
+            user: widget.user,
+          ),
+        ),
+      );
+    } catch (e) {
+      print(e);
+    }
   }
 
-  String? ambilDataReview(id) {}
+  Future<Review?> ambilDataReview(String idKereta, int idUser) async {
+    try {
+      Review ThisReview =
+          await ReviewClient.fetchByKeretaUser(idKereta, idUser);
+      return ThisReview;
+    } catch (e) {
+      return null;
+    }
+  }
 }
