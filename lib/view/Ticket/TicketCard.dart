@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:transportasi_11/client/JadwalClient.dart';
 import 'package:transportasi_11/client/KeretaClient.dart';
 import 'package:transportasi_11/data/jadwal.dart';
-import 'package:transportasi_11/data/Kereta.dart';
+import 'package:transportasi_11/data/kereta.dart';
 import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/data/ticket.dart';
 import 'package:intl/intl.dart';
 import 'package:transportasi_11/data/user.dart';
+import 'package:transportasi_11/view/Reviews/TulisReview.dart';
 import 'package:transportasi_11/view/Ticket/tampilKereta.dart';
 import 'package:transportasi_11/view/invoicePage.dart';
 import 'package:transportasi_11/view/pdf/pdf_view.dart';
@@ -132,7 +133,16 @@ class _TicketCardState extends State<TicketCard> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Kereta : " + kereta!.nama.toString()),
+                          TextButton(
+                            child: Text("Kereta : " + kereta!.nama.toString()),
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => TulisReview(
+                                          kereta: kereta, user: user!)));
+                            },
+                          ),
                           Column(
                             children: [
                               Text("Kode Tiket"),

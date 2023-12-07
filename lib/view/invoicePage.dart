@@ -3,7 +3,7 @@ import 'package:transportasi_11/client/KeretaClient.dart';
 import 'package:transportasi_11/client/TicketClient.dart';
 import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/data/jadwal.dart';
-import 'package:transportasi_11/data/Kereta.dart';
+import 'package:transportasi_11/data/kereta.dart';
 import 'package:transportasi_11/data/ticket.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:flutter/material.dart';

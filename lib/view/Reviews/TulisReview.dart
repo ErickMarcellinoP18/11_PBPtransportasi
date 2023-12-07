@@ -184,6 +184,7 @@ class _TulisReviewState extends State<TulisReview> {
               builder: (context) =>
                   MyReview(kereta: widget.kereta, user: widget.user)));
     } catch (e) {
+      print(e);
       showSnackBar(context, "Gagal Memasukkan Review",
           const Color.fromARGB(255, 34, 102, 141));
     }
