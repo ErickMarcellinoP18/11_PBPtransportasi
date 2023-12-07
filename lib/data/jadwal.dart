@@ -5,9 +5,9 @@ import 'package:intl/intl.dart';
 class Jadwal {
   final int? idJadwal;
   int? harga, kursi;
-  int status, rating;
-  String idKereta, berangkat, tiba;
-  String namaKereta;
+  int? status, rating;
+  String? idKereta, berangkat, tiba;
+  String? namaKereta;
   DateTime tanggal, jam_berangkat, jam_tiba;
 
   Jadwal(
@@ -19,8 +19,8 @@ class Jadwal {
       required this.tiba,
       required this.status,
       required this.kursi,
-      required this.rating,
-      required this.namaKereta,
+      this.rating,
+      this.namaKereta,
       required this.jam_berangkat,
       required this.jam_tiba});
 

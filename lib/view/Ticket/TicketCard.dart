@@ -124,7 +124,7 @@ class _TicketCardState extends State<TicketCard> {
                       ],
                     ),
                     Divider(
-                      height: 20, // Adjust the height of the Divider
+                      height: 20,
                       color: Colors.grey,
                     ),
                     Padding(
@@ -208,19 +208,21 @@ class _TicketCardState extends State<TicketCard> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => ListViewKereta(
-                                            selectedDate:
-                                                widget.oneTicket.tanggal_pergi,
+                                            selectedDate: widget
+                                                .oneTicket.tanggal_pergi
+                                                .toString(),
                                             selectedDari: widget.oneTicket.asal
                                                 .toString(),
                                             selectedKe: widget.oneTicket.tujuan
                                                 .toString(),
-                                            penumpang: widget.oneTicket
-                                                .jumlah, // ini jumlah penumpang entah kenapa jadi merah sam
-                                            idUser: widget.oneTicket
-                                                .id_user, // ini juga harusnya int
+                                            penumpang: widget
+                                                    .oneTicket.jumlah ??
+                                                0, // ini jumlah penumpang entah kenapa jadi merah sam
+                                            idUser: widget.oneTicket.id_user ??
+                                                0, // ini juga harusnya int
                                             idTicket: widget.oneTicket.IdTicket,
-                                            loggedIn: widget
-                                                .loggedIn // ini aku butuh sam buat lempar datanya
+                                            loggedIn:
+                                                user // ini aku butuh sam buat lempar datanya
                                             , //nanti ini ubah lagi
                                           ), // Pastikan variabel selectedDate sudah dideklarasikan di tempat yang sesuai
                                         ),

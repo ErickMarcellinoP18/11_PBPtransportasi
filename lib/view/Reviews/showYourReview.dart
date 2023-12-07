@@ -50,14 +50,11 @@ class _MyReviewState extends State<MyReview> {
             ambilDataReview(widget.idUser) != null
                 ? Card(
                     child: Slidable(
-                      // Specify a key if the Slidable is dismissible.
                       key: const ValueKey(0),
-                      // The end action pane is the one at the right or the bottom side.
                       endActionPane: const ActionPane(
                         motion: ScrollMotion(),
                         children: [
                           SlidableAction(
-                            // An action can be bigger than the others.
                             flex: 1,
                             onPressed: null,
                             backgroundColor: Color.fromARGB(255, 34, 102, 141),
@@ -138,11 +135,5 @@ class _MyReviewState extends State<MyReview> {
     return "You";
   }
 
-  String? ambilDataReview(id) {
-    if (id == 1) {
-      return "ini kereta keren kali";
-    } else {
-      return null;
-    }
-  }
+  String? ambilDataReview(id) {}
 }
