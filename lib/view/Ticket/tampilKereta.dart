@@ -5,6 +5,7 @@ import 'package:transportasi_11/data/ticket.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:transportasi_11/main.dart';
 import 'package:transportasi_11/view/Reviews/reviewPage.dart';
+import 'package:transportasi_11/view/Ticket/TicketPage.dart';
 import 'package:transportasi_11/view/Ticket/inputHomePage.dart';
 import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/invoicePage.dart';
@@ -82,7 +83,6 @@ class _ListViewKeretaState extends State<ListViewKereta>
       }
 
       showSnackBar(context, 'Success', Colors.green);
-      Navigator.pop(context);
     } catch (err) {
       showSnackBar(context, err.toString(), Colors.red);
       Navigator.pop(context);
@@ -360,7 +360,7 @@ class _ListViewKeretaState extends State<ListViewKereta>
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HomeView(
+                      builder: (context) => TicketHomePage(
                           loggedIn: widget
                               .loggedIn)), // Ganti InvoicePage dengan halaman yang sesuai
                 ); // Tutup dialog

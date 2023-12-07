@@ -208,9 +208,11 @@ class _TicketCardState extends State<TicketCard> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => ListViewKereta(
-                                            selectedDate: widget
-                                                .oneTicket.tanggal_pergi
-                                                .toString(),
+                                            selectedDate:
+                                                DateFormat('EEEE, dd MMMM yyyy')
+                                                    .format(DateTime.parse(
+                                                        widget.oneTicket
+                                                            .tanggal_pergi)),
                                             selectedDari: widget.oneTicket.asal
                                                 .toString(),
                                             selectedKe: widget.oneTicket.tujuan
@@ -235,7 +237,9 @@ class _TicketCardState extends State<TicketCard> {
                                         context,
                                         MaterialPageRoute(
                                             builder: ((context) =>
-                                                PembayaranPage())), // nanti ini kukelarin dulu di source ku
+                                                PembayaranPage(
+                                                  oneTiket: widget.oneTicket,
+                                                ))), // nanti ini kukelarin dulu di source ku
                                       );
                                     },
                                     child: Text("PAY")),
