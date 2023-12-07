@@ -6,7 +6,7 @@ class ticket {
   String? id_kereta;
   String? tujuan, asal, status;
   int? jumlah;
-  DateTime? tanggal_pergi;
+  String tanggal_pergi;
 
   ticket({
     required this.IdTicket,
@@ -30,15 +30,19 @@ class ticket {
       tujuan: json["ke"],
       jumlah: json["jumlah"],
       status: json["status"],
-      tanggal_pergi: DateTime.parse(json["tanggal_pergi"]));
+      tanggal_pergi: json["tanggal_pergi"]);
 
   String toRawJson() => json.encode(toJson());
 
   Map<String, dynamic> toJson() => {
         "id": IdTicket,
+        "id_user": id_user,
+        "id_jadwal": id_jadwal,
+        "id_kereta": id_kereta,
         "dari": asal,
         "ke": tujuan,
         "jumlah": jumlah,
         "status": status,
+        "tanggal_pergi": tanggal_pergi,
       };
 }

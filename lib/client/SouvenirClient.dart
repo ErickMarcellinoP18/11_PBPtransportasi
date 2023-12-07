@@ -1,13 +1,13 @@
-import 'package:transportasi_11/data/stasiun.dart';
+import 'package:transportasi_11/data/souvenir.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart';
 
-class stasiunClient {
+class SouvenirClient {
   static final String url = '10.0.2.2:8000';
-  static final String endpoint = '/api/all';
+  static final String endpoint = '/api/allSouve';
 
-  static Future<List<Stasiun>> fetchAll() async {
+  static Future<List<Souvenir>> fetchAll() async {
     try {
       var response = await get(Uri.http(url, endpoint));
 
@@ -15,7 +15,7 @@ class stasiunClient {
 
       Iterable list = json.decode(response.body)['data'];
 
-      return list.map((e) => Stasiun.fromJson(e)).toList();
+      return list.map((e) => Souvenir.fromJson(e)).toList();
     } catch (e) {
       return Future.error(e.toString());
     }

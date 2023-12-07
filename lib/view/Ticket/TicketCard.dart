@@ -2,7 +2,7 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:transportasi_11/client/JadwalClient.dart';
 import 'package:transportasi_11/client/KeretaClient.dart';
-import 'package:transportasi_11/data/Jadwal.dart';
+import 'package:transportasi_11/data/jadwal.dart';
 import 'package:transportasi_11/data/Kereta.dart';
 import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/data/ticket.dart';

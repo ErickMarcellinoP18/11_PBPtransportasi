@@ -5,8 +5,9 @@ import 'package:intl/intl.dart';
 class Jadwal {
   final int? idJadwal;
   int? harga, kursi;
-  int status;
+  int status, rating;
   String idKereta, berangkat, tiba;
+  String namaKereta;
   DateTime tanggal, jam_berangkat, jam_tiba;
 
   Jadwal(
@@ -18,6 +19,8 @@ class Jadwal {
       required this.tiba,
       required this.status,
       required this.kursi,
+      required this.rating,
+      required this.namaKereta,
       required this.jam_berangkat,
       required this.jam_tiba});
 
@@ -28,7 +31,9 @@ class Jadwal {
         harga: json["harga"],
         berangkat: json["berangkat"],
         tiba: json["tiba"],
+        namaKereta: json["nama"],
         status: json["status"],
+        rating: json["rating"],
         kursi: json["kursi"],
         tanggal: DateTime.parse(json['tanggal']),
         jam_berangkat: DateFormat('HH:mm:ss').parse(json['jam_berangkat']),
@@ -44,6 +49,8 @@ class Jadwal {
         "berangkat": berangkat,
         "tiba": tiba,
         "status": status,
+        "rating": rating,
+        "nama": namaKereta,
         "kursi": kursi,
         'tanggal': tanggal.toIso8601String(),
         'jam_berangkat': DateFormat('HH:mm:ss').format(jam_berangkat),

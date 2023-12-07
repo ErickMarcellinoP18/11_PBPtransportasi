@@ -1,4 +1,4 @@
-import 'package:transportasi_11/data/Jadwal.dart';
+import 'package:transportasi_11/data/jadwal.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart';
