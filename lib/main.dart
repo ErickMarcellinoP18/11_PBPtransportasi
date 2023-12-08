@@ -6,9 +6,11 @@ import 'package:transportasi_11/client/TicketClient.dart';
 import 'package:transportasi_11/constant/app_constant.dart';
 import 'package:transportasi_11/data/ticket.dart';
 import 'package:transportasi_11/qr_scan/scan_qr_page.dart';
+import 'package:transportasi_11/view/HomeNew.dart';
 import 'package:transportasi_11/view/PetugasView/homePetugas.dart';
 import 'package:transportasi_11/view/Ticket/TicketCard.dart';
 import 'package:transportasi_11/view/Ticket/TicketPage.dart';
+import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/loginRegistResetPass/login.dart';
 import 'package:transportasi_11/view/loginRegistResetPass/register.dart';
 import 'package:transportasi_11/theme/theme_model.dart';
@@ -43,14 +45,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: RegisterView(
-        id: null,
-        name: null,
-        email: null,
-        fullName: null,
-        noTelp: null,
-        password: null,
-      ),
+      home: HomeNew(),
+      // RegisterView(
+      //   id: null,
+      //   name: null,
+      //   email: null,
+      //   fullName: null,
+      //   noTelp: null,
+      //   password: null,
+      // ),
     );
     // home: TicketHomePage(
     //     loggedIn: User(

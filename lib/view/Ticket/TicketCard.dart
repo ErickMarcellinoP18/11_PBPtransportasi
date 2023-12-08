@@ -202,31 +202,31 @@ class _TicketCardState extends State<TicketCard> {
                             flex: 1,
                             child: Column(
                               children: [
-                                IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => ListViewKereta(
-                                            selectedDate:
-                                                widget.oneTicket.tanggal_pergi,
-                                            selectedDari: widget.oneTicket.asal
-                                                .toString(),
-                                            selectedKe: widget.oneTicket.tujuan
-                                                .toString(),
-                                            penumpang: widget.oneTicket
-                                                .jumlah, // ini jumlah penumpang entah kenapa jadi merah sam
-                                            idUser: widget.oneTicket
-                                                .id_user, // ini juga harusnya int
-                                            idTicket: widget.oneTicket.IdTicket,
-                                            loggedIn: widget
-                                                .loggedIn // ini aku butuh sam buat lempar datanya
-                                            , //nanti ini ubah lagi
-                                          ), // Pastikan variabel selectedDate sudah dideklarasikan di tempat yang sesuai
-                                        ),
-                                      );
-                                    },
-                                    icon: Icon(Icons.edit)),
+                                // IconButton(
+                                //     onPressed: () {
+                                //       Navigator.push(
+                                //         context,
+                                //         MaterialPageRoute(
+                                //           builder: (context) => ListViewKereta(
+                                //             selectedDate:
+                                //                 widget.oneTicket.tanggal_pergi,
+                                //             selectedDari: widget.oneTicket.asal
+                                //                 .toString(),
+                                //             selectedKe: widget.oneTicket.tujuan
+                                //                 .toString(),
+                                //             penumpang: widget.oneTicket
+                                //                 .jumlah, // ini jumlah penumpang entah kenapa jadi merah sam
+                                //             idUser: widget.oneTicket
+                                //                 .id_user, // ini juga harusnya int
+                                //             idTicket: widget.oneTicket.IdTicket,
+                                //             loggedIn: widget
+                                //                 .loggedIn // ini aku butuh sam buat lempar datanya
+                                //             , //nanti ini ubah lagi
+                                //           ), // Pastikan variabel selectedDate sudah dideklarasikan di tempat yang sesuai
+                                //         ),
+                                //       );
+                                //     },
+                                //     icon: Icon(Icons.edit)),
                                 TextButton(
                                     onPressed: () {
                                       Navigator.push(
