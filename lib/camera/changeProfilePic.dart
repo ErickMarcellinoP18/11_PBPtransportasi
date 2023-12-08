@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'dart:io';
 
-import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/view/home.dart';
 
 class DisplayPictureScreen extends StatefulWidget {
@@ -57,8 +56,8 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                           content: Text('Berhasil Mengganti profile Picture'),
                         ),
                       );
-                      await editProfilePicture(
-                          widget.loggedIn.id!, fileResult!);
+                      // await editProfilePicture(
+                      //     widget.loggedIn.id!, fileResult!);
                       // await editUser(widget.id!);
                       widget.loggedIn.profilePicture =
                           await fileResult!.readAsBytes();
@@ -94,8 +93,8 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
     );
   }
 
-  Future<void> editProfilePicture(int id, File image) async {
-    final Uint8List imageBytes = await image.readAsBytes();
-    await SQLHelper.editProfilePic(imageBytes, id);
-  }
+  // Future<void> editProfilePicture(int id, File image) async {
+  //   final Uint8List imageBytes = await image.readAsBytes();
+  //   await SQLHelper.editProfilePic(imageBytes, id);
+  // }
 }

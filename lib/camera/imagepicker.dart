@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:transportasi_11/data/user.dart';
-import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/view/home.dart';
 
 class ImagePickerButton extends StatefulWidget {
@@ -20,10 +19,7 @@ class ImagePickerButton extends StatefulWidget {
 class _ImagePickerButtonState extends State<ImagePickerButton> {
   List<Map<String, dynamic>> employee = [];
   void refresh() async {
-    final data = await SQLHelper.getUser();
-    setState(() {
-      employee = data;
-    });
+    setState(() {});
   }
 
   @override
@@ -48,8 +44,8 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
                           content: Text('Berhasil Mengganti profile Picture'),
                         ),
                       );
-                      await editProfilePicture(
-                          widget.loggedin.id!, File(widget.imageUpdate.path));
+                      // await editProfilePicture(
+                      //     widget.loggedin.id!, File(widget.imageUpdate.path));
                       // await editUser(widget.id!);
                       widget.loggedin.profilePicture =
                           await File(widget.imageUpdate.path).readAsBytes();
@@ -85,10 +81,10 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
     );
   }
 
-  Future<void> editProfilePicture(int id, File image) async {
-    final Uint8List imageBytes = await image.readAsBytes();
-    await SQLHelper.editProfilePic(imageBytes, id);
-  }
+  // Future<void> editProfilePicture(int id, File image) async {
+  //   final Uint8List imageBytes = await image.readAsBytes();
+  //   await SQLHelper.editProfilePic(imageBytes, id);
+  // }
 
   Future _pickImage() async {
     try {
@@ -96,7 +92,7 @@ class _ImagePickerButtonState extends State<ImagePickerButton> {
           await ImagePicker().pickImage(source: ImageSource.gallery);
       setState(() {
         if (pickedImage != null) {
-          editProfilePicture(widget.loggedin.id!, File(pickedImage.path));
+          // editProfilePicture(widget.loggedin.id!, File(pickedImage.path));
           widget.loggedin.profilePicture =
               File(pickedImage.path).readAsBytes() as Uint8List?;
         }

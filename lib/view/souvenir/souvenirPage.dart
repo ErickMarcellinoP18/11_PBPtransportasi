@@ -5,7 +5,6 @@ import 'package:transportasi_11/client/TransaksiClient.dart';
 import 'package:transportasi_11/data/souvenir.dart';
 import 'package:transportasi_11/data/transaksi.dart';
 import 'package:transportasi_11/data/user.dart';
-import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:io';
@@ -94,10 +93,6 @@ class SouvenirHomePage extends ConsumerWidget {
         },
       ),
     );
-  }
-
-  Future<void> deleteTicket(int id) async {
-    await SQLHelper.deleteTicket(id);
   }
 
   Future<void> setMaxBrightness() async {
