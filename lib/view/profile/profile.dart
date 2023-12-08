@@ -301,7 +301,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       profilePicture: widget.Profpicture);
 
                                   await editUser(widget.id!, main);
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
@@ -402,7 +402,7 @@ class _ProfileViewState extends State<ProfileView> {
       final pickedImage = await ImagePicker().pickImage(source: sources);
       setState(() {
         if (pickedImage != null) {
-          Navigator.pushReplacement(
+          Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => ImagePickerButton(

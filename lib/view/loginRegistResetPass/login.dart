@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:transportasi_11/component/passComp.dart';
 import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/data/user.dart';
@@ -36,12 +38,28 @@ class _LoginViewState extends State<LoginView> {
     super.initState();
   }
 
+  Future<Uint8List> compressImage(Uint8List imageBytes) async {
+    final result = await FlutterImageCompress.compressWithList(
+      imageBytes,
+      minHeight: 400,
+      minWidth: 400,
+      quality: 40, // Sesuaikan dengan kebutuhan Anda
+    );
+    print(imageBytes.length);
+    print(result.length);
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<User?> login() async {
       try {
         User loggedIn = await userClient.Login(
             controllerUsername.text, controllerPassword.text);
+        final Uint8List imageBytes =
+            loggedIn.profilePicture!.buffer.asUint8List();
+        final Uint8List compressedImage = await compressImage(imageBytes);
+        loggedIn.profilePicture = compressedImage;
         showSnackbar(context, "Berhasil Login", Colors.green);
         return loggedIn;
       } catch (e) {
@@ -148,7 +166,7 @@ class _LoginViewState extends State<LoginView> {
                                         content: Text('Login Petugas'),
                                       ),
                                     );
-                                    Navigator.pushReplacement(
+                                    Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
@@ -158,7 +176,7 @@ class _LoginViewState extends State<LoginView> {
                                   } else {
                                     User? loggedIn = await login();
                                     if (loggedIn != null) {
-                                      Navigator.pushReplacement(
+                                      Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => HomeView(

@@ -15,7 +15,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
       await userClient.ResetPass(
           _emailController.text, passwordController.text);
       showSnackbar(context, "Berhasil Mengganti Password", Colors.green);
-      Navigator.pushReplacement(
+      Navigator.push(
           context, MaterialPageRoute(builder: (context) => LoginView()));
     } catch (e) {
       showSnackbar(context, "Gagal ganti password", Colors.red);

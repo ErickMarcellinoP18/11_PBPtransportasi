@@ -48,19 +48,19 @@ class _RegisterViewState extends State<RegisterView> {
   Future<Uint8List> compressImage(Uint8List imageBytes) async {
     final result = await FlutterImageCompress.compressWithList(
       imageBytes,
-      minHeight: 800,
-      minWidth: 600,
+      minHeight: 400,
+      minWidth: 400,
       quality: 40, // Sesuaikan dengan kebutuhan Anda
     );
+    print(imageBytes.length);
+    print(result.length);
     return result;
   }
 
-  Future<void> submission() async {
+  void submission() async {
     final ByteData data1 = await rootBundle.load('assets/images/ekonomi.jpg');
     final Uint8List imageBytes = data1.buffer.asUint8List();
-
-    // Mengompres gambar
-    final compressedImage = await compressImage(imageBytes);
+    final Uint8List compressedImage = await compressImage(imageBytes);
 
     User input = User(
       id: 0,
@@ -72,28 +72,9 @@ class _RegisterViewState extends State<RegisterView> {
       password: controllerPassword.text,
     );
     try {
-      // ... (bagian kode lainnya)
-    } catch (err) {
-      // ... (bagian kode lainnya)
-    }
-  }
-
-  void submission() async {
-    final ByteData data1 = await rootBundle.load('assets/images/ekonomi.jpg');
-    final Uint8List imageBytes = data1.buffer.asUint8List();
-    User input = User(
-      id: 0,
-      name: controllerUsername.text,
-      email: controllerEmail.text,
-      fullName: controllerFullname.text,
-      noTelp: controllerNotelp.text,
-      profilePicture: imageBytes,
-      password: controllerPassword.text,
-    );
-    try {
       await userClient.create(input);
       showSnackbar(context, "Berhasil Register", Colors.green);
-      Navigator.pushReplacement(
+      Navigator.push(
           context, MaterialPageRoute(builder: (context) => LoginView()));
     } catch (err) {
       showSnackbar(context, "Gagal Register", Colors.red);
@@ -254,13 +235,7 @@ class _RegisterViewState extends State<RegisterView> {
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   if (widget.id == null) {
-<<<<<<< Updated upstream
-                                    submission();
-                                    // ScaffoldMessenger.of(context).showSnackBar(
-                                    //   const SnackBar(
-                                    //     content: Text('Register Sukses'),
-                                    //   ),
-                                    // );
+                                    _showConfirmationDialog(context);
                                   } else {
                                     User main = User(
                                         id: widget.id,
@@ -271,15 +246,12 @@ class _RegisterViewState extends State<RegisterView> {
                                         password: controllerPassword.text);
 
                                     // await editUser(widget.id!);
-                                    Navigator.pushReplacement(
+                                    Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 TicketHomePage(
                                                     loggedIn: main)));
-=======
-                                    _showConfirmationDialog(context);
->>>>>>> Stashed changes
                                   }
                                 }
                               },
@@ -342,6 +314,7 @@ class _RegisterViewState extends State<RegisterView> {
             TextButton(
               onPressed: () {
                 submission();
+                Navigator.pop(context);
               },
               child: Text('Ya'),
             ),

@@ -176,7 +176,7 @@ class _TulisReviewState extends State<TulisReview> {
       await ReviewClient.create(thisOne);
       showSnackBar(context, "Berhasil Memasukkan Review",
           const Color.fromARGB(255, 34, 102, 141));
-      Navigator.pushReplacement(
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
@@ -199,7 +199,7 @@ class _TulisReviewState extends State<TulisReview> {
       await ReviewClient.update(thisOne);
       showSnackBar(context, "Berhasil Mengubah Review",
           const Color.fromARGB(255, 34, 102, 141));
-      Navigator.pushReplacement(
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>

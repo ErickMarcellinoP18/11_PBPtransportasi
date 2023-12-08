@@ -154,7 +154,7 @@ class _MyReviewState extends State<MyReview> {
   }
 
   void _navigateToMyReview(BuildContext context) {
-    Navigator.pushReplacement(
+    Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => TulisReview(
@@ -170,7 +170,7 @@ class _MyReviewState extends State<MyReview> {
     try {
       await ReviewClient.destroy(kaloada!.id);
       await Future.delayed(Duration.zero);
-      Navigator.pushReplacement(
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => MyReview(

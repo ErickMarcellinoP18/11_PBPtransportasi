@@ -50,6 +50,7 @@ class _editProfileState extends State<editProfile> {
 
   List<Map<String, dynamic>> employee = [];
   void refresh() async {
+    LoggedIn();
     setState(() {});
   }
 
@@ -80,6 +81,7 @@ class _editProfileState extends State<editProfile> {
 
   @override
   Widget build(BuildContext context) {
+    refresh();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -137,17 +139,17 @@ class _editProfileState extends State<editProfile> {
 
                       SizedBox(height: 10),
                       Text(
-                        controllerFullname.text,
+                        widget.fullName.toString(),
                         style: TextStyle(fontSize: 30),
                       ),
                       ListTile(
                         leading: Icon(Icons.account_box, color: Colors.blue),
-                        title: Text(controllerUsername.text),
+                        title: Text(widget.name.toString()),
                       ),
                       ListTile(
                         leading:
                             Icon(Icons.alternate_email, color: Colors.blue),
-                        title: Text(controllerEmail.text),
+                        title: Text(widget.email.toString()),
                       ),
 
                       SizedBox(
@@ -156,7 +158,7 @@ class _editProfileState extends State<editProfile> {
                           padding: const EdgeInsets.all(8.0),
                           child: OutlinedButton(
                             onPressed: () {
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => ProfileView(
@@ -193,7 +195,7 @@ class _editProfileState extends State<editProfile> {
                           padding: const EdgeInsets.all(8.0),
                           child: OutlinedButton(
                             onPressed: () {
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
@@ -293,7 +295,7 @@ class _editProfileState extends State<editProfile> {
       final pickedImage = await ImagePicker().pickImage(source: sources);
       setState(() {
         if (pickedImage != null) {
-          Navigator.pushReplacement(
+          Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => ImagePickerButton(
