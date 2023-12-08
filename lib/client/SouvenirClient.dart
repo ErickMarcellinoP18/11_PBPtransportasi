@@ -20,4 +20,16 @@ class SouvenirClient {
       return Future.error(e.toString());
     }
   }
+
+  static Future<Souvenir> find(id) async {
+    try {
+      var response = await get(Uri.http(url, '/api/souvenir/$id'));
+
+      if (response.statusCode != 200) throw Exception(response.reasonPhrase);
+
+      return Souvenir.fromJson(json.decode(response.body)['data']);
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
 }
