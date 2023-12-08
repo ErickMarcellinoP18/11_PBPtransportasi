@@ -1,3 +1,4 @@
+import 'package:quickalert/quickalert.dart';
 import 'package:transportasi_11/client/SouvenirClient.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -87,10 +88,18 @@ class _InputSouvenirState extends State<InputSouvenir> {
     try {
       if (widget.idTransaksi != null) {
         await TransaksiClient.update(input);
-        showSnackBar(context, 'Berhasil Mengupdate Souvenir ', Colors.green);
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          text: 'Berhasil Mengupdate Transaksi!',
+        );
       } else {
         await TransaksiClient.create(input);
-        showSnackBar(context, 'Berhasil Menambahkan Souvenir ', Colors.green);
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          text: 'Berhasil Menginputkan Transaksi!',
+        );
       }
       Navigator.push(
           context,

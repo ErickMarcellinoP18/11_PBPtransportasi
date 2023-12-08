@@ -78,30 +78,30 @@ class _RegisterViewState extends State<RegisterView> {
     }
   }
 
+  void submission() async {
+    final ByteData data1 = await rootBundle.load('assets/images/ekonomi.jpg');
+    final Uint8List imageBytes = data1.buffer.asUint8List();
+    User input = User(
+      id: 0,
+      name: controllerUsername.text,
+      email: controllerEmail.text,
+      fullName: controllerFullname.text,
+      noTelp: controllerNotelp.text,
+      profilePicture: imageBytes,
+      password: controllerPassword.text,
+    );
+    try {
+      await userClient.create(input);
+      showSnackbar(context, "Berhasil Register", Colors.green);
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LoginView()));
+    } catch (err) {
+      showSnackbar(context, "Gagal Register", Colors.red);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    void submission() async {
-      final ByteData data1 = await rootBundle.load('assets/images/ekonomi.jpg');
-      final Uint8List imageBytes = data1.buffer.asUint8List();
-      User input = User(
-        id: 0,
-        name: controllerUsername.text,
-        email: controllerEmail.text,
-        fullName: controllerFullname.text,
-        noTelp: controllerNotelp.text,
-        profilePicture: imageBytes,
-        password: controllerPassword.text,
-      );
-      try {
-        await userClient.create(input);
-        showSnackbar(context, "Berhasil Register", Colors.green);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginView()));
-      } catch (err) {
-        showSnackbar(context, err.toString(), Colors.red);
-      }
-    }
-
     if (widget.id != null) {
       controllerUsername.text = widget.name!;
       controllerEmail.text = widget.email!;
@@ -254,6 +254,7 @@ class _RegisterViewState extends State<RegisterView> {
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   if (widget.id == null) {
+<<<<<<< Updated upstream
                                     submission();
                                     // ScaffoldMessenger.of(context).showSnackBar(
                                     //   const SnackBar(
@@ -276,6 +277,9 @@ class _RegisterViewState extends State<RegisterView> {
                                             builder: (context) =>
                                                 TicketHomePage(
                                                     loggedIn: main)));
+=======
+                                    _showConfirmationDialog(context);
+>>>>>>> Stashed changes
                                   }
                                 }
                               },
@@ -320,14 +324,32 @@ class _RegisterViewState extends State<RegisterView> {
     ));
   }
 
-  // Future<void> addUser() async {
-  //   await SQLHelper.addUser(
-  //       controllerUsername.text,
-  //       controllerEmail.text,
-  //       controllerPassword.text,
-  //       controllerNotelp.text,
-  //       controllerFullname.text);
-  // }
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Konfirmasi'),
+          content:
+              Text('Apakah anda yakin semua data telah terisi dengan baik?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Tutup dialog
+              },
+              child: Text('Tidak'),
+            ),
+            TextButton(
+              onPressed: () {
+                submission();
+              },
+              child: Text('Ya'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   // bool emailUnique(String email) {
   //   for (int i = 0; i < employee.length; i++) {

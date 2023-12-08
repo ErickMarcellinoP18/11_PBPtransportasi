@@ -29,10 +29,18 @@ void main() {
       await tester.enterText(find.byType(TextFormField).at(1), '123145678');
       await tester.pumpAndSettle(Duration(seconds: 2));
 
-      await tester.tap(find.byKey(const Key('LoginBtn')));
+      await tester.tap(find.byType(ElevatedButton).first);
       await tester.pumpAndSettle(Duration(seconds: 2));
 
-      expect(find.text('Gagal Login'), findsOneWidget);
+      expect(find.byWidgetPredicate((widget) {
+        if (widget is SnackBar) {
+          final snackBar = widget as SnackBar;
+          return snackBar.content != null &&
+              snackBar.content is Text &&
+              (snackBar.content as Text).data == 'Gagal Login';
+        }
+        return false;
+      }), findsOneWidget);
     });
 
     testWidgets('cek berhasil login Petugas', (WidgetTester tester) async {
@@ -44,10 +52,10 @@ void main() {
       await tester.enterText(find.byType(TextFormField).at(1), 'petugasPBP');
       await tester.pumpAndSettle(Duration(seconds: 2));
 
-      await tester.tap(find.byKey(const Key('LoginBtn')));
+      await tester.tap(find.byType(ElevatedButton).first);
       await tester.pumpAndSettle(Duration(seconds: 2));
 
-      expect(find.byType(HomeView), isNotNull);
+      expect(find.byType(HomePagePetugas), isNotNull);
       await tester.pumpAndSettle(Duration(seconds: 2));
     });
 
@@ -60,12 +68,8 @@ void main() {
       await tester.enterText(find.byType(TextFormField).at(1), '12345678');
       await tester.pumpAndSettle(Duration(seconds: 2));
 
-      await tester.tap(find.byKey(const Key('password')));
-
-      for (var i = 0; i < 10; i++) {
-        await tester.tap(find.byKey(const Key('LoginBtn')));
-        await tester.pumpAndSettle(Duration(seconds: 2));
-      }
+      await tester.tap(find.byType(ElevatedButton).first);
+      await tester.pumpAndSettle(Duration(seconds: 2));
 
       expect(find.byType(HomeView), isNotNull);
       await tester.pumpAndSettle(Duration(seconds: 2));

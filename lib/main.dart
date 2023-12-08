@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 import 'package:transportasi_11/client/TicketClient.dart';
 import 'package:transportasi_11/constant/app_constant.dart';
 import 'package:transportasi_11/data/ticket.dart';
@@ -30,13 +31,17 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: createMaterialColor(Color.fromARGB(255, 34, 102, 141)),
       ),
-      home: const HomePage(),
+      home: HomePage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key});
+  HomePage({Key? key});
+
+  double _brightnessValue = 0.2; // Kecerahan awal (0-1)
+  double _initialBrightness = 0.2; // Kecerahan awal yang disimpan
+  ScreenBrightness screenBrightness = ScreenBrightness();
 
   @override
   Widget build(BuildContext context) {

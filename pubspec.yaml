@@ -17,7 +17,7 @@ dependencies:
   shared_preferences:
   cupertino_icons: ^1.0.2
   flutter_material_pickers: ^3.6.0
-  flutter_slidable: ^3.0.1
+  flutter_slidable: ^3.0.1 
   screen_brightness: ^0.2.2+1
   sensors_plus: ^3.1.0
   pdf: ^3.6.4
@@ -27,6 +27,7 @@ dependencies:
   barcode_widget: ^2.0.4
   flutter_riverpod: ^2.4.8
   mockito: ^5.4.3
+  quickalert: ^1.0.2
   integration_test:
     sdk: flutter
 

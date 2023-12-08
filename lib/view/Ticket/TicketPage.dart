@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:transportasi_11/data/ticket.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -46,6 +47,11 @@ class TicketHomePage extends ConsumerWidget {
     try {
       await ticketClient.destroy(id);
       ref.refresh(listTicketProvider);
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.success,
+        text: 'Berhasil Delete Ticket!',
+      );
       // showSnackBar(context, "Delete Success", Colors.green);
     } catch (e) {
       // showSnackBar(context, e.toString(), Colors.red);

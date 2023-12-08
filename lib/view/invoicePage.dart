@@ -165,7 +165,7 @@ class _PembayaranPage extends State<PembayaranPage>
                                     color: Color.fromRGBO(34, 102, 141, 1),
                                   ),
                                 ),
-                                Icon(Icons.more_vert),
+                                Icon(Icons.line_axis_rounded),
                                 Text(
                                   DateFormat('HH:mm')
                                       .format(jadwal!.jam_tiba)

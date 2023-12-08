@@ -1,3 +1,6 @@
+import 'package:quickalert/quickalert.dart';
+import 'package:screen_brightness/screen_brightness.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 import 'package:transportasi_11/client/JadwalClient.dart';
 import 'package:transportasi_11/client/TicketClient.dart';
 import 'package:transportasi_11/data/jadwal.dart';
@@ -45,8 +48,31 @@ class _ListViewKeretaState extends State<ListViewKereta>
   late final Map<DateTime, List<Jadwal>> jadwalMap = {};
   late DateTime selectedDate = parsedSelectedDate;
 
+  double _brightnessValue = 0.1; // Kecerahan awal (0-1)
+  double _initialBrightness = 0.7; // Kecerahan awal yang disimpan
+  ScreenBrightness screenBrightness = ScreenBrightness();
+
+  double x = 0, y = 0, z = 0;
+
   @override
   void initState() {
+    gyroscopeEvents.listen((GyroscopeEvent event) {
+      print(event);
+
+      x = event.x;
+      y = event.y;
+      z = event.z;
+
+      //rough calculation, you can use
+      //advance formula to calculate the orentation
+      if (x > 0) {
+        setMaxBrightness();
+      } else if (x < 0) {
+        setMinBrightness();
+      }
+
+      setState(() {});
+    });
     super.initState();
     generateDateList();
     fetchJadwalData(parsedSelectedDate);
@@ -78,11 +104,19 @@ class _ListViewKeretaState extends State<ListViewKereta>
     try {
       if (widget.idTicket != null) {
         await ticketClient.update(input);
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          text: 'Berhasil Mengupdate Tiket!',
+        );
       } else {
         await ticketClient.create(input);
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          text: 'Berhasil Meginput Tiket!',
+        );
       }
-
-      showSnackBar(context, 'Success', Colors.green);
     } catch (err) {
       showSnackBar(context, err.toString(), Colors.red);
       Navigator.pop(context);
@@ -192,6 +226,14 @@ class _ListViewKeretaState extends State<ListViewKereta>
     }
   }
 
+  Future<void> setMaxBrightness() async {
+    await screenBrightness.setScreenBrightness(1.0);
+  }
+
+  Future<void> setMinBrightness() async {
+    await screenBrightness.setScreenBrightness(0.5);
+  }
+
   Widget buildJadwalList(DateTime date) {
     if (jadwalMap.containsKey(date)) {
       List<Jadwal> jadwalData = jadwalMap[date]!;
@@ -265,7 +307,7 @@ class _ListViewKeretaState extends State<ListViewKereta>
                               fontSize: 18,
                             ),
                           ),
-                          Icon(Icons.more_vert),
+                          Icon(Icons.linear_scale),
                           Text(
                             DateFormat('HH:mm')
                                 .format(jadwalData[idx].jam_tiba),
@@ -282,12 +324,12 @@ class _ListViewKeretaState extends State<ListViewKereta>
                         mainAxisAlignment: MainAxisAlignment
                             .start, // Ubah ke MainAxisAlignment.spaceBetween
                         children: [
-                          const SizedBox(width: 10.0),
+                          const SizedBox(width: 9.0),
                           Text(
                             '${jadwalData[idx].berangkat}',
                             style: const TextStyle(fontSize: 14),
                           ),
-                          const SizedBox(width: 50.0),
+                          const SizedBox(width: 40.0),
                           Text(
                             '${jadwalData[idx].tiba}',
                             style: const TextStyle(
@@ -361,7 +403,7 @@ class _ListViewKeretaState extends State<ListViewKereta>
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => TicketHomePage(
+                      builder: (context) => HomeView(
                           loggedIn: widget
                               .loggedIn)), // Ganti InvoicePage dengan halaman yang sesuai
                 ); // Tutup dialog

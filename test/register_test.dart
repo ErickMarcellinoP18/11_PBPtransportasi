@@ -40,7 +40,7 @@ void main() {
       await tester.pumpAndSettle(Duration(seconds: 2));
 
       // await tester.tap(find.byType(ElevatedButton));
-      await tester.tap(find.byKey(const Key('RegisterBtn')));
+      await tester.tap(find.byType(ElevatedButton).first);
       await tester.pumpAndSettle(Duration(seconds: 2));
 
       expect(find.byType(HomeView), isNotNull);
@@ -78,10 +78,13 @@ void main() {
       await tester.pumpAndSettle(Duration(seconds: 2));
 
       // await tester.tap(find.byType(ElevatedButton));
-      await tester.tap(find.byKey(const Key('RegisterBtn')));
+      await tester.tap(find.byType(ElevatedButton).first);
       await tester.pumpAndSettle(Duration(seconds: 2));
 
-      expect(find.byType(HomeView), isNotNull);
+      await tester.tap(find.text('Ya'));
+      await tester.pumpAndSettle(Duration(seconds: 2));
+
+      expect(find.byType(LoginView), isNotNull);
       await tester.pumpAndSettle(Duration(seconds: 2));
     });
   });

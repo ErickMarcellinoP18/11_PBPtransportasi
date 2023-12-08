@@ -7,6 +7,7 @@ import 'package:transportasi_11/data/kereta.dart';
 import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/data/souvenir.dart';
 import 'package:transportasi_11/data/ticket.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:intl/intl.dart';
 import 'package:transportasi_11/data/transaksi.dart';
 import 'package:transportasi_11/data/user.dart';
@@ -169,8 +170,11 @@ class _SouvenirCardState extends State<SouvenirCard> {
                                           MaterialPageRoute(
                                               builder: ((context) =>
                                                   HomeView(loggedIn: user))));
-                                      showSnackBar(context, 'Success Membayar',
-                                          Colors.green);
+                                      QuickAlert.show(
+                                        context: context,
+                                        type: QuickAlertType.success,
+                                        text: 'Berhasil Bayar Souvenir!',
+                                      );
                                     },
                                     child: Text("PAY")),
                                 IconButton(
