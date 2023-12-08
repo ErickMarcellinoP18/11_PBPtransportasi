@@ -33,16 +33,14 @@ class _TulisReviewState extends State<TulisReview> {
       Review? current = await findReview(widget.idReview!);
       setState(() {
         editReview = current;
+        _currentValue = editReview!.rekomendasi;
+        controllerContent.text = editReview!.content;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (editReview != null) {
-      _currentValue = editReview!.rekomendasi;
-      controllerContent.text = editReview!.content;
-    }
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 206, 205, 205),
       appBar: AppBar(

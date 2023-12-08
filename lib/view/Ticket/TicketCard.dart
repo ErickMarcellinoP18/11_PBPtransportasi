@@ -8,7 +8,7 @@ import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/data/ticket.dart';
 import 'package:intl/intl.dart';
 import 'package:transportasi_11/data/user.dart';
-import 'package:transportasi_11/view/Reviews/TulisReview.dart';
+import 'package:transportasi_11/view/Reviews/showYourReview.dart';
 import 'package:transportasi_11/view/Ticket/tampilKereta.dart';
 import 'package:transportasi_11/view/invoicePage.dart';
 import 'package:transportasi_11/view/pdf/pdf_view.dart';
@@ -133,16 +133,19 @@ class _TicketCardState extends State<TicketCard> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextButton(
-                            child: Text("Kereta : " + kereta!.nama.toString()),
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => TulisReview(
-                                          kereta: kereta, user: user!)));
-                            },
-                          ),
+                          widget.oneTicket.status.toString() == "Sudah Dibayar"
+                              ? TextButton(
+                                  child: Text(
+                                      "Kereta : " + kereta!.nama.toString()),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => MyReview(
+                                                kereta: kereta, user: user!)));
+                                  },
+                                )
+                              : Text("Kereta : " + kereta!.nama.toString()),
                           Column(
                             children: [
                               Text("Kode Tiket"),
@@ -170,7 +173,7 @@ class _TicketCardState extends State<TicketCard> {
                               : Colors.amber),
                     ),
                     Divider(
-                      height: 20, // Adjust the height of the Divider
+                      height: 20,
                       color: Colors.grey,
                     ),
                     Row(

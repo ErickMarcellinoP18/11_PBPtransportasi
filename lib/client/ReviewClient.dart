@@ -9,7 +9,7 @@ class ReviewClient {
 
   static Future<List<Review>> fetchByKereta(kode) async {
     try {
-      var response = await get(Uri.http(url, "reviewByKereta/${kode}"));
+      var response = await get(Uri.http(url, "/api/reviewByKereta/${kode}"));
       if (response.statusCode != 200) throw Exception(response.reasonPhrase);
       Iterable list = json.decode(response.body)['data'];
       return list.map((e) => Review.fromJson(e)).toList();
@@ -20,8 +20,7 @@ class ReviewClient {
 
   static Future<Review> fetchByKeretaUser(kode, id) async {
     try {
-      var response =
-          await get(Uri.http("10.0.2.2:8000", "/reviewUser/{$kode}/{$id}"));
+      var response = await get(Uri.http(url, "/api/reviewUser/$kode/$id"));
       if (response.statusCode != 200) throw Exception(response.reasonPhrase);
       return Review.fromJson(json.decode(response.body)['data']);
     } catch (e) {
