@@ -15,7 +15,7 @@ import 'package:transportasi_11/component/form_component.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:intl/intl.dart';
-// import 'package:transportasi_11/view/Ticket/TicketPage.dart';
+import 'package:transportasi_11/view/Ticket/TicketPage.dart';
 
 // ugd aapi
 import 'package:transportasi_11/data/client/userClient.dart';
@@ -83,13 +83,6 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    // if (widget.id != null) {
-    //   controllerUsername.text = widget.name!;
-    //   controllerEmail.text = widget.email!;
-    //   controllerPassword.text = widget.password!;
-    //   controllerNotelp.text = widget.noTelp!;
-    //   controllerFullname.text = widget.fullName!;
-    // }
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -99,185 +92,246 @@ class _ProfileViewState extends State<ProfileView> {
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Text(widget.Profpicture.toString()),
-                  Center(
-                    child: Stack(
-                      children: [
-                        CircleAvatar(
-                          radius: 50,
-                          backgroundImage: MemoryImage(widget.Profpicture),
-                        ),
-                        Positioned(
-                            bottom: -10,
-                            right: -15,
-                            child: IconButton(
-                                onPressed: () {
-                                  OptionPopUp().then((_) => refresh());
-                                },
-                                icon: Icon(Icons.camera_alt)))
-                      ],
-                    ),
-                  ),
-                  TextFormField(
-                    controller: controllerUsername,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Username',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your name';
-                      } else if (value.contains(' ')) {
-                        return 'Username tidak boleh ada spasi';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 24),
-                  TextFormField(
-                    controller: controllerEmail,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Email',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Email Tidak Boleh Kosong';
-                      } else if (!value.contains('@')) {
-                        return 'Email Tidak Valid';
-                      } else if (emailUnique(value) && widget.id == null) {
-                        return 'Email Sudah Terdaftar';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 24),
-                  TextFormField(
-                    controller: controllerPassword,
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Password',
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            isPasswordVisible = !isPasswordVisible;
-                          });
-                        },
-                        icon: Icon(
-                          isPasswordVisible
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          color: isPasswordVisible ? Colors.grey : Colors.blue,
-                        ),
-                      ),
-                    ),
-                    obscureText: isPasswordVisible,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password Tidak Boleh Kosong';
-                      } else if (value.length < 8) {
-                        return 'Password Minimal 8 karakter';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 24),
-                  TextFormField(
-                    controller: controllerFullname,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Full Name',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your name';
-                      } else if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
-                        return 'Nama Lengkap hanya mengandung huruf dan spasi';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 24),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: controllerNotelp,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Nomor Telepon',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Nomor Telepon tidak boleh kosong';
-                      } else if (value.length < 10 || value.length > 13) {
-                        return 'Nomor Telepon Tidak Valid';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 48, width: 100),
-                  Row(
+            child: Center(
+              child: Container(
+                margin: const EdgeInsets.only(
+                  top: 20,
+                  right: 40,
+                  left: 40,
+                ),
+                height: 690,
+                width: 350,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.black26,
+                        offset: Offset(2, 2),
+                        blurRadius: 5)
+                  ],
+                ),
+                // key: _formKey,
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              if (widget.id == null) {
-                                await addUser();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Register Sukses'),
-                                  ),
-                                );
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginView()));
-                              } else {
-                                User main = User(
-                                    id: widget.id,
-                                    fullName: controllerFullname.text,
-                                    email: controllerEmail.text,
-                                    noTelp: controllerNotelp.text,
-                                    name: controllerUsername.text,
-                                    password: controllerPassword.text,
-                                    profilePicture: widget.Profpicture);
+                      // Text(widget.Profpicture.toString()),
+                      SizedBox(height: 10),
+                      Center(
+                        child: Stack(
+                          children: [
+                            CircleAvatar(
+                              radius: 50,
+                              backgroundImage: MemoryImage(widget.Profpicture),
+                            ),
+                            Positioned(
+                                bottom: -10,
+                                right: -15,
+                                child: IconButton(
+                                    onPressed: () {
+                                      OptionPopUp().then((_) => refresh());
+                                    },
+                                    icon: Icon(Icons.camera_alt)))
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 24),
+                      TextFormField(
+                        controller: controllerUsername,
+                        decoration: InputDecoration(
+                          labelText: 'Username',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your name';
+                          } else if (value.contains(' ')) {
+                            return 'Username tidak boleh ada spasi';
+                          }
+                          return null;
+                        },
+                      ),
 
-                                await editUser(widget.id!, main);
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            HomeView(loggedIn: main)));
-                              }
-                            }
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text("Register"),
+                      // TextFormField(
+                      //   controller: controllerUsername,
+                      //   decoration: const InputDecoration(
+                      //     border: UnderlineInputBorder(),
+                      //     labelText: 'Username',
+                      //   ),
+                      //   validator: (value) {
+                      //     if (value == null || value.isEmpty) {
+                      //       return 'Please enter your name';
+                      //     } else if (value.contains(' ')) {
+                      //       return 'Username tidak boleh ada spasi';
+                      //     }
+                      //     return null;
+                      //   },
+                      // ),
+                      SizedBox(height: 24),
+                      TextFormField(
+                        controller: controllerEmail,
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Email Tidak Boleh Kosong';
+                          } else if (!value.contains('@')) {
+                            return 'Email Tidak Valid';
+                          } else if (emailUnique(value) && widget.id == null) {
+                            return 'Email Sudah Terdaftar';
+                          }
+                          return null;
+                        },
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Cancel'),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
+
+                      // SizedBox(height: 24),
+                      // TextFormField(
+                      //   controller: controllerEmail,
+                      //   decoration: const InputDecoration(
+                      //     border: UnderlineInputBorder(),
+                      //     labelText: 'Email',
+                      //   ),
+                      //   validator: (value) {
+                      //     if (value == null || value.isEmpty) {
+                      //       return 'Email Tidak Boleh Kosong';
+                      //     } else if (!value.contains('@')) {
+                      //       return 'Email Tidak Valid';
+                      //     } else if (emailUnique(value) && widget.id == null) {
+                      //       return 'Email Sudah Terdaftar';
+                      //     }
+                      //     return null;
+                      //   },
+                      // ),
+
+                      SizedBox(height: 24),
+                      TextFormField(
+                        controller: controllerPassword,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isPasswordVisible = !isPasswordVisible;
+                              });
+                            },
+                            icon: Icon(
+                              isPasswordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color:
+                                  isPasswordVisible ? Colors.grey : Colors.blue,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
+                        obscureText: isPasswordVisible,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Password Tidak Boleh Kosong';
+                          } else if (value.length < 8) {
+                            return 'Password Minimal 8 karakter';
+                          }
+                          return null;
+                        },
                       ),
+
+                      SizedBox(height: 24),
+                      TextFormField(
+                        controller: controllerFullname,
+                        decoration: InputDecoration(
+                          labelText: 'Full Name',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your name';
+                          } else if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
+                            return 'Nama Lengkap hanya mengandung huruf dan spasi';
+                          }
+                          return null;
+                        },
+                      ),
+
+                      SizedBox(height: 24),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: controllerNotelp,
+                        decoration: InputDecoration(
+                          labelText: 'Nomor Telepon',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Nomor Telepon tidak boleh kosong';
+                          } else if (value.length < 10 || value.length > 13) {
+                            return 'Nomor Telepon Tidak Valid';
+                          }
+                          return null;
+                        },
+                      ),
+
+                      const SizedBox(height: 48, width: 100),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  User main = User(
+                                      id: widget.id,
+                                      fullName: controllerFullname.text,
+                                      email: controllerEmail.text,
+                                      noTelp: controllerNotelp.text,
+                                      name: controllerUsername.text,
+                                      password: controllerPassword.text,
+                                      profilePicture: widget.Profpicture);
+
+                                  await editUser(widget.id!, main);
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              HomeView(loggedIn: main)));
+                                }
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text("Update"),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('Exit'),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
             ),
           ),
