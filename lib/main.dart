@@ -16,7 +16,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/data/user.dart';
-import 'package:transportasi_11/view/Reviews/reviewPage.dart';
 
 void main() {
   runApp(ProviderScope(child: const MainApp()));
