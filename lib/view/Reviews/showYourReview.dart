@@ -28,7 +28,7 @@ class _MyReviewState extends State<MyReview> {
     initReview();
   }
 
-  Future<Review?> initReview() async {
+  Future<void> initReview() async {
     Review? current =
         await ambilDataReview(widget.kereta.kode!, widget.user.id!);
     setState(() {
@@ -85,7 +85,7 @@ class _MyReviewState extends State<MyReview> {
                             label: 'Update',
                           ),
                           SlidableAction(
-                            onPressed: null,
+                            onPressed: DeleteReview,
                             backgroundColor: Colors.red,
                             foregroundColor: Colors.white,
                             icon: Icons.delete,
@@ -109,7 +109,7 @@ class _MyReviewState extends State<MyReview> {
                                   width: 100,
                                 ),
                                 Text(
-                                  kaloada!.rekomendasi.toString(),
+                                  "${kaloada!.rekomendasi}%",
                                   style: textKeren,
                                 ),
                               ],
@@ -129,20 +129,24 @@ class _MyReviewState extends State<MyReview> {
                       ),
                     ),
                   )
-                : const SizedBox(
-                    height: 200,
+                : Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          "Masih Belum Ada Review dari Anda!",
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 34, 102, 141),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              _navigateToMyReview(context);
+                            },
+                            child: Text("Buat Review baru?"))
+                      ],
+                    ),
                   ),
-            const Positioned.fill(
-                child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                "Masih Belum Ada Review!",
-                style: TextStyle(
-                    color: Color.fromARGB(255, 34, 102, 141),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-              ),
-            )),
           ],
         ),
       ),
@@ -156,7 +160,7 @@ class _MyReviewState extends State<MyReview> {
         builder: (context) => TulisReview(
           kereta: widget.kereta,
           user: widget.user,
-          idReview: kaloada!.id,
+          idReview: kaloada == null ? null : kaloada!.id,
         ),
       ),
     );
@@ -165,7 +169,7 @@ class _MyReviewState extends State<MyReview> {
   void DeleteReview(BuildContext context) async {
     try {
       await ReviewClient.destroy(kaloada!.id);
-      // ignore: use_build_context_synchronously
+      await Future.delayed(Duration.zero);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
