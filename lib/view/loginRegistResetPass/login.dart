@@ -8,7 +8,6 @@ import 'package:transportasi_11/view/Ticket/TicketPage.dart';
 import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/PetugasView/homePetugas.dart';
 import 'package:transportasi_11/view/loginRegistResetPass/register.dart';
-import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/component/form_component.dart';
 import 'package:transportasi_11/view/loginRegistResetPass/resetPass.dart';
 
@@ -28,10 +27,7 @@ class _LoginViewState extends State<LoginView> {
 
   List<Map<String, dynamic>> employee = [];
   void refresh() async {
-    final data = await SQLHelper.getUser();
-    setState(() {
-      employee = data;
-    });
+    setState(() {});
   }
 
   @override

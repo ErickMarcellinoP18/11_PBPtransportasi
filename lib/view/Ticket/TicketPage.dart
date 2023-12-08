@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:transportasi_11/data/ticket.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/view/Ticket/TicketCard.dart';
 // import 'package:transportasi_11/view/Ticket/ticketInputPage.dart';
 import 'package:transportasi_11/view/loginRegistResetPass/register.dart';
@@ -99,10 +98,6 @@ class TicketHomePage extends ConsumerWidget {
         },
       ),
     );
-  }
-
-  Future<void> deleteTicket(int id) async {
-    await SQLHelper.deleteTicket(id);
   }
 
   Future<void> setMaxBrightness() async {

@@ -13,7 +13,6 @@ import 'package:transportasi_11/main.dart';
 import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/loginRegistResetPass/login.dart';
 import 'package:transportasi_11/component/form_component.dart';
-import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:intl/intl.dart';
 import 'package:transportasi_11/view/Ticket/TicketPage.dart';
@@ -51,10 +50,7 @@ class _editProfileState extends State<editProfile> {
 
   List<Map<String, dynamic>> employee = [];
   void refresh() async {
-    final data = await SQLHelper.getUser();
-    setState(() {
-      employee = data;
-    });
+    setState(() {});
   }
 
   void LoggedIn() async {
@@ -234,14 +230,14 @@ class _editProfileState extends State<editProfile> {
     );
   }
 
-  Future<void> addUser() async {
-    await SQLHelper.addUser(
-        controllerUsername.text,
-        controllerEmail.text,
-        controllerPassword.text,
-        controllerNotelp.text,
-        controllerFullname.text);
-  }
+  // Future<void> addUser() async {
+  //   await SQLHelper.addUser(
+  //       controllerUsername.text,
+  //       controllerEmail.text,
+  //       controllerPassword.text,
+  //       controllerNotelp.text,
+  //       controllerFullname.text);
+  // }
 
   bool emailUnique(String email) {
     for (int i = 0; i < employee.length; i++) {
@@ -261,10 +257,10 @@ class _editProfileState extends State<editProfile> {
     }
   }
 
-  Future<void> editProfilePicture(int id, File image) async {
-    final Uint8List imageBytes = await image.readAsBytes();
-    await SQLHelper.editProfilePic(imageBytes, id);
-  }
+  // Future<void> editProfilePicture(int id, File image) async {
+  //   final Uint8List imageBytes = await image.readAsBytes();
+  //   await SQLHelper.editProfilePic(imageBytes, id);
+  // }
 
   Future OptionPopUp() async {
     showModalBottomSheet(

@@ -14,7 +14,6 @@ import 'package:transportasi_11/view/loginRegistResetPass/register.dart';
 import 'package:transportasi_11/theme/theme_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/data/user.dart';
 
 void main() {
