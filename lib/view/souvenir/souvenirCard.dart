@@ -12,9 +12,11 @@ import 'package:transportasi_11/data/transaksi.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:transportasi_11/view/Reviews/TulisReview.dart';
 import 'package:transportasi_11/view/Ticket/tampilKereta.dart';
+import 'package:transportasi_11/view/home.dart';
 import 'package:transportasi_11/view/invoicePage.dart';
 import 'package:transportasi_11/view/pdf/pdf_view.dart';
 import 'package:transportasi_11/view/souvenir/inputSouvenirPage.dart';
+import 'package:transportasi_11/view/souvenir/souvenirPage.dart';
 
 class SouvenirCard extends StatefulWidget {
   const SouvenirCard(
@@ -47,6 +49,22 @@ class _SouvenirCardState extends State<SouvenirCard> {
     } catch (e) {
       print(e);
       return null;
+    }
+  }
+
+  void onSubmission() async {
+    Transaksi input = Transaksi(
+      id: widget.oneTransaksi.id ?? 0,
+      id_user: widget.oneTransaksi.id_user,
+      id_souvenir: widget.oneTransaksi.id_souvenir,
+      jumlah: widget.oneTransaksi.jumlah,
+      status: "Sudah Dibayar",
+    );
+    try {
+      await TransaksiClient.update(input);
+    } catch (err) {
+      showSnackBar(context, err.toString(), Colors.red);
+      Navigator.pop(context);
     }
   }
 
@@ -143,18 +161,18 @@ class _SouvenirCardState extends State<SouvenirCard> {
                                       );
                                     },
                                     icon: Icon(Icons.edit)),
-                                // TextButton(
-                                //     onPressed: () {
-                                //       Navigator.push(
-                                //         context,
-                                //         MaterialPageRoute(
-                                //             builder: ((context) =>
-                                //                 PembayaranPage(
-                                //                   oneTiket: widget.oneTicket,
-                                //                 ))), // nanti ini kukelarin dulu di source ku
-                                //       );
-                                //     },
-                                //     child: Text("PAY")),
+                                TextButton(
+                                    onPressed: () {
+                                      onSubmission();
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  HomeView(loggedIn: user))));
+                                      showSnackBar(context, 'Success Membayar',
+                                          Colors.green);
+                                    },
+                                    child: Text("PAY")),
                                 IconButton(
                                     onPressed: widget.onDelete,
                                     icon: Icon(Icons.delete))
@@ -169,5 +187,17 @@ class _SouvenirCardState extends State<SouvenirCard> {
             );
           }
         });
+  }
+
+  void showSnackBar(BuildContext context, String msg, Color bg) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        backgroundColor: bg,
+        action: SnackBarAction(
+            label: 'hide', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 }
