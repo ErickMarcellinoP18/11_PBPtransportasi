@@ -1,13 +1,15 @@
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:transportasi_11/component/passComp.dart';
-import 'package:transportasi_11/data/client/userClient.dart';
-import 'package:transportasi_11/view/loginRegistResetPass/login.dart';
-import 'package:transportasi_11/component/form_component.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:transportasi_11/data/user.dart';
-import 'package:intl/intl.dart';
+import 'package:transportasi_11/view/loginRegistResetPass/login.dart';
 import 'package:transportasi_11/view/Ticket/TicketPage.dart';
+import 'package:transportasi_11/data/client/userClient.dart';
+// import 'package:transportasi_11/database/sql_helper.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView(
@@ -35,15 +37,45 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController controllerFullname = TextEditingController();
   bool isPasswordVisible = false;
 
-  List<Map<String, dynamic>> employee = [];
-  void refresh() async {
-    setState(() {});
+  // List<Map<String, dynamic>> employee = [];
+  // void refresh() async {
+  //   final data = await SQLHelper.getUser();
+  //   setState(() {
+  //     employee = data;
+  //   });
+  // }
+
+  Future<Uint8List> compressImage(Uint8List imageBytes) async {
+    final result = await FlutterImageCompress.compressWithList(
+      imageBytes,
+      minHeight: 800,
+      minWidth: 600,
+      quality: 40, // Sesuaikan dengan kebutuhan Anda
+    );
+    return result;
   }
 
-  @override
-  void initState() {
-    refresh();
-    super.initState();
+  Future<void> submission() async {
+    final ByteData data1 = await rootBundle.load('assets/images/ekonomi.jpg');
+    final Uint8List imageBytes = data1.buffer.asUint8List();
+
+    // Mengompres gambar
+    final compressedImage = await compressImage(imageBytes);
+
+    User input = User(
+      id: 0,
+      name: controllerUsername.text,
+      email: controllerEmail.text,
+      fullName: controllerFullname.text,
+      noTelp: controllerNotelp.text,
+      profilePicture: compressedImage,
+      password: controllerPassword.text,
+    );
+    try {
+      // ... (bagian kode lainnya)
+    } catch (err) {
+      // ... (bagian kode lainnya)
+    }
   }
 
   @override
@@ -228,6 +260,22 @@ class _RegisterViewState extends State<RegisterView> {
                                     //     content: Text('Register Sukses'),
                                     //   ),
                                     // );
+                                  } else {
+                                    User main = User(
+                                        id: widget.id,
+                                        fullName: controllerFullname.text,
+                                        email: controllerEmail.text,
+                                        noTelp: controllerNotelp.text,
+                                        name: controllerUsername.text,
+                                        password: controllerPassword.text);
+
+                                    // await editUser(widget.id!);
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                TicketHomePage(
+                                                    loggedIn: main)));
                                   }
                                 }
                               },
@@ -281,14 +329,14 @@ class _RegisterViewState extends State<RegisterView> {
   //       controllerFullname.text);
   // }
 
-  bool emailUnique(String email) {
-    for (int i = 0; i < employee.length; i++) {
-      if (employee[i]['email'] == email) {
-        return true;
-      }
-    }
-    return false;
-  }
+  // bool emailUnique(String email) {
+  //   for (int i = 0; i < employee.length; i++) {
+  //     if (employee[i]['email'] == email) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 
   // Future<void> editUser(int id) async {
   //   await SQLHelper.editUser(

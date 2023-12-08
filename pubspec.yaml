@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.18.0
+  flutter_image_compress: ^2.1.0
   provider: ^5.0.0
   shared_preferences:
   cupertino_icons: ^1.0.2
@@ -40,12 +41,10 @@ dev_dependencies:
   http: ^1.1.0
   http_mock_adapter: ^0.4.0
 
-
 flutter:
   uses-material-design: true
-  
-  assets:
 
+  assets:
     - assets/images/download.jpeg
     - assets/images/ekonomi.jpg
     - assets/images/bisnis.jpg
@@ -57,13 +56,13 @@ flutter:
     - assets/images/download.png
 
   fonts:
-  - family: Raleway
-    fonts:
-    - asset: assets/fonts/Raleway-Regular.ttf
-    - asset: assets/fonts/Raleway-Italic.ttf
-      style: italic
-  - family: Poppins
-    fonts:
-    - asset: assets/fonts/Poppins-Regular.ttf
-    - asset: assets/fonts/Poppins-Bold.ttf
-      weight: 700
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway-Regular.ttf
+        - asset: assets/fonts/Raleway-Italic.ttf
+          style: italic
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
