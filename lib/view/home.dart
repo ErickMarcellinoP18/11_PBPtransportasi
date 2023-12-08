@@ -1,16 +1,18 @@
+//main
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/theme/theme_model.dart';
+import 'package:transportasi_11/view/HomeNew.dart';
 import 'package:transportasi_11/view/Ticket/TicketPage.dart';
-import 'package:transportasi_11/view/Reviews/reviewPage.dart';
 import 'package:transportasi_11/view/Ticket/inputHomePage.dart';
+import 'package:transportasi_11/view/souvenir/souvenirPage.dart';
 import 'package:transportasi_11/view/view_list.dart';
 import 'package:transportasi_11/view/topbar2.dart';
 import 'package:transportasi_11/view/grid.dart';
 import 'package:transportasi_11/view/view_list.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:transportasi_11/view/profile/profile.dart';
+import 'package:transportasi_11/view/profile/edit_profile.dart';
 
 class HomeView extends StatefulWidget {
   final User loggedIn;
@@ -36,12 +38,12 @@ class _HomeViewState extends State<HomeView> {
     _widgetOption = <Widget>[
       Padding(
         padding: EdgeInsets.all(8.0),
-        child: GridExpandable(),
+        child: HomeNew(),
       ),
       InputHome(loggedIn: widget.loggedIn),
       TicketHomePage(loggedIn: widget.loggedIn),
-      ReviewPage(),
-      ProfileView(
+      SouvenirHomePage(loggedIn: widget.loggedIn),
+      editProfile(
         id: widget.loggedIn.id!,
         name: widget.loggedIn.name!,
         email: widget.loggedIn.email!,
@@ -50,6 +52,15 @@ class _HomeViewState extends State<HomeView> {
         password: widget.loggedIn.password!,
         Profpicture: widget.loggedIn.profilePicture!,
       ),
+      // ProfileView(
+      //   id: widget.loggedIn.id!,
+      //   name: widget.loggedIn.name!,
+      //   email: widget.loggedIn.email!,
+      //   fullName: widget.loggedIn.fullName!,
+      //   noTelp: widget.loggedIn.noTelp!,
+      //   password: widget.loggedIn.password!,
+      //   Profpicture: widget.loggedIn.profilePicture!,
+      // ),
     ];
     super.initState();
   }
@@ -97,7 +108,7 @@ class _HomeViewState extends State<HomeView> {
                 Icons.airplane_ticket,
                 color: Color.fromARGB(255, 34, 102, 141),
               ),
-              label: "Promo"),
+              label: "Souvenir Saya"),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.person,

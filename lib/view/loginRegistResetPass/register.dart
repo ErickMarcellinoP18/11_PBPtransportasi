@@ -5,9 +5,9 @@ import 'package:transportasi_11/component/passComp.dart';
 import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/view/loginRegistResetPass/login.dart';
 import 'package:transportasi_11/component/form_component.dart';
-import 'package:transportasi_11/database/sql_helper.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:intl/intl.dart';
+import 'package:transportasi_11/view/Ticket/TicketPage.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView(
@@ -35,19 +35,16 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController controllerFullname = TextEditingController();
   bool isPasswordVisible = false;
 
-  // List<Map<String, dynamic>> employee = [];
-  // void refresh() async {
-  //   final data = await SQLHelper.getUser();
-  //   setState(() {
-  //     employee = data;
-  //   });
-  // }
+  List<Map<String, dynamic>> employee = [];
+  void refresh() async {
+    setState(() {});
+  }
 
-  // @override
-  // void initState() {
-  //   refresh();
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    refresh();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,148 +79,179 @@ class _RegisterViewState extends State<RegisterView> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Silahkan Buat Akun"),
-      ),
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextFormField(
-                    controller: controllerUsername,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Username',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your name';
-                      } else if (value.contains(' ')) {
-                        return 'Username tidak boleh ada spasi';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 24),
-                  TextFormField(
-                    controller: controllerEmail,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Email',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Email Tidak Boleh Kosong';
-                      } else if (!value.contains('@')) {
-                        return 'Email Tidak Valid';
-                      } else
-                        // if (emailUnique(value)) {
-                        //   return 'Email Sudah Terdaftar';
-                        // }
-                        return null;
-                    },
-                  ),
-                  SizedBox(height: 24),
-                  TextFormField(
-                    controller: controllerPassword,
-                    decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Password',
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            isPasswordVisible = !isPasswordVisible;
-                          });
-                        },
-                        icon: Icon(
-                          isPasswordVisible
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          color: isPasswordVisible ? Colors.grey : Colors.blue,
+        child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/images/GambarKeretaApi.jpg"),
+                  fit: BoxFit.cover)),
+          child: Center(
+            child: Card(
+              elevation: 8.0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0)),
+              margin: EdgeInsets.only(
+                right: 20,
+                left: 20,
+              ),
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Daftar Akun",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontFamily: 'Noto Sans HK',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          controller: controllerUsername,
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Username',
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your name';
+                            } else if (value.contains(' ')) {
+                              return 'Username tidak boleh ada spasi';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 24),
+                        TextFormField(
+                          controller: controllerEmail,
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Email',
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Email Tidak Boleh Kosong';
+                            } else if (!value.contains('@')) {
+                              return 'Email Tidak Valid';
+                            } else
+                              // if (emailUnique(value)) {
+                              //   return 'Email Sudah Terdaftar';
+                              // }
+                              return null;
+                          },
+                        ),
+                        SizedBox(height: 24),
+                        TextFormField(
+                          controller: controllerPassword,
+                          decoration: InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Password',
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  isPasswordVisible = !isPasswordVisible;
+                                });
+                              },
+                              icon: Icon(
+                                isPasswordVisible
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: isPasswordVisible
+                                    ? Colors.grey
+                                    : Colors.blue,
+                              ),
+                            ),
+                          ),
+                          obscureText: isPasswordVisible,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Password Tidak Boleh Kosong';
+                            } else if (value.length < 8) {
+                              return 'Password Minimal 8 karakter';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 24),
+                        TextFormField(
+                          controller: controllerFullname,
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Full Name',
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your name';
+                            } else if (!RegExp(r'^[a-zA-Z ]+$')
+                                .hasMatch(value)) {
+                              return 'Nama Lengkap hanya mengandung huruf dan spasi';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 24),
+                        TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: controllerNotelp,
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Nomor Telepon',
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Nomor Telepon tidak boleh kosong';
+                            } else if (value.length < 10 || value.length > 13) {
+                              return 'Nomor Telepon Tidak Valid';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 48, width: 100),
+                        SizedBox(
+                          child: ElevatedButton(
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  if (widget.id == null) {
+                                    submission();
+                                    // ScaffoldMessenger.of(context).showSnackBar(
+                                    //   const SnackBar(
+                                    //     content: Text('Register Sukses'),
+                                    //   ),
+                                    // );
+                                  }
+                                }
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 16.0, horizontal: 16.0),
+                                child: Text("Register"),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Color.fromARGB(255, 142, 205, 221))),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginView()));
+                            },
+                            child: const Text('Sudah punya akun ?')),
+                      ],
                     ),
-                    obscureText: isPasswordVisible,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password Tidak Boleh Kosong';
-                      } else if (value.length < 8) {
-                        return 'Password Minimal 8 karakter';
-                      }
-                      return null;
-                    },
                   ),
-                  SizedBox(height: 24),
-                  TextFormField(
-                    controller: controllerFullname,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Full Name',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your name';
-                      } else if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
-                        return 'Nama Lengkap hanya mengandung huruf dan spasi';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 24),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: controllerNotelp,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Nomor Telepon',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Nomor Telepon tidak boleh kosong';
-                      } else if (value.length < 10 || value.length > 13) {
-                        return 'Nomor Telepon Tidak Valid';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 48, width: 100),
-                  SizedBox(
-                    child: ElevatedButton(
-                      key: const Key('RegisterBtn'),
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          if (widget.id == null) {
-                            submission();
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //   const SnackBar(
-                            //     content: Text('Register Sukses'),
-                            //   ),
-                            // );
-                          }
-                        }
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 16.0),
-                        child: Text("Register"),
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                      key: const Key('login'),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginView()));
-                      },
-                      child: const Text('Sudah punya akun ?')),
-                ],
+                ),
               ),
             ),
           ),
@@ -253,14 +281,14 @@ class _RegisterViewState extends State<RegisterView> {
   //       controllerFullname.text);
   // }
 
-  // bool emailUnique(String email) {
-  //   for (int i = 0; i < employee.length; i++) {
-  //     if (employee[i]['email'] == email) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
+  bool emailUnique(String email) {
+    for (int i = 0; i < employee.length; i++) {
+      if (employee[i]['email'] == email) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   // Future<void> editUser(int id) async {
   //   await SQLHelper.editUser(

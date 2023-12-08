@@ -1,4 +1,4 @@
-import 'package:transportasi_11/data/Kereta.dart';
+import 'package:transportasi_11/data/kereta.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart';

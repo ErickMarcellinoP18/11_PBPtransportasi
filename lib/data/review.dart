@@ -4,12 +4,14 @@ class Review {
   final int id;
   final String id_kereta;
   final int id_user;
+  final int rekomendasi;
   final String content;
 
   const Review({
     required this.id,
     required this.id_kereta,
     required this.id_user,
+    required this.rekomendasi,
     required this.content,
   });
 
@@ -22,12 +24,14 @@ class Review {
         id_kereta: json["id_kereta"],
         id_user: json["id_user"],
         content: json["content"],
+        rekomendasi: json["rekomendasi"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "id_kereta": id_kereta,
         "id_user": id_user,
-        "content": content
+        "content": content,
+        "rekomendasi": rekomendasi,
       };
 }

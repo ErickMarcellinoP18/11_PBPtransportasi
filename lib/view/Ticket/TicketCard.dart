@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:transportasi_11/client/JadwalClient.dart';
 import 'package:transportasi_11/client/KeretaClient.dart';
 import 'package:transportasi_11/data/jadwal.dart';
-import 'package:transportasi_11/data/Kereta.dart';
+import 'package:transportasi_11/data/kereta.dart';
 import 'package:transportasi_11/data/client/userClient.dart';
 import 'package:transportasi_11/data/ticket.dart';
 import 'package:intl/intl.dart';
 import 'package:transportasi_11/data/user.dart';
+import 'package:transportasi_11/view/Reviews/showYourReview.dart';
 import 'package:transportasi_11/view/Ticket/tampilKereta.dart';
 import 'package:transportasi_11/view/invoicePage.dart';
 import 'package:transportasi_11/view/pdf/pdf_view.dart';
@@ -124,7 +125,7 @@ class _TicketCardState extends State<TicketCard> {
                       ],
                     ),
                     Divider(
-                      height: 20, // Adjust the height of the Divider
+                      height: 20,
                       color: Colors.grey,
                     ),
                     Padding(
@@ -132,7 +133,19 @@ class _TicketCardState extends State<TicketCard> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Kereta : " + kereta!.nama.toString()),
+                          widget.oneTicket.status.toString() == "Sudah Dibayar"
+                              ? TextButton(
+                                  child: Text(
+                                      "Kereta : " + kereta!.nama.toString()),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => MyReview(
+                                                kereta: kereta, user: user!)));
+                                  },
+                                )
+                              : Text("Kereta : " + kereta!.nama.toString()),
                           Column(
                             children: [
                               Text("Kode Tiket"),
@@ -160,7 +173,7 @@ class _TicketCardState extends State<TicketCard> {
                               : Colors.amber),
                     ),
                     Divider(
-                      height: 20, // Adjust the height of the Divider
+                      height: 20,
                       color: Colors.grey,
                     ),
                     Row(
@@ -202,38 +215,44 @@ class _TicketCardState extends State<TicketCard> {
                             flex: 1,
                             child: Column(
                               children: [
-                                // IconButton(
-                                //     onPressed: () {
-                                //       Navigator.push(
-                                //         context,
-                                //         MaterialPageRoute(
-                                //           builder: (context) => ListViewKereta(
-                                //             selectedDate:
-                                //                 widget.oneTicket.tanggal_pergi,
-                                //             selectedDari: widget.oneTicket.asal
-                                //                 .toString(),
-                                //             selectedKe: widget.oneTicket.tujuan
-                                //                 .toString(),
-                                //             penumpang: widget.oneTicket
-                                //                 .jumlah, // ini jumlah penumpang entah kenapa jadi merah sam
-                                //             idUser: widget.oneTicket
-                                //                 .id_user, // ini juga harusnya int
-                                //             idTicket: widget.oneTicket.IdTicket,
-                                //             loggedIn: widget
-                                //                 .loggedIn // ini aku butuh sam buat lempar datanya
-                                //             , //nanti ini ubah lagi
-                                //           ), // Pastikan variabel selectedDate sudah dideklarasikan di tempat yang sesuai
-                                //         ),
-                                //       );
-                                //     },
-                                //     icon: Icon(Icons.edit)),
+                                IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ListViewKereta(
+                                            selectedDate:
+                                                DateFormat('EEEE, dd MMMM yyyy')
+                                                    .format(DateTime.parse(
+                                                        widget.oneTicket
+                                                            .tanggal_pergi)),
+                                            selectedDari: widget.oneTicket.asal
+                                                .toString(),
+                                            selectedKe: widget.oneTicket.tujuan
+                                                .toString(),
+                                            penumpang: widget
+                                                    .oneTicket.jumlah ??
+                                                0, // ini jumlah penumpang entah kenapa jadi merah sam
+                                            idUser: widget.oneTicket.id_user ??
+                                                0, // ini juga harusnya int
+                                            idTicket: widget.oneTicket.IdTicket,
+                                            loggedIn:
+                                                user // ini aku butuh sam buat lempar datanya
+                                            , //nanti ini ubah lagi
+                                          ), // Pastikan variabel selectedDate sudah dideklarasikan di tempat yang sesuai
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(Icons.edit)),
                                 TextButton(
                                     onPressed: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: ((context) =>
-                                                PembayaranPage())), // nanti ini kukelarin dulu di source ku
+                                                PembayaranPage(
+                                                  oneTiket: widget.oneTicket,
+                                                ))), // nanti ini kukelarin dulu di source ku
                                       );
                                     },
                                     child: Text("PAY")),
