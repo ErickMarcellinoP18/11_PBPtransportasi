@@ -4,6 +4,7 @@ import 'package:transportasi_11/data/jadwal.dart';
 import 'package:transportasi_11/data/ticket.dart';
 import 'package:transportasi_11/data/user.dart';
 import 'package:transportasi_11/main.dart';
+import 'package:transportasi_11/view/Reviews/reviewKereta.dart';
 import 'package:transportasi_11/view/Reviews/reviewPage.dart';
 import 'package:transportasi_11/view/Ticket/TicketPage.dart';
 import 'package:transportasi_11/view/Ticket/inputHomePage.dart';
@@ -225,8 +226,9 @@ class _ListViewKeretaState extends State<ListViewKereta>
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      ReviewPage()), // Ganti InvoicePage dengan halaman yang sesuai
+                                  builder: (context) => ReviewKereta(
+                                      idKereta: jadwalData[idx]
+                                          .idKereta!)), // Ganti InvoicePage dengan halaman yang sesuai
                             );
                           },
                           child: Text(

@@ -16,12 +16,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class ReviewKereta extends ConsumerWidget {
-  final Kereta loggedIn;
+  final String idKereta;
   late final FutureProvider<List<Review>> listReviewProvider;
-  ReviewKereta({Key? key, required this.loggedIn}) : super(key: key) {
+  ReviewKereta({Key? key, required this.idKereta}) : super(key: key) {
     listReviewProvider = FutureProvider<List<Review>>((ref) async {
-      final loggedInId = loggedIn.kode;
-      return await ReviewClient.fetchByKereta(loggedInId);
+      return await ReviewClient.fetchByKereta(idKereta);
     });
   }
 
