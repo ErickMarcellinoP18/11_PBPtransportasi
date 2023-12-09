@@ -125,7 +125,7 @@ class _HomeNewState extends State<HomeNew> {
                                           children: [
                                             Image(
                                                 image: AssetImage(
-                                                    'assets/icons/train_antar.png')),
+                                                    'assets/icons/icon_pay.png')),
                                             Text("Input Souvenir",
                                                 style: TextStyle(
                                                   fontSize: 12,
