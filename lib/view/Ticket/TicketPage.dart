@@ -33,16 +33,16 @@ class TicketHomePage extends ConsumerWidget {
   double _initialBrightness = 0.5; // Kecerahan awal yang disimpan
   ScreenBrightness screenBrightness = ScreenBrightness();
 
-  void initState() {
-    // super.initState();
-    accelerometerEvents.listen((AccelerometerEvent event) {
-      if (event.z < 0) {
-        setMaxBrightness();
-      } else {
-        setMinBrightness();
-      }
-    });
-  }
+  // void initState() {
+  //   // super.initState();
+  //   accelerometerEvents.listen((AccelerometerEvent event) {
+  //     if (event.z < 0) {
+  //       setMaxBrightness();
+  //     } else {
+  //       setMinBrightness();
+  //     }
+  //   });
+  // }
 
   // final listTicketProvider = FutureProvider<List<ticket>>((ref) async {
   //   return await ticketClient.findByUser(loggedIn.id);

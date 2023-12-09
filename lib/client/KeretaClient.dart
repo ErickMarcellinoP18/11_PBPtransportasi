@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 class KeretaClient {
-  static final String url = '10.0.2.2:8000';
+  static final String url = '20.255.52.134:8000';
   static final String endpoint = '/api/kereta';
 
   static Future<List<Kereta>> fetchAll() async {

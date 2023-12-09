@@ -52,30 +52,21 @@ class _ListViewKeretaState extends State<ListViewKereta>
   double _initialBrightness = 0.7; // Kecerahan awal yang disimpan
   ScreenBrightness screenBrightness = ScreenBrightness();
 
-  double x = 0, y = 0, z = 0;
+  // double x = 0, y = 0, z = 0;
 
   @override
   void initState() {
-    gyroscopeEvents.listen((GyroscopeEvent event) {
-      print(event);
-
-      x = event.x;
-      y = event.y;
-      z = event.z;
-
-      //rough calculation, you can use
-      //advance formula to calculate the orentation
-      if (x > 0) {
-        setMaxBrightness();
-      } else if (x < 0) {
-        setMinBrightness();
-      }
-
-      setState(() {});
-    });
     super.initState();
     generateDateList();
     fetchJadwalData(parsedSelectedDate);
+
+    accelerometerEvents.listen((AccelerometerEvent event) {
+      if (event.z < 0) {
+        setMaxBrightness();
+      } else {
+        setMinBrightness();
+      }
+    });
   }
 
   void generateDateList() {

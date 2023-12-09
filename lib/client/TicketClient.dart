@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 class ticketClient {
-  static final String url = '10.0.2.2:8000';
+  static final String url = '20.255.52.134:8000';
   static final String endpoint = '/api/tiket';
 
   static Future<List<ticket>> fetchAll() async {
