@@ -101,6 +101,7 @@ class _InputSouvenirState extends State<InputSouvenir> {
           text: 'Berhasil Menginputkan Transaksi!',
         );
       }
+
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -265,6 +266,7 @@ class _InputSouvenirState extends State<InputSouvenir> {
             ),
             TextButton(
               onPressed: () {
+                Navigator.pop(context);
                 // Panggil fungsi onSubmit jika user mengonfirmasi
                 onSubmit(idUser, idSouvenir); // Tutup dialog
               },

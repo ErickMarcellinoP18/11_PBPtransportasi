@@ -114,7 +114,7 @@ class _ListViewKeretaState extends State<ListViewKereta>
         QuickAlert.show(
           context: context,
           type: QuickAlertType.success,
-          text: 'Berhasil Meginput Tiket!',
+          text: 'Berhasil Menginput Tiket!',
         );
       }
     } catch (err) {

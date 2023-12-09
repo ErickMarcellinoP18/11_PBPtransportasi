@@ -9,6 +9,7 @@ import 'package:transportasi_11/data/user.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:transportasi_11/view/Ticket/TicketPage.dart';
+import 'package:transportasi_11/view/home.dart';
 
 class PembayaranPage extends StatefulWidget {
   const PembayaranPage({
@@ -281,7 +282,7 @@ class _PembayaranPage extends State<PembayaranPage>
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TicketHomePage(
+                              builder: (context) => HomeView(
                                   loggedIn:
                                       user)), // nanti ini kukelarin dulu di source ku
                         );

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transportasi_11/theme/theme_model.dart';
+import 'package:transportasi_11/view/HomeNew.dart';
 import 'package:transportasi_11/view/Ticket/TicketPage.dart';
 import 'package:transportasi_11/view/Ticket/inputHomePage.dart';
 import 'package:transportasi_11/view/souvenir/souvenirPage.dart';
@@ -35,10 +36,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     _widgetOption = <Widget>[
-      Padding(
-        padding: EdgeInsets.all(8.0),
-        child: GridExpandable(),
-      ),
+      HomeNew(loggedIn: widget.loggedIn),
       InputHome(loggedIn: widget.loggedIn),
       TicketHomePage(loggedIn: widget.loggedIn),
       SouvenirHomePage(loggedIn: widget.loggedIn),

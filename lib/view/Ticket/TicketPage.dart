@@ -33,6 +33,17 @@ class TicketHomePage extends ConsumerWidget {
   double _initialBrightness = 0.5; // Kecerahan awal yang disimpan
   ScreenBrightness screenBrightness = ScreenBrightness();
 
+  void initState() {
+    // super.initState();
+    accelerometerEvents.listen((AccelerometerEvent event) {
+      if (event.z < 0) {
+        setMaxBrightness();
+      } else {
+        setMinBrightness();
+      }
+    });
+  }
+
   // final listTicketProvider = FutureProvider<List<ticket>>((ref) async {
   //   return await ticketClient.findByUser(loggedIn.id);
   // });
@@ -65,12 +76,6 @@ class TicketHomePage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 206, 205, 205),
       appBar: AppBar(
-        leading: IconButton(
-            color: const Color.fromARGB(255, 255, 250, 221),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back)),
         backgroundColor: Color.fromARGB(255, 34, 102, 141),
         title: Text(
           "History",

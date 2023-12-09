@@ -249,7 +249,7 @@ class _InputHomeState extends State<InputHome> {
                                                 selectedKe: selectedKe,
                                                 penumpang: int.parse(
                                                     controllerPenumpang.text),
-                                                idUser: 1,
+                                                idUser: widget.loggedIn.id!,
                                                 loggedIn: widget
                                                     .loggedIn, //nanti ini ubah lagi
                                               ), // Pastikan variabel selectedDate sudah dideklarasikan di tempat yang sesuai

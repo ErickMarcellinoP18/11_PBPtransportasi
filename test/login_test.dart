@@ -62,7 +62,7 @@ void main() {
     testWidgets('cek berhasil login', (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(home: LoginView()));
 
-      await tester.enterText(find.byType(TextFormField).first, '123');
+      await tester.enterText(find.byType(TextFormField).first, '111');
       await tester.pumpAndSettle(Duration(seconds: 2));
 
       await tester.enterText(find.byType(TextFormField).at(1), '12345678');
