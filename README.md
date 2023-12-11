@@ -9,6 +9,7 @@
 ## Deskripsi Project <br />
 Membuat aplikasi selayaknya KAI (kereta api indonesia) untuk melayani pembelian tiket kereta api secara online. Project ini akan dikerjakan menggunakan bahasa flutter yang bisa di port untuk berbagai device. <br />
 
+
 ## UGD 1 <br />
 Membuat visibility toggle untuk password <br />
 Membuat grid view kasaran <br />
@@ -41,3 +42,4 @@ CRUD Transaksi (Joshua)<br />
 Register (Tio)<br />
 Login (Joshua & Samuel dikit)<br />
 CRUD Transaksi Testing (Joshua)<br />
+
