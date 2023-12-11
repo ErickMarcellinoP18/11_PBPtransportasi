@@ -32,3 +32,12 @@ Membuat Text to speech dan Scan qr beserta validasi sisanya (Joshua) <br />
 Membuat imagePicker dan QR Code menggunakan barcode widget (Samuel) <br />
 Membuat PDF Viewer dan printing beserta isi-isinya (Joshua) <br />
 Memikirkan ide untuk UGD, membantu dalam merapikan code, serta melanjutkan penyicilan UI untuk Tugas Besar (Tio, Agatha, Erick) <br />
+
+# UGD API 2 <br />
+Login,Register,Ubah Password (Samuel, (Tio, Agatha, Erick bantu-bantu aja))<br />
+CRUD Transaksi (Joshua)<br />
+
+# UGD Testing <br />
+Register (Tio)<br />
+Login (Joshua & Samuel dikit)<br />
+CRUD Transaksi Testing (Joshua)<br />
